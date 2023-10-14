@@ -50,10 +50,30 @@ def profile(username):
     if not user:
         return "User not found."
     if request.method == 'POST':
+        # First name, last name, SRN, CGPA ,Semester and email, upload resume, current YEAR/Batch.
+        # If student not in team -> button to create a team (only for 3rd years)
+        # If student has a team -> view team button -> on clicking view team redirect to team page.
+        # If student has a resume -> view resume, edit resume button
+        # If student does not have a resume -> upload resume
+        # Batch -> Outgoing Year 
         user['email'] = request.form.get('email')
         user['bio'] = request.form.get('bio')
         return "Profile updated successfully."
     return render_template('studentprofile.html', username=username, user=user)
+
+''' TEACHER PROFILE PAGE '''
+# If a teacher is a supervisor -> modify teacher page to supervisor
+# TEACHER PAGE -> Teacher ID, Name, Floor, Cabin, Current Project List
+
+# Regardless of the year for which a teacher is a supervisor -> redirect to supervisor page
+# SUPERVISOR PAGE -> Supervisor ID,Name,Drop down box for checking the batch of team
+# If the supervisor exists for the current batch (3rd year) -> accept requests
+# If the supervisor exists for the final year batch (4th year) -> do not accept requests.
+# View Active Teams(button) -> Each team will have "view project" button,List of active project teams with team name,project name
+
+'''ADMIN PAGE'''
+
+
 
 @app.route('/logout')
 def logout():
