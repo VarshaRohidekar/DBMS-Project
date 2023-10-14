@@ -63,13 +63,13 @@ def profile(username):
 
 ''' TEACHER PROFILE PAGE '''
 # If a teacher is a supervisor -> modify teacher page to supervisor
-# TEACHER PAGE -> Teacher ID, Name, Floor, Cabin, Current Project List
+# TEACHER PAGE -> Teacher ID, Name, GET REVIEWS(SEE LATER)
 
 # Regardless of the year for which a teacher is a supervisor -> redirect to supervisor page
-# SUPERVISOR PAGE -> Supervisor ID,Name,Drop down box for checking the batch of team
-# If the supervisor exists for the current batch (3rd year) -> accept requests
+# SUPERVISOR PAGE -> Supervisor ID,Name,Drop down box for checking the batch of team, GET REVIEWS(LATER)
+# If the supervisor exists for the current batch (3rd year) -> on view requests -> viewing pending requests(allowed to accept/reject) (x or a tick)
 # If the supervisor exists for the final year batch (4th year) -> do not accept requests.
-# View Active Teams(button) -> Each team will have "view project" button,List of active project teams with team name,project name
+# View Active Teams(button) -> Each team will have "view project" button,List of active project teams with team name,project name,BATCH
 
 '''ADMIN PAGE'''
 
