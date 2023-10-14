@@ -1,0 +1,10 @@
+body {
+    background-image: url('../static/logo1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.navbar {
+    background-color: #3498db; /* Custom background color */
+}
