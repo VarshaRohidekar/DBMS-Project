@@ -59,12 +59,12 @@ create table Supervisor (
 create table Supervisor_years (
     supervisor_id char(13),
     batch year
-)
+);
 
 create table Supervisor_Domains (
     supervisor_id char(13) not null,
     domain varchar(30) not null check (domain in ('Natural Language Processing', 'Machine Learning and Arrificial Intelligence')),
-    constraint domain_pk primary key (supervisor_id, domain),
+    primary key (supervisor_id, domain),
     foreign key (supervisor_id) references Supervisor(supervisor_id) on update cascade on delete cascade
 );
 
