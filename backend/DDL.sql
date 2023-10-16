@@ -18,7 +18,7 @@ create table Student (
     email varchar(50) not null,
     resume_doc mediumblob default null,
     pswd varchar(20) not null,
-    outgoing_year year
+    outgoing_year year not null
 );
 
 create table Teacher (
@@ -58,7 +58,9 @@ create table Supervisor (
 
 create table Supervisor_years (
     supervisor_id char(13),
-    batch year
+    batch year,
+    primary key (supervisor_id, batch),
+    foreign key (supervisor_id) references Supervisor(supervisor_id) on update cascade
 );
 
 create table Supervisor_Domains (
@@ -73,7 +75,7 @@ create table Supervisor_Domains (
 create table Request (
     request_id char(10) primary key,
     team_id char(10) not null,
-    supervisor_id char(13) not null default '0000000000000',
+    supervisor_id char(13) not null default '0000000000000',        --- but '0000000000000' needs to be in Supervisor table
     interested_domain varchar(30) not null,
     idea varchar(140),
     constraint team_id_ref foreign key (team_id) references Team(team_id) 
