@@ -75,7 +75,7 @@ create table Supervisor_Domains (
 create table Request (
     request_id char(10) primary key,
     team_id char(10) not null,
-    supervisor_id char(13) not null default '0000000000000',        --- but '0000000000000' needs to be in Supervisor table
+    supervisor_id char(13) not null default '0000000000000',        -- but '0000000000000' needs to be in Supervisor table
     interested_domain varchar(30) not null,
     idea varchar(140),
     constraint team_id_ref foreign key (team_id) references Team(team_id) 
