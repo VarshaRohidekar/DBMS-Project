@@ -38,40 +38,6 @@ else:
 cnx_cursor = cnx.cursor()
 show_tables(cnx_cursor)
 
-# srn = "PES1IG21CS695"
-# pswd = "Happy123"
-# Fname = "Vaishnavi"
-# Lname = "Venu"
-# email = "vaishnavigv.sn@gmail.com"
-# semester = "5"
-# cgpa = "8.55"
-# outgoing_year = "2025" 
-
-
-# student_data = {
-#     'srn' : srn,
-#     'pswd' : pswd,
-#     'Fname' : Fname,
-#     'Lname' : Lname,
-#     'email' : email,
-#     'semester' : semester,
-#     'cgpa' : cgpa,
-#     'outgoing_year' : outgoing_year
-# }
-
-# cnx_cursor.execute(insert_student, student_data)
-# display_table_contents(cnx_cursor, "Student")
-# cnx_cursor.execute("delete from Student")
-# Student = "Student"
-
-# try:
-#     cnx_cursor.execute("SELECT * FROM " + Student)
-# except:
-#     print("unable to execute")
-# else:
-#     for x in cnx_cursor:
-#         print(x)
-
 with open("datasets/Student.csv", mode='r') as file:
     csvfile = csv.reader(file)
     
