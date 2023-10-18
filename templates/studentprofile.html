@@ -26,7 +26,7 @@
     <div class="container">
         <h1>Welcome, {{ username }}</h1>
         <h2>Dashboard</h2>
-        <form method="POST" action="{{ url_for('profile', username=username) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ url_for('studentprofile', username=username) }}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
