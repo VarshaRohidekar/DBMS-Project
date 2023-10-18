@@ -1,61 +1,7 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Home Page</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="body">
-    <nav>
-        <ul>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/signup">Sign Up</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        <h1>Welcome to My App</h1>
-        <a href="{{ url_for('login') }}" class="btn">Login / Signup</a>
-        <h2>Data as Table:</h2>
-        <style>
-            table {
-                /* border-collapse: collapse; */
-                width: 100%;
-            }
-            th, td {
-                border: 10px solid #ddd;
-                /* padding: 0px; */
-                text-align:center;
-                width:max-content;
-            }
-            tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-        </style>
-        <table id="myDataTable">
-            <thead>
-                <tr>
-                    {% for column in column_names %}
-                    <th>{{ column }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in data %}
-                <tr>
-                    {% for cell in row %}
-                    <td>{{ cell }}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Navbar Example</title>
+    <title>Capstone Mapping</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" type="text/css" href="/static/style.css">  -->
 </head>
@@ -70,13 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="/signup">Sign Up</a>
-                </li> -->
             </ul>
         </div>
     </nav>
-    <!-- <h1>Hello</h1> -->
 </body>
 </html>
 
