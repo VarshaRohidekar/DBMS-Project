@@ -6,9 +6,9 @@ app.secret_key = 'dbms'
 # A simple dictionary to store user data (replace with a proper database)
 
 users = {
-    'user1': {'password': 'password1', 'name': 'John Doe','auth':1},
-    'user2': {'password': 'password2', 'name': 'Jane Smith','auth':2},
-    'user3': {'password': 'password3', 'name': 'ADMIN CHECKING','auth':3}
+    'user1': {'password': 'password1', 'name': 'John Doe','auth':'t'},
+    'user2': {'password': 'password2', 'name': 'Jane Smith','auth':'s'},
+    'user3': {'password': 'password3', 'name': 'ADMIN CHECKING','auth':'a'}
 }
 
 logged_in_users = set()
