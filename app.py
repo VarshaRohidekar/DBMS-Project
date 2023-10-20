@@ -81,6 +81,16 @@ def login():
 def studentprofile(username):
     first_name, last_name, email, outgoing_year, cgpa, semester, teamEligibility, hasTeam, hasResume = StudentDashboardFunc.get_student_details(username)
     
+    if teamEligibility:
+        # needs to redirect to 2 different pages depending upon state of team formation
+        if hasTeam:
+            return "go to team page"        # a button
+        else:
+            return "create team"            # a button
+    
+    else:
+        return None
+    
     if request.method == 'POST':
         # First name, last name, SRN, CGPA ,Semester and email, upload resume, current YEAR/Batch.
         # If student not in team -> button to create a team (only for 3rd years)
