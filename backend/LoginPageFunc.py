@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import errorcode 
-import config    
+from backend import config    
     
 def verify_login(role, id, password):
 

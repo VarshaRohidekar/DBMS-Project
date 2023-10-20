@@ -11,7 +11,18 @@
             <div class="col-md-6">
                 <h1 class="text-center">Login or Sign Up</h1>
                 <form method="POST" action="/login">
+
                     <div class="form-group">
+                        <label for="role">Role:</label>
+                        <select name="role" id="role">
+                            <option value="s">Student</option>
+                            <option value="t">Teacher</option>
+                            <option value="a">Admin</option>
+                          </select>
+                          <!-- <input type="submit" value="Submit"/> -->
+                    </div>    
+                    <div class="form-group">
+                        <!-- need to add a drop down for student or teacher (role)-->
                         <label for="username">Username:</label>
                         <input type="text" class="form-control" id="username" name="username" required>
                     </div>
