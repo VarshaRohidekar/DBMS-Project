@@ -1,0 +1,45 @@
+html part:
+<form method="POST">
+    <div class="sql-query">
+        <label for="command">Enter query here: </label>
+        <input type="text" id="query" name="query" required>
+    </div>
+    <button type="submit">Send Query</button>
+</form>
+<div>
+    <p></p>
+    {% if result %}
+    <table>
+        <thead>
+            <tr>
+                {% for column in cols %}
+                <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in result[1:] %}
+                <tr>
+                    {% for cell in row %}
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+python app part:
+data=""
+    if request.method=='POST':
+        query = request.form.get('query')
+        cursor = db.cursor()
+
+        cursor.execute(query)
+        data = cursor.fetchall()
+        # Get the column names from the database cursor
+        column_names = [desc[0] for desc in cursor.description]
+        # df = pd.DataFrame(data,columns=column_names)
+
+return render_template('home.html',result=data, cols=column_names)

@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for,session
+from flask import Flask, render_template, request, redirect, url_for,session,jsonify
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
 from backend import LoginPageFunc, StudentDashboardFunc
+import pandas as pd
 # A simple dictionary to store user data (replace with a proper database)
 
 # users = {
@@ -13,20 +14,16 @@ from backend import LoginPageFunc, StudentDashboardFunc
 
 logged_in_users = set()
 
-# db = mysql.connector.connect(
-#     host="localhost",
-#     user="root",
-#     password="newyork1176",
-#     database="art_gallery"
-# )
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="newyork1176",
+    database="Capstone_Mapping"
+)
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def home():
-    # cursor = db.cursor()
-    # cursor.execute("SELECT * FROM art")
-    # data = cursor.fetchall()
-    # # Get the column names from the database cursor
-    # column_names = [desc[0] for desc in cursor.description]
+    
     return render_template('home.html')
 
 logged_in_users = set()
@@ -81,15 +78,15 @@ def login():
 def studentprofile(username):
     first_name, last_name, email, outgoing_year, cgpa, semester, teamEligibility, hasTeam, hasResume = StudentDashboardFunc.get_student_details(username)
     
-    if teamEligibility:
-        # needs to redirect to 2 different pages depending upon state of team formation
-        if hasTeam:
-            return "go to team page"        # a button
-        else:
-            return "create team"            # a button
+    # if teamEligibility:
+    #     # needs to redirect to 2 different pages depending upon state of team formation
+    #     if hasTeam:
+    #         return "go to team page"        # a button
+    #     else:
+    #         return "create team"            # a button
     
-    else:
-        return None
+    # else:
+    #     return None
     
     if request.method == 'POST':
         # First name, last name, SRN, CGPA ,Semester and email, upload resume, current YEAR/Batch.
@@ -149,5 +146,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,port='3001',host="127.0.0.1")
+    app.run(debug=True,port='3003',host="127.0.0.1")
 
