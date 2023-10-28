@@ -31,6 +31,12 @@ create table Teacher (
     pswd varchar(20) not null
 );
 
+create table Admin (
+    admin_id char(7) primary key,
+    pswd varchar(20) not null,
+    email varchar(50) not null
+);
+
 create table Team (
     team_id char(10) primary key
 );

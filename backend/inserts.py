@@ -3,3 +3,6 @@ insert_student = """INSERT INTO Student (srn, pswd, Fname, Lname, semester, cgpa
 
 insert_teacher = """INSERT INTO Teacher (teacher_id, Fname, Lname, email, floor, cabin_no, pswd)
                     VALUES (%(teacher_id)s, %(Fname)s, %(Lname)s, %(email)s, %(floor)s, %(cabin_no)s, %(pswd)s)"""
+
+insert_admin = """INSERT INTO Admin (admin_id, pswd, email)
+                 VALUES (%(admin_id)s, %(pswd)s, %(email)s)"""
