@@ -1,10 +1,48 @@
-body {
-    background-image: url('../static/logo1.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+/* Navbar style */
+.navbar {
+    background-color: #3498db;
+    min-height: 60px; /* Adjust the navbar's minimum height as needed */
+    margin-bottom: 10px; /* Add a margin to separate it from the content below */
 }
 
-.navbar {
-    background-color: #3498db; /* Custom background color */
+/* Dashboard sidebar style */
+.dashboard {
+    width: 50px;
+    height: 100%;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+/* Toggle Dashboard button style */
+#toggleDashboard {
+    display: block; /* Make sure the button is initially visible */
+    position: absolute;
+    top: 10px; /* Adjust the top value to move the button down as needed */
+    left: 10px; /* Adjust the left position as needed */
+    z-index: 1;
+}
+
+/* Style the sidebar links */
+.dashboard ul li {
+    padding: 16px;
+    text-align: center;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+/* Style for the sidebar links when hovered over */
+.dashboard ul li:hover {
+    color: #f1f1f1;
+}
+
+/* Custom styling for the Toggle Dashboard button */
+.custom-button {
+    /* You can add more styles here if needed */
+    height: 50px;
 }

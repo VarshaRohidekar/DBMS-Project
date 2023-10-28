@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Profile Page</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
-<body class="body">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Admin Profile</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome, {{ username }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
-        </div>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Dashboard</a>
     </nav>
-    <div class="container">
-        <h1>Welcome, {{ username }}</h1>
-        <h2>Admin Dashboard</h2>
-        <!-- Add admin-specific content here -->
-        <p>This is the admin dashboard. You can add admin-specific content here.</p>
-        <!-- Example button to perform admin actions -->
-        <div class="form-group">
-            <button type="button" class="btn btn-danger">Perform Admin Action</button>
-        </div>
+    
+    <div class="dashboard" id="dashboard">
+        <ul>
+            <li>Home</li> 
+            <li>About</li>
+        </ul>
     </div>
+    
+    <!-- "Toggle Dashboard" button outside of the sidebar -->
+    <button id="toggleDashboard" class="btn btn-secondary custom-button">Toggle Dashboard</button>
+
+    <script>
+        const dashboard = document.getElementById('dashboard');
+        const toggleButton = document.getElementById('toggleDashboard');
+
+        toggleButton.style.display = 'block'; // Make sure the button is initially visible
+
+        toggleButton.addEventListener('click', function() {
+            if (dashboard.style.width === '250px') {
+                dashboard.style.width = '0';
+            } else {
+                dashboard.style.width = '250px';
+            }
+        });
+    </script>
 </body>
 </html>

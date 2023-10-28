@@ -117,18 +117,21 @@ def teacherprofile(username):
 # View Active Teams(button) -> Each team will have "view project" button,List of active project teams with team name,project name,BATCH
 
 '''ADMIN PAGE'''
-# @app.route('/adminprofile/<username>', methods=['GET', 'POST'])
-# def adminprofile(username):
-#     user = users.get(username)
-#     if not user:
-#         return "User not found."
-#     if request.method == 'POST':
-#         # Add teacher-specific logic for updating the profile
-#         user['email'] = request.form.get('email')
-#         user['bio'] = request.form.get('bio')
-#         return "Teacher profile updated successfully."
-#     return render_template('adminprofile.html', username=username, user=user)
+# @app.route('/adminprofile', methods=['GET', 'POST'])
+# def adminprofile():
+#     # user = users.get(username)
+#     # if not user:
+#     #     return "User not found."
+#     # if request.method == 'POST':
+#     #     # Add teacher-specific logic for updating the profile
+#     #     user['email'] = request.form.get('email')
+#     #     user['bio'] = request.form.get('bio')
+#     #     return "Teacher profile updated successfully."
+#     return render_template('adminprofile.html')
 
+@app.route('/adminprofile')
+def adminprofile():
+    return render_template('adminprofile.html')
 
 @app.route('/logout')
 def logout():
