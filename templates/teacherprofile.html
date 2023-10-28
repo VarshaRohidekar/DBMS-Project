@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome, {{username}}</a>
+                    <a class="nav-link" href="#">Welcome, {{first_name}}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
@@ -22,15 +22,12 @@
         </div>
     </nav>
     <div class="container">
-        <h1>Welcome, {{ username }}</h1>
+        <h1>Welcome, {{ first_name }} {{ last_name }}</h1>
         <h2>Teacher Dashboard</h2>
         <form method="POST" action="{{ url_for('teacherprofile', username=username) }}" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="email">Email</label>
-                <p>{{user.email}}</p>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Update Profile</button>
+                <!-- <label for="email">Email:</label> -->
+                <p>Email: {{ email_id }}</p>
             </div>
         </form>
     </div>

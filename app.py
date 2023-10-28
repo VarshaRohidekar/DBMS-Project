@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for,session,jso
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
-from backend import LoginPageFunc, StudentDashboardFunc
+from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc
 import pandas as pd
 from backend import config
 # A simple dictionary to store user data (replace with a proper database)
@@ -99,17 +99,12 @@ def studentprofile(username):
     return render_template('studentprofile.html', username=username, first_name=first_name, last_name=last_name, email_id=email,outgoing_year=outgoing_year,cgpa=cgpa,semester=semester, hasResume=hasResume, teamEligibility = teamEligibility, hasTeam=hasTeam)
 
 
-# @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
-# def teacherprofile(username):
-#     user = users.get(username)
-#     if not user:
-#         return "User not found."
-#     if request.method == 'POST':
-#         # Add teacher-specific logic for updating the profile
-#         user['email'] = request.form.get('email')
-#         user['bio'] = request.form.get('bio')
-#         return "Teacher profile updated successfully."
-#     return render_template('teacherprofile.html', username=username, user=user)
+@app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
+def teacherprofile(username):
+    # user = users.get(username)
+    first_name,last_name,email = TeacherDashboardFunc.get_teacher_details(username)
+    print(first_name,last_name,email)
+    return render_template('teacherprofile.html', username=username, first_name=first_name,last_name=last_name,email_id=email)
 
 ''' TEACHER PROFILE PAGE '''
 # If a teacher is a supervisor -> modify teacher page to supervisor
@@ -144,5 +139,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,port='3003',host="127.0.0.1")
+    app.run(debug=True,port='3005',host="127.0.0.1")
 
