@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for,session,jso
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
-from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc
+from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc
 import pandas as pd
 from backend import config
 # A simple dictionary to store user data (replace with a proper database)
@@ -13,7 +13,7 @@ from backend import config
 #     'user3': {'password': 'password3', 'name': 'ADMIN CHECKING','auth':'a'}
 # }
 
-logged_in_users = set()
+logged_in_users = []
 
 db = mysql.connector.connect(
     **config.config
@@ -24,7 +24,7 @@ def home():
     
     return render_template('home.html')
 
-logged_in_users = set()
+# logged_in_users = set()
 
 @app.route('/login', methods=['POST','GET'])
 def login():
@@ -129,15 +129,20 @@ def teacherprofile(username):
 #     #     return "Teacher profile updated successfully."
 #     return render_template('adminprofile.html')
 
-@app.route('/adminprofile')
-def adminprofile():
-    return render_template('adminprofile.html')
+@app.route('/adminprofile/<username>', methods=['GET', 'POST'])
+def adminprofile(username):
+    
+    logged_in_users.append(username)
+    AdminFunc.log_in()
+    email = AdminFunc.get_admin_details(username)
+    return render_template('adminprofile.html', email=email, admin_id=username)
 
 @app.route('/logout')
 def logout():
     # Log the user out by removing them from the logged_in_users set
     username = request.path.split('/')[-1]
     if username in logged_in_users:
+        AdminFunc.log_out()
         logged_in_users.remove(username)
     return redirect(url_for('login'))
 

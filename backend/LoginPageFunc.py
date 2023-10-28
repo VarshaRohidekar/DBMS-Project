@@ -25,6 +25,8 @@ def verify_login(role, id, password):
         result = cnx_cursor.execute(""" SELECT srn, pswd from Student where srn = %(srn)s""", {'srn' : id})
     elif role == 't':
         result = cnx_cursor.execute(""" SELECT teacher_id, pswd from Teacher where teacher_id = %(teacher_id)s""", {'teacher_id' : id})
+    else:
+        result = cnx_cursor.execute("""SELECT admin_id, pswd FROM Admin where admin_id = %(admin_id)s""", {'admin_id': id})
     content = cnx_cursor.fetchone()
     cnx.close()
     

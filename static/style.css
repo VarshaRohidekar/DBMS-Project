@@ -7,7 +7,7 @@
 
 /* Dashboard sidebar style */
 .dashboard {
-    width: 50px;
+    width: 0px;
     height: 100%;
     background-color: #333;
     position: fixed;
@@ -15,6 +15,7 @@
     left: 0;
     overflow-x: hidden;
     transition: 0.5s;
+    z-index: 2;
 }
 
 /* Toggle Dashboard button style */
@@ -23,7 +24,7 @@
     position: absolute;
     top: 10px; /* Adjust the top value to move the button down as needed */
     left: 10px; /* Adjust the left position as needed */
-    z-index: 1;
+    z-index: 0;
 }
 
 /* Style the sidebar links */
@@ -45,4 +46,18 @@
 .custom-button {
     /* You can add more styles here if needed */
     height: 50px;
+}
+
+#admin-dashboard-x {
+    position:absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    background-color: transparent;
+    border-radius: 10%;
+    border-color: transparent;
+}
+
+#admin-dashboard-x:hover {
+    background-color: #818181;
 }
