@@ -55,6 +55,7 @@ need to put pop saying that this is the last team they can accept, and on accept
 
 create table Supervisor (
     supervisor_id char(13) primary key,
+    batch year,
     team_limit int not null check (team_limit > 0),
     active_projects int not null check (active_projects >= 0),
     foreign key (supervisor_id) references Teacher(teacher_id) on update cascade on delete restrict
