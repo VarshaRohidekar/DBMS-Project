@@ -1,0 +1,70 @@
+css:
+.dashboard {
+    width: 0;
+    height: 100%;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+#toggleDashboard {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    z-index: 1;
+}
+
+/* Style the sidebar links */
+.dashboard a {
+    padding: 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.dashboard a:hover {
+    color: #f1f1f1;
+}
+
+
+html:
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+    <div class="dashboard" id="dashboard">
+        <ul>
+            <li>Home</li> 
+            <li>About</li>
+        </ul>
+    </div>
+    <button id="toggleDashboard">Toggle Dashboard</button>
+
+    <script>
+        const dashboard = document.getElementById('dashboard');
+        const toggleButton = document.getElementById('toggleDashboard');
+
+        toggleButton.addEventListener('click', function() {
+            if (dashboard.style.width === '250px') {
+                dashboard.style.width = '0';
+            } else {
+                dashboard.style.width = '250px';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+python:
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
