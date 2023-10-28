@@ -4,6 +4,7 @@ app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
 from backend import LoginPageFunc, StudentDashboardFunc
 import pandas as pd
+from backend import config
 # A simple dictionary to store user data (replace with a proper database)
 
 # users = {
@@ -15,10 +16,7 @@ import pandas as pd
 logged_in_users = set()
 
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="newyork1176",
-    database="Capstone_Mapping"
+    **config.config
 )
 
 @app.route('/', methods=['POST', 'GET'])
@@ -98,7 +96,7 @@ def studentprofile(username):
         # user['email'] = request.form.get('email')
         # user['bio'] = request.form.get('bio')
         return "Profile updated successfully."
-    return render_template('studentprofile.html', username=username, first_name=first_name, last_name=last_name, email_id=email,outgoing_year=outgoing_year,cgpa=cgpa,semester=semester)
+    return render_template('studentprofile.html', username=username, first_name=first_name, last_name=last_name, email_id=email,outgoing_year=outgoing_year,cgpa=cgpa,semester=semester, hasResume=hasResume, teamEligibility = teamEligibility, hasTeam=hasTeam)
 
 
 # @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])

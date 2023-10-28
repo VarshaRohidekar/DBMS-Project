@@ -31,6 +31,7 @@
                 <!-- <label for="email">Email:</label> -->
                 <p>Email: {{ email_id }}</p>
             </div>
+            {% if not hasResume %}
             <div class="form-group">
                 <label for="resume">Upload Resume:</label>
                 <input type="file" class="form-control-file" id="resume" name="resume">
@@ -38,6 +39,25 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Upload Resume</button>
             </div>
+            {% endif %}
+
+            {% if hasResume %}
+            <div>
+                <p> Show button to view resume and reupload resume </p>
+            </div>
+            {% endif%}
+
+            {% if teamEligibility %}
+            <div>
+                {% if hasTeam %}
+                    <p> link to team page </p>
+                {% endif %}
+
+                {% if not hasTeam%}
+                    <p> link to create team form </p>
+                {% endif %}
+            </div>
+            {% endif %}
         </form>
     </div>
 </body>
