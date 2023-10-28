@@ -54,8 +54,7 @@ need to put pop saying that this is the last team they can accept, and on accept
 */
 
 create table Supervisor (
-    supervisor_id char(13) primary key,
-    batch year,
+    supervisor_id char(13) not null,
     team_limit int not null check (team_limit > 0),
     active_projects int not null check (active_projects >= 0),
     foreign key (supervisor_id) references Teacher(teacher_id) on update cascade on delete restrict
@@ -72,7 +71,7 @@ create table Supervisor_years (
 
 create table Supervisor_Domains (
     supervisor_id char(13) not null,
-    domain varchar(30) not null check (domain in ('Natural Language Processing', 'Machine Learning and Arrificial Intelligence')),
+    domain varchar(50) not null check (domain in ('Natural Language Processing', 'Machine Learning and Arrificial Intelligence')),
     primary key (supervisor_id, domain),
     foreign key (supervisor_id) references Supervisor(supervisor_id) on update cascade on delete cascade
 );

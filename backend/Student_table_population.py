@@ -1,7 +1,8 @@
 import mysql.connector
 from mysql.connector import errorcode 
 import config 
-from inserts import * 
+# from inserts import * 
+from backend import inserts
 import csv
 
 def show_tables(c):
@@ -53,6 +54,6 @@ with open("datasets/Student.csv", mode='r') as file:
             'outgoing_year' : year
         }
 
-        cnx_cursor.execute(insert_student, student_data)
+        cnx_cursor.execute(inserts.insert_student, student_data)
 
 cnx.close()

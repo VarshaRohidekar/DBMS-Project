@@ -1,7 +1,8 @@
 import mysql.connector
 from mysql.connector import errorcode 
 import config 
-from inserts import * 
+# from inserts import * 
+from backend import inserts
 import csv
 
 def show_tables(c):
@@ -40,6 +41,6 @@ with open("datasets/Teacher.csv", mode='r') as file:
             'cabin_no' : cabin_no
         }
 
-        cnx_cursor.execute(insert_teacher, teacher_data)
+        cnx_cursor.execute(inserts.insert_teacher, teacher_data)
 
 cnx.close()
