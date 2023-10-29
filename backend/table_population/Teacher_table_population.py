@@ -1,25 +1,20 @@
 import mysql.connector
 from mysql.connector import errorcode 
-import config 
-from inserts import * 
+import sys
+import os 
+queries_path = os.path.abspath("../queries")
+sys.path.append(queries_path)
+backend_path = os.path.abspath("../../backend")
+sys.path.append(backend_path)
+# from inserts import * 
+import inserts
+import config
 import csv
 
 def show_tables(c):
     c.execute("show tables")
     for x in c:
         print(x)
-    return
-
-def display_table_contents(c, table_name):
-    # print(table_name)
-    try:    
-        result = c.execute("SELECT * FROM " + table_name)
-    except:
-        print("unable to execute")
-    else:
-        rows = c.fetchall()
-        for row in rows:
-            print(row)
     return
 
 try:
@@ -38,15 +33,20 @@ else:
 cnx_cursor = cnx.cursor()
 show_tables(cnx_cursor)
 
-with open("datasets/Admin.csv", mode='r') as file:
+with open("../datasets/Teacher.csv", mode='r') as file:
     csvfile = csv.reader(file)
     
-    for (admin_id,pswd,email) in csvfile:
-        admin_data = {
-            'admin_id' : admin_id,
+    for (teacher_id, fname, lname, email, floor, cabin_no, pswd) in csvfile:
+        teacher_data = {
+            'teacher_id' : teacher_id,
             'pswd' : pswd,
-            'email' : email
+            'Fname' : fname,
+            'Lname' : lname,
+            'email' : email,
+            'floor' : floor,
+            'cabin_no' : cabin_no
         }
-        cnx_cursor.execute(insert_admin, admin_data)
+
+        cnx_cursor.execute(inserts.insert_teacher, teacher_data)
 
 cnx.close()

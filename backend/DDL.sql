@@ -38,10 +38,10 @@ create table Admin (
 );
 
 create table Team (
-    team_id char(10) primary key
+    team_id int primary key auto_increment
 );
 
-alter table Student add team_id char(10);
+alter table Student add team_id int;
 alter table Student add foreign key (team_id) references Team(team_id) on update cascade on delete set null;
 
 /* 
@@ -79,8 +79,8 @@ create table Supervisor_Domains (
 /* for a supervisor id being 0000000000000, return value 'this supervisor is no longer available' */
 
 create table Request (
-    request_id char(10) primary key,
-    team_id char(10) not null,
+    request_id int primary key auto_increment,
+    team_id int not null,
     supervisor_id char(13) not null default '0000000000000',
     interested_domain varchar(30) not null,
     idea varchar(140),
@@ -93,8 +93,8 @@ create table Request (
 /* an accepted request from the student's side should be used to create the project entry*/
 
 create table Project (
-    project_id char(10) primary key,
-    team_id char(10) not null,
+    project_id int primary key auto_increment,
+    team_id int not null,
     supervisor_id char(13) not null,
     start_d date,
     end_d date,
@@ -106,7 +106,7 @@ create table Project (
 );
 
 create table Review (
-    project_id char(10),
+    project_id int,
     phase int check (phase in (1,2,3)),
     grade char(1) check (grade in ('S', 'A', 'B', 'C', 'D', 'E', 'F')),
     primary key (project_id, phase),
@@ -114,7 +114,7 @@ create table Review (
 );
 
 create table Reviewed_by (
-    project_id char(10),
+    project_id int,
     phase int check(phase in (1,2,3)),
     reviewer_id char(13) not null,
     feedback varchar(100) not null,
@@ -124,10 +124,21 @@ create table Reviewed_by (
 );
 
 create table Document (
-    project_id char(10),
+    project_id int,
     phase int check(phase in (1,2,3)),
     dname varchar(20) not null,
     dfile blob not null,
     primary key(project_id, phase),
     foreign key (project_id) references Project(project_id)
 );
+
+-- create table latest_id (
+--     table_name varchar(20) primary key check (table_name in ('Team', 'Request', 'Project')),
+--     last_id char(10) not null
+-- );
+
+
+-- /*  setting base values for request ids  */
+-- insert into latest_id values ('Team', '0000000000');
+-- insert into latest_id values ('Request', '0000000000');
+-- insert into latest_id values ('Project', '0000000000');

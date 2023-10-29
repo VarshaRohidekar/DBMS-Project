@@ -1,8 +1,15 @@
 import mysql.connector
 from mysql.connector import errorcode 
-import config 
+# from backend.config import config 
+import sys
+import os 
+queries_path = os.path.abspath("../queries")
+sys.path.append(queries_path)
+backend_path = os.path.abspath("../../backend")
+sys.path.append(backend_path)
 # from inserts import * 
-from backend import inserts
+import inserts
+import config
 import csv
 
 def show_tables(c):
@@ -39,7 +46,7 @@ else:
 cnx_cursor = cnx.cursor()
 show_tables(cnx_cursor)
 
-with open("datasets/Student.csv", mode='r') as file:
+with open("../datasets/Student.csv", mode='r') as file:
     csvfile = csv.reader(file)
     
     for (srn, fname, lname, sem, pswd, cgpa, year, email) in csvfile:

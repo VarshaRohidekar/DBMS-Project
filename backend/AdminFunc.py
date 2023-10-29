@@ -1,6 +1,12 @@
 import mysql.connector
 from mysql.connector import errorcode 
-from backend import config, selects
+from backend import config
+import sys
+import os 
+queries_path = os.path.abspath("queries/selects.py")
+sys.path.append(queries_path)
+# import selects
+# from queries.selects import *
 
 
 # returning hasTeam and hasResume values in the get_student_details function itself
@@ -35,7 +41,8 @@ def get_admin_details(id):
 def get_student_details(semester):
     global cnx
     cnx_cursor = cnx.cursor()
-    result = cnx_cursor.execute(selects.select_students, {'sem': semester})
+    # result = cnx_cursor.execute(selects.select_students, {'sem': semester})
+    result = cnx_cursor.execute(select_students, {'sem': semester})
     data = cnx_cursor.fetchall()
     column_names = [desc[0] for desc in cnx_cursor.description]
     
@@ -44,7 +51,8 @@ def get_student_details(semester):
 def get_teacher_details():
     global cnx
     cnx_cursor = cnx.cursor()
-    result = cnx_cursor.execute(selects.select_teachers)
+    # result = cnx_cursor.execute(selects.select_teachers)
+    result = cnx_cursor.execute(select_teachers)
     data = cnx_cursor.fetchall()
     column_names = [desc[0] for desc in cnx_cursor.description]
    

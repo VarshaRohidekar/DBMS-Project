@@ -1,8 +1,14 @@
 import mysql.connector
 from mysql.connector import errorcode 
-import config 
-# from inserts import *
-from backend import inserts
+import sys
+import os 
+queries_path = os.path.abspath("../queries")
+sys.path.append(queries_path)
+backend_path = os.path.abspath("../../backend")
+sys.path.append(backend_path)
+# from inserts import * 
+import inserts
+import config
 
 supervisor_info = [['T1ZXCVBNM7890',[2025], 4, 2, ['Natural Language Processing']], ['TQWERTYUIOP67', [2025], 4, 0, ['Machine Learning and Arrificial Intelligence']], ['TQRSTUVWX8901', [2024, 2025], 6, 3, ['Natural Language Processing', 'Machine Learning and Arrificial Intelligence'] ]]
 
