@@ -8,23 +8,35 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Dashboard</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
+            <button id="toggleDashboard" class="btn btn-secondary custom-button">Toggle Dashboard</button>
+            <a class="navbar-brand" href="#">Dashboard</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
     </nav>
     
     <div class="dashboard" id="dashboard">
         <ul>
             <li>Home</li> 
             <li>About</li>
+            <li>Teacher Section </li>
+            <li>Student Section </li>
         </ul>
         <button id="admin-dashboard-x"> x </button>
     </div>
     
     <!-- "Toggle Dashboard" button outside of the sidebar -->
-    <button id="toggleDashboard" class="btn btn-secondary custom-button">Toggle Dashboard</button>
     <div>
         <p> Admin page </p>
         <p> Admin ID: {{ admin_id }}, email: {{ email }}  </p>
+    </div>
+    <div>
+        
     </div>
     <script>
         const dashboard = document.getElementById('dashboard');

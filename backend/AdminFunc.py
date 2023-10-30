@@ -6,7 +6,7 @@ import os
 queries_path = os.path.abspath("queries/selects.py")
 sys.path.append(queries_path)
 # import selects
-# from queries.selects import *
+# from queries.selects import * 
 
 
 # returning hasTeam and hasResume values in the get_student_details function itself

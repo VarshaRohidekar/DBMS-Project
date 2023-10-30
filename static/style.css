@@ -1,8 +1,35 @@
 /* Navbar style */
 .navbar {
-    background-color: #3498db;
+    background-color: #83acc7;
     min-height: 60px; /* Adjust the navbar's minimum height as needed */
     margin-bottom: 10px; /* Add a margin to separate it from the content below */
+    display:flex;
+}
+
+.navbar-div {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.navbar-brand {
+    position: relative;
+    /* align-self: center; */
+    left: 50%
+    /* text-align: center; */
+}
+
+.logout-link {
+    position: relative;
+    right: 10px;
+}
+
+#admin-logout {
+    display:block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
 }
 
 /* Dashboard sidebar style */
