@@ -5,6 +5,7 @@ app.secret_key = 'dbms'
 from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc
 import pandas as pd
 from backend import config
+import os
 # A simple dictionary to store user data (replace with a proper database)
 
 # users = {
@@ -76,6 +77,7 @@ def login():
 def studentprofile(username):
     first_name, last_name, email, outgoing_year, cgpa, semester, teamEligibility, hasTeam, hasResume = StudentDashboardFunc.get_student_details(username)
     
+    resume_link = url_for("showresume", username=username)
     # if teamEligibility:
     #     # needs to redirect to 2 different pages depending upon state of team formation
     #     if hasTeam:
@@ -85,7 +87,7 @@ def studentprofile(username):
     
     # else:
     #     return None
-    
+    print(url_for("showresume", username=username))
     if request.method == 'POST':
         # First name, last name, SRN, CGPA ,Semester and email, upload resume, current YEAR/Batch.
         # If student not in team -> button to create a team (only for 3rd years)
@@ -95,9 +97,25 @@ def studentprofile(username):
         # Batch -> Outgoing Year 
         # user['email'] = request.form.get('email')
         # user['bio'] = request.form.get('bio')
-        return "Profile updated successfully."
-    return render_template('studentprofile.html', username=username, first_name=first_name, last_name=last_name, email_id=email,outgoing_year=outgoing_year,cgpa=cgpa,semester=semester, hasResume=hasResume, teamEligibility = teamEligibility, hasTeam=hasTeam)
+        for field, data in request.files.items():
+            print("file recieved")
+            print(field)
+            print(data.stream.read())
+            StudentDashboardFunc.insert_file(username, data.stream)
+        # resume = form['resume']
+        # if resume:
+        #     print(resume)
+        # else:
+        #     print("no resume")
+        
+        # return "Profile updated successfully."
+    return render_template('studentprofile.html', username=username, first_name=first_name, last_name=last_name, email_id=email,outgoing_year=outgoing_year,cgpa=cgpa,semester=semester, hasResume=hasResume, teamEligibility = teamEligibility, hasTeam=hasTeam, resume_page = resume_link)
 
+@app.route('/studentprofile/<username>/resume', methods = ['GET', 'POST'])
+def showresume(username):
+    
+    print("reached resume")
+    return render_template('resume.html', username=username)
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
 def teacherprofile(username):
