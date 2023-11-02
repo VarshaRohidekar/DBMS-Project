@@ -15,3 +15,5 @@ insert_supervisor_years = """INSERT INTO Supervisor_years (supervisor_id, batch)
 
 insert_supervisor_domain = """INSERT INTO Supervisor_Domains (supervisor_id, domain)
                               VALUES (%(supervisor_id)s, %(domain)s)"""
+                              
+insert_team = """INSERT INTO Team (team_name) VALUES (%(teamName)s)"""

@@ -38,7 +38,8 @@ create table Admin (
 );
 
 create table Team (
-    team_id int primary key auto_increment
+    team_id int primary key auto_increment,
+    team_name varchar(20) not null
 );
 
 alter table Student add team_id int;

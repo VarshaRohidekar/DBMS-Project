@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for,session,jso
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
-from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc
+from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc
 import pandas as pd
 from backend import config
 import os
