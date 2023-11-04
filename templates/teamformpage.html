@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Team Formation Form</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Team Formation Form</h1>
-    <form action="{{to_check}}" method="POST">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
+        <a class="navbar-brand" href="#" style=align-items:center;color:aqua>Team Form Page</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style=color:aqua>Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div>
 
-        <label for="TeamName">Team_Name(Max 20 characters)</label>
-        <input type="text" id="TeamName" name="TeamName" required><br><br>
-        
-        <label for="srn1">SRN-1:</label>
-        <input type="text" id="srn1" name="srn1" required><br><br>
-        
-        <label for="srn2">SRN-2:</label>
-        <input type="text" id="srn2" name="srn2" required><br><br>
-        
-        <label for="srn3">SRN-3:</label>
-        <input type="text" id="srn3" name="srn3" required><br><br>
-        
-        <label for="srn4">SRN-4:</label>
-        <input type="text" id="srn4" name="srn4" required><br><br>
-
-        <input type="submit" value="Create Team">
-    </form>
+        <h1>Team Formation Form</h1>
+        <form action="{{to_check}}" method="POST">
+            
+            <label for="TeamName">Team_Name(Max 20 characters)</label>
+            <input type="text" id="TeamName" name="TeamName" required><br><br>
+            
+            <label for="srn1">SRN-1:</label>
+            <input type="text" id="srn1" name="srn1" required><br><br>
+            
+            <label for="srn2">SRN-2:</label>
+            <input type="text" id="srn2" name="srn2" required><br><br>
+            
+            <label for="srn3">SRN-3:</label>
+            <input type="text" id="srn3" name="srn3" required><br><br>
+            
+            <label for="srn4">SRN-4:</label>
+            <input type="text" id="srn4" name="srn4" required><br><br>
+            
+            <input type="submit" value="Create Team">
+        </form>
+    </div>
 </body>
 </html>

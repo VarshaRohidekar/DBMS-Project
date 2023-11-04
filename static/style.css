@@ -52,6 +52,7 @@
     top: 10px; /* Adjust the top value to move the button down as needed */
     left: 10px; /* Adjust the left position as needed */
     z-index: 0;
+    color: aqua;
 
     
 }
