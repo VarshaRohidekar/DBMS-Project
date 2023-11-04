@@ -71,4 +71,4 @@ def get_requests(team_id):
     
     return
 
-team_info(10)
+team_info(3)
