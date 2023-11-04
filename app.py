@@ -136,9 +136,8 @@ def teamformpage():
         value = TeamFormFunc.validate_team(srn1,srn2,srn3,srn4)
         if value==True:
             (i,teamid)=TeamFormFunc.add_team(srn1,srn2,srn3,srn4,TeamName)
-            # if i==True:
-                
-
+            if i==True:
+                return redirect(url_for('teampage', team_id=teamid))
     return render_template('teamformpage.html')
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
