@@ -85,6 +85,7 @@ create table Request (
     supervisor_id char(13) not null default '0000000000000',
     interested_domain varchar(30) not null,
     idea varchar(140),
+    req_status int not null check(req_status in (-1, 0, 1)),
     constraint team_id_ref foreign key (team_id) references Team(team_id) 
             on update cascade on delete cascade,
     constraint super_id_ref foreign key (supervisor_id) references Supervisor(supervisor_id)

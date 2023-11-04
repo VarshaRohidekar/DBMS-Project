@@ -46,10 +46,10 @@ def team_info(team_id):
     for row in rows:
         print(row)   
     
-    return (team_id, team_name, hasProject)
+    return (team_id, team_name, rows, hasProject)
 
 
-def get_requests():
+def get_requests(team_id):
     
     try:
         cnx = mysql.connector.connect(**config.config)
