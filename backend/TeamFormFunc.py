@@ -9,8 +9,8 @@ or should verification be done in the create function
 
 import mysql.connector
 from mysql.connector import errorcode 
-from backend import config
-# import config
+# from backend import config
+import config
 import sys
 import os 
 queries_path = os.path.abspath("queries/inserts.py")

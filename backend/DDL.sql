@@ -101,7 +101,7 @@ create table Project (
     start_d date,
     end_d date,
     cur_phase int not null check(cur_phase in(1,2,3)),
-    domain varchar(30) not null,
+    domain varchar(50) not null,
     problem_statement varchar(140) not null,
     foreign key(team_id) references Team(team_id),
     foreign key(supervisor_id) references Supervisor(supervisor_id)
