@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}">Return to Team Page</a>
+                </li>
             </ul>
         </div>
     </nav>

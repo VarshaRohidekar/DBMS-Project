@@ -4,6 +4,22 @@
     <title>Status of Project</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .box {
+            width: 32%; /* Adjust the width as needed */
+            height: 700px; /* Adjust the height as needed */
+            border: 3px solid #000;
+            text-align: center;
+            display: inline-block;
+            /* margin: 5px; */
+            padding: 0px;
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 5px;
+            margin-right: 5px;
+            background-color: #ffffff;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
@@ -12,7 +28,6 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}">Home</a>
-
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}">Return to Team Page</a>
@@ -20,3 +35,20 @@
             </ul>
         </div>
     </nav>
+
+    <div class="box">
+        <h3>PHASE 1 - SEMESTER 6</h3>
+        <input type="checkbox" id="phase1Checkbox" name="phase1Checkbox">
+    </div>
+
+    <div class="box">
+        <h3>PHASE 2 - SEMESTER 7</h3>
+        <input type="checkbox" id="phase2Checkbox" name="phase2Checkbox">
+    </div>
+
+    <div class="box">
+        <h3>PHASE 3 - SEMESTER 8</h3>
+        <input type="checkbox" id="phase3Checkbox" name="phase3Checkbox">
+    </div>
+</body>
+</html>
