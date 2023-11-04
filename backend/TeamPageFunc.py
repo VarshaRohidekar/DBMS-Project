@@ -1,13 +1,13 @@
 import mysql.connector
 from mysql.connector import errorcode 
-# from backend import config
-import config
+from backend import config
+# import config
 import sys
 import os 
-queries_path = os.path.abspath("queries")
+queries_path = os.path.abspath("queries/selects.py")
 sys.path.append(queries_path)
 # from queries.inserts import insert_team
-from selects import *
+# from selects import *
 
 def team_info(team_id):
 
@@ -28,7 +28,9 @@ def team_info(team_id):
     cnx_cursor.execute("""SELECT * FROM Team WHERE team_id=%(team_id)s""", {'team_id':team_id})
     (team_id, team_name) = cnx_cursor.fetchone()
     
-    cnx_cursor.execute(select_team_members, {'team_id':team_id})
+    cnx_cursor.execute("""SELECT srn, Fname, Lname, cgpa
+                         FROM Student
+                         WHERE team_id=%(team_id)s""", {'team_id':team_id})
     rows = cnx_cursor.fetchall()
     
     cnx_cursor.execute("""SELECT project_id FROM Project WHERE team_id=%(team_id)s""", {'team_id': team_id})
@@ -44,7 +46,8 @@ def team_info(team_id):
     for row in rows:
         print(row)   
     
-    return 
+    return (team_id, team_name, hasProject)
+
 
 def get_requests():
     

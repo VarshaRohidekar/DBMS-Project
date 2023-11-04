@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for,session,jso
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
-from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc
+from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc
 import pandas as pd
 from backend import config
 import os
@@ -139,6 +139,15 @@ def teamformpage():
             if i==True:
                 return redirect(url_for('teampage', team_id=teamid))
     return render_template('teamformpage.html')
+
+@app.route('/teampage/<team_id>', methods=["GET", "POST"])
+def teampage(team_id):
+    
+    (team_id, team_name, hasProject) = TeamPageFunc.team_info(team_id)
+    
+    
+    return render_template('teampage.html', team_id=team_id, team_name=team_name)
+
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
 def teacherprofile(username):
