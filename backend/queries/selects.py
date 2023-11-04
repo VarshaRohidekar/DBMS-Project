@@ -9,6 +9,6 @@ select_pending_requests = """SELECT *
                              FROM Request
                              WHERE supervisor_id = %(id)s"""
                              
-select_team_members = """SELECT srn, Fname, Lname, cpga
+select_team_members = """SELECT srn, Fname, Lname, cgpa
                          FROM Student
                          WHERE team_id=%(team_id)s"""
