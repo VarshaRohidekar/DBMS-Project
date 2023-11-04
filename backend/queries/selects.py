@@ -8,3 +8,7 @@ select_teachers = """SELECT teacher_id, Fname, Lname, email, floor, cabin_no
 select_pending_requests = """SELECT *
                              FROM Request
                              WHERE supervisor_id = %(id)s"""
+                             
+select_team_members = """SELECT srn, Fname, Lname, cpga
+                         FROM Student
+                         WHERE team_id=%(team_id)s"""

@@ -10,6 +10,7 @@ or should verification be done in the create function
 import mysql.connector
 from mysql.connector import errorcode 
 from backend import config
+# import config
 import sys
 import os 
 queries_path = os.path.abspath("queries/inserts.py")
@@ -37,7 +38,7 @@ def validate_team(srn1, srn2, srn3, srn4):
         'srn3':srn3,
         'srn4':srn4
     }
-    cnx_cursor.execute("""SELECT srn FROM Student WHERE srn in (%(srn1)s, %(srn2)s, %(srn3)s, %(srn4)s) and team_id is NULL""", data)
+    cnx_cursor.execute("""SELECT srn FROM Student WHERE srn in (%(srn1)s, %(srn2)s, %(srn3)s, %(srn4)s) and team_id is NULL and semester>=5""", data)
     srns = cnx_cursor.fetchall()
     cnx.close()
     
@@ -66,10 +67,11 @@ def add_team(srn1, srn2, srn3, srn4, teamName):
         
     cnx_cursor = cnx.cursor()
     try:
-        cnx_cursor.execute(insert_team, {'teamName': teamName})
+        cnx_cursor.execute("""INSERT INTO Team (team_name) VALUES (%(teamName)s)""", {'teamName': teamName})
         # cnx_cursor.execute(selects.select_team_id, {'teamName': teamName})
         # team_id = cnx_cursor.fetchone()[0]
         team_id = cnx_cursor.lastrowid
+        print(team_id)
         info = {
             'team_id': team_id,
             'srn1': srn1,
@@ -86,11 +88,11 @@ def add_team(srn1, srn2, srn3, srn4, teamName):
     except:
         # need to handle these errors properly
         
-        return False 
+        return (False, None) 
     else:
-        return True
+        return (True, team_id)
 
 
-#add_team('PES1UG04MVE50', 'PES1UG0K93E04', 'PES1UG0W9A363', 'PES1UG0Z51234', 'trialTeam')
-# v = validate_team('PES1UG04MVE50', 'PES1UG0K93E04', 'PES1UG0W9A363', 'PES1UG0Z51234')
-# print(v)
+add_team('PES1UG04MVE50', 'PES1UG0K93E04', 'PES1UG0W9A363', 'PES1UG0Z51234', 'trialTeam')
+v = validate_team('PES1UG04MVE50', 'PES1UG0K93E04', 'PES1UG0W9A363', 'PES1UG0Z51234')
+print(v)
