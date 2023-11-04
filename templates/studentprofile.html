@@ -61,9 +61,8 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Upload Resume</button>
             </div>
-
+            
         </form>
-
         {% endif%}
 
         {% if teamEligibility %}
@@ -73,7 +72,7 @@
             {% endif %}
 
             {% if not hasTeam%}
-                <p> link to create team form </p>
+                <a href="/teamformpage">Create Team</a>
             {% endif %}
         </div>
         {% endif %}

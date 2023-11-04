@@ -1,12 +1,12 @@
 import mysql.connector
 from mysql.connector import errorcode 
-from config import *
+import config
 from queries import selects
 
 def get_requests(supervisor_id):
     
     try:
-        cnx = mysql.connector.connect(**config)
+        cnx = mysql.connector.connect(**config.config)
 
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:

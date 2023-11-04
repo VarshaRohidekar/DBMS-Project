@@ -7,7 +7,7 @@ queries_path = os.path.abspath("../queries")
 sys.path.append(queries_path)
 backend_path = os.path.abspath("../../backend")
 sys.path.append(backend_path)
-# from inserts import * 
+# from queriesinserts import * 
 import inserts
 import config
 import csv

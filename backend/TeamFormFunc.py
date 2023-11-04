@@ -15,7 +15,8 @@ import sys
 import os 
 queries_path = os.path.abspath("queries/inserts.py")
 sys.path.append(queries_path)
-# from queries.inserts import insert_team
+# from inserts import insert_team
+
 
 def validate_team(srn1, srn2, srn3, srn4):
     try:

@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import errorcode 
-from config import *
+import config
 
 def get_available_supervisors():
     

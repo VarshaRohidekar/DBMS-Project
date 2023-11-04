@@ -77,6 +77,8 @@ def login():
 def studentprofile(username):
     first_name, last_name, email, outgoing_year, cgpa, semester, teamEligibility, hasTeam, hasResume = StudentDashboardFunc.get_student_details(username)
     
+
+
     resume_link = url_for("showresume", username=username)
     # if teamEligibility:
     #     # needs to redirect to 2 different pages depending upon state of team formation
@@ -116,6 +118,22 @@ def showresume(username):
     
     print("reached resume")
     return render_template('resume.html', username=username)
+
+
+@app.route('/teamformpage', methods=['GET','POST'])
+def teamformpage():
+    if request.method=="POST":
+        srn1 = request.form.get('srn1')
+        srn2 = request.form.get('srn2')
+        srn3 = request.form.get('srn3')
+        srn4 = request.form.get('srn4')
+
+        print(srn1)
+        print(srn2)
+        print(srn3)
+        print(srn4)
+    
+    return render_template('teamformpage.html')
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
 def teacherprofile(username):
@@ -165,5 +183,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,port='3005',host="127.0.0.1")
+    app.run(debug=True,port='3000',host="127.0.0.1")
 
