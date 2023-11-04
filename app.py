@@ -155,6 +155,11 @@ def teampage(team_id, srn):
     return render_template('teampage.html', team_id=team_id, team_name=team_name, srn=srn, rows=rows, cols=cols)
 
 
+@app.route('/teampage/<team_id>/<srn>/requestsform', methods=["GET", "POST"])
+def requestsform(team_id,srn):
+    return render_template('requestsform.html', team_id=team_id,srn=srn)
+
+
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
 def teacherprofile(username):
     # user = users.get(username)
@@ -203,5 +208,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,port='3005',host="127.0.0.1")
+    app.run(debug=True,port='8080',host="127.0.0.1")
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
+        <a class="navbar-brand" href="#">Request Page</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}">Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <label for="supervisorSelect">Select Supervisor:</label>
+    <select id="supervisorSelect">
+        
+    </select>
+
+    <div id="supervisorDetails">
+    </div>
+
+    <button id="addSupervisorButton">Add Supervisor</button>
+
+    <div id="addSupervisorForm" style="display: none;">
+        <h2>Add Supervisor</h2>
+        <form id="supervisorForm">
+            <label for="domain">Interested Domain:</label>
+            <input type="text" id="domain" name="domain" required><br>
+
+            <label for="supervisorName">Supervisor Name:</label>
+            <input type="text" id="supervisorName" name="supervisorName" required><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("addSupervisorButton").addEventListener("click", function() {
+            var addSupervisorForm = document.getElementById("addSupervisorForm");
+            addSupervisorForm.style.display = addSupervisorForm.style.display === "none" ? "block" : "none";
+        });
+
+        document.getElementById("supervisorForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var domain = document.getElementById("domain").value;
+            var supervisorName = document.getElementById("supervisorName").value;
+
+            document.getElementById("domain").value = "";
+            document.getElementById("supervisorName").value = "";
+        });
+
+        document.getElementById("supervisorSelect").addEventListener("change", function() {
+            var selectedSupervisor = document.getElementById("supervisorSelect").value;
+            var supervisorDetails = document.getElementById("supervisorDetails");
+
+            supervisorDetails.innerHTML = "Selected Supervisor: " + selectedSupervisor;
+        });
+    </script>
+</body>
+</html>

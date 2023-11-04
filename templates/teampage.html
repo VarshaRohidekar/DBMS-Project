@@ -21,31 +21,30 @@
     
     <div class="dashboard" id="dashboard">
         <ul>
-            <li>Make Requests</li> 
+            <li><a href="{{url_for('requestsform',srn=srn,team_id=team_id)}}">Make requests</a></li>
             <li>Request Status</li>
         </ul>
         <button id="admin-dashboard-x"> x </button>
     </div>
     
-    <h1>Team Page - Team {{ team_id }}</h1>
-    <p>Team information for Team {{team_id}}:</p>
-    <p>Team Name : {{team_name}}</p>
+    <h3 style=text-align:center> Welcome, {{team_name}}</h3>
+    <h2 style=text-align:center>TEAM ID : {{ team_id }}</h2>
     
     </div>
-    <div>
-        <table>
+    <div style="text-align: center;">
+        <table style="margin: 0 auto; text-align: left;width: 700px;height: 500px;">
             <thead>
-                <tr>
+                <tr style="border: 1px solid #000;">
                     {% for column in cols %}
-                    <th>{{ column }}</th>
+                    <th style="border: 1px solid #000;">{{ column }}</th>
                     {% endfor %}
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="border: 1px solid #000";>
                 {% for row in rows %}
-                    <tr>
+                    <tr style="border: 1px solid #000;">
                         {% for cell in row %}
-                        <td>{{ cell }}</td>
+                        <td style="border: 1px solid #000;">{{ cell }}</td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
