@@ -94,6 +94,6 @@ def add_team(srn1, srn2, srn3, srn4, teamName):
         return (True, team_id)
 
 
-add_team('PES1UG04MVE50', 'PES1UG0K93E04', 'PES1UG0W9A363', 'PES1UG0Z51234', 'trialTeam')
-v = validate_team('PES1UG04MVE50', 'PES1UG0K93E04', 'PES1UG0W9A363', 'PES1UG0Z51234')
-print(v)
+# add_team('PES1UG04MVE50', 'PES1UG0K93E04', 'PES1UG0W9A363', 'PES1UG0Z51234', 'trialTeam')
+# v = validate_team('PES1UG04MVE50', 'PES1UG0K93E04', 'PES1UG0W9A363', 'PES1UG0Z51234')
+# print(v)

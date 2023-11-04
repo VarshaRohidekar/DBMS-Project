@@ -127,12 +127,18 @@ def teamformpage():
         srn2 = request.form.get('srn2')
         srn3 = request.form.get('srn3')
         srn4 = request.form.get('srn4')
+        TeamName = request.form.get('TeamName')
 
         print(srn1)
         print(srn2)
         print(srn3)
         print(srn4)
-    
+        value = TeamFormFunc.validate_team(srn1,srn2,srn3,srn4)
+        if value==True:
+            (i,teamid)=TeamFormFunc.add_team(srn1,srn2,srn3,srn4,TeamName)
+            # if i==True:
+                
+
     return render_template('teamformpage.html')
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
@@ -183,5 +189,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,port='3000',host="127.0.0.1")
+    app.run(debug=True,port='3001',host="127.0.0.1")
 
