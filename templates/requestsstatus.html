@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Request Status</title>
-    </head>
-</html>
+<head>
+    <title>Status of Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
 <body>
-    <h1>HI</h1>
-</body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
+        <a class="navbar-brand" href="#" style=align-items:center>Status of Project</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}">Home</a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}">Return to Team Page</a>
+                </li>
+            </ul>
+        </div>
+    </nav>

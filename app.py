@@ -160,8 +160,8 @@ def requestsform(team_id,srn):
     return render_template('requestsform.html', team_id=team_id,srn=srn)
 
 @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=["GET", "POST"])
-def requestsstatus(team_id,srn):
-    return render_template('requestsstatus.html', team_id=team_id,srn=srn)
+def requestsstatus(team_id, srn):
+    return render_template('requestsstatus.html', team_id=team_id, srn=srn)
 
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
