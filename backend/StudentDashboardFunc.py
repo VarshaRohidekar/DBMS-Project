@@ -41,7 +41,7 @@ def get_student_details(srn):
         teamEligibility = False
         
     
-    return (first_name, last_name, email, outgoing_year, cgpa, semester, teamEligibility, hasTeam, hasResume)
+    return (first_name, last_name, email, outgoing_year, cgpa, semester, teamEligibility, hasTeam, hasResume, team_id)
 
 def insert_file(username, stream_obj):
     

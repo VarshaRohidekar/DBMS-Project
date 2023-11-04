@@ -68,11 +68,11 @@
         {% if teamEligibility %}
         <div>
             {% if hasTeam %}
-                <p> link to team page </p>
+                <a href="{{url_for('teampage', team_id=team_id, srn=username)}}"> Team Page </a>
             {% endif %}
 
             {% if not hasTeam%}
-                <a href="/teamformpage">Create Team</a>
+                <a href="{{url_for('teamformpage', srn=username)}}">Create Team</a>
             {% endif %}
         </div>
         {% endif %}

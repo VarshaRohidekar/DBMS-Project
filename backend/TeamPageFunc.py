@@ -32,6 +32,7 @@ def team_info(team_id):
                          FROM Student
                          WHERE team_id=%(team_id)s""", {'team_id':team_id})
     rows = cnx_cursor.fetchall()
+    column_names = [desc[0] for desc in cnx_cursor.description]
     
     cnx_cursor.execute("""SELECT project_id FROM Project WHERE team_id=%(team_id)s""", {'team_id': team_id})
     content = cnx_cursor.fetchall()
@@ -46,7 +47,7 @@ def team_info(team_id):
     for row in rows:
         print(row)   
     
-    return (team_id, team_name, rows, hasProject)
+    return (team_id, team_name, rows, column_names, hasProject)
 
 
 def get_requests(team_id):
@@ -71,4 +72,4 @@ def get_requests(team_id):
     
     return
 
-team_info(3)
+# team_info(3)

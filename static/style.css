@@ -52,6 +52,8 @@
     top: 10px; /* Adjust the top value to move the button down as needed */
     left: 10px; /* Adjust the left position as needed */
     z-index: 0;
+
+    
 }
 
 /* Style the sidebar links */
@@ -59,7 +61,7 @@
     padding: 16px;
     text-align: center;
     font-size: 25px;
-    color: #818181;
+    color: #e3e0e0;
     display: block;
     transition: 0.3s;
 }

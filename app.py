@@ -75,7 +75,7 @@ def login():
 # Check whether the person logging in is a teacher/student or admin
 @app.route('/studentprofile/<username>', methods=['GET', 'POST'])
 def studentprofile(username):
-    first_name, last_name, email, outgoing_year, cgpa, semester, teamEligibility, hasTeam, hasResume = StudentDashboardFunc.get_student_details(username)
+    first_name, last_name, email, outgoing_year, cgpa, semester, teamEligibility, hasTeam, hasResume, team_id = StudentDashboardFunc.get_student_details(username)
     
 
 
@@ -111,7 +111,7 @@ def studentprofile(username):
         #     print("no resume")
         
         # return "Profile updated successfully."
-    return render_template('studentprofile.html', username=username, first_name=first_name, last_name=last_name, email_id=email,outgoing_year=outgoing_year,cgpa=cgpa,semester=semester, hasResume=hasResume, teamEligibility = teamEligibility, hasTeam=hasTeam, resume_page = resume_link)
+    return render_template('studentprofile.html', username=username, first_name=first_name, last_name=last_name, email_id=email,outgoing_year=outgoing_year,cgpa=cgpa,semester=semester, hasResume=hasResume, teamEligibility = teamEligibility, hasTeam=hasTeam, resume_page = resume_link, team_id=team_id)
 
 @app.route('/studentprofile/<username>/resume', methods = ['GET', 'POST'])
 def showresume(username):
@@ -120,8 +120,9 @@ def showresume(username):
     return render_template('resume.html', username=username)
 
 
-@app.route('/teamformpage', methods=['GET','POST'])
-def teamformpage():
+@app.route('/teamformpage/<srn>', methods=['GET','POST'])
+def teamformpage(srn):
+    print(url_for('teamformpage', srn=srn))
     if request.method=="POST":
         srn1 = request.form.get('srn1')
         srn2 = request.form.get('srn2')
@@ -135,18 +136,23 @@ def teamformpage():
         print(srn4)
         value = TeamFormFunc.validate_team(srn1,srn2,srn3,srn4)
         if value==True:
+            print("Team valid")
             (i,teamid)=TeamFormFunc.add_team(srn1,srn2,srn3,srn4,TeamName)
             if i==True:
-                return redirect(url_for('teampage', team_id=teamid))
-    return render_template('teamformpage.html')
+                print("Team formed")
+                return redirect(url_for('teampage', team_id=teamid, srn=srn))
+        if value==False:
+            print("Team not valid")
+            # return render
+    return render_template('teamformpage.html', to_check=url_for('teamformpage', srn=srn))
 
-@app.route('/teampage/<team_id>', methods=["GET", "POST"])
-def teampage(team_id):
+@app.route('/teampage/<team_id>/<srn>', methods=["GET", "POST"])
+def teampage(team_id, srn):
+    print(srn)
+    (team_id, team_name, rows, cols, hasProject) = TeamPageFunc.team_info(team_id)
     
-    (team_id, team_name, hasProject) = TeamPageFunc.team_info(team_id)
     
-    
-    return render_template('teampage.html', team_id=team_id, team_name=team_name)
+    return render_template('teampage.html', team_id=team_id, team_name=team_name, srn=srn, rows=rows, cols=cols)
 
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
@@ -197,5 +203,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,port='3001',host="127.0.0.1")
+    app.run(debug=True,port='3005',host="127.0.0.1")
 
