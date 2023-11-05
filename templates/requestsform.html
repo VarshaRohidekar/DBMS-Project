@@ -101,7 +101,7 @@
 
     <div id="addSupervisorForm" style="display: none;">
         <h2>Add Supervisor</h2>
-        <form id="supervisorForm">
+        <form method="POST">
             <label for="domain">Interested Domain:</label>
             <input type="text" id="domain" name="domain" required><br>
 
@@ -127,7 +127,8 @@
             document.getElementById("domain").value = "";
             document.getElementById("supervisorName").value = "";
         });
-
+        // print(domain)
+        // print(supervisorName)
         document.getElementById("supervisorSelect").addEventListener("change", function() {
             var selectedSupervisor = document.getElementById("supervisorSelect").value;
             var supervisorDetails = document.getElementById("supervisorDetails");

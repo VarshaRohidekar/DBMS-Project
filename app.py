@@ -2,10 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for,session,jso
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
-from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc, ProjectPageFunc, RequestFormFunc
+from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc, ProjectPageFunc, RequestFormFunc, SupervisorFunc
 import pandas as pd
 from backend import config
 import os
+import json
 # A simple dictionary to store user data (replace with a proper database)
 
 # users = {
@@ -159,13 +160,19 @@ def teampage(team_id, srn):
 
 @app.route('/teampage/<team_id>/<srn>/requestsform', methods=["GET", "POST"])
 def requestsform(team_id,srn):
+    domain=""
+    supervisorName=""
+    if request.method=='POST':
+        domain = request.form.get('domain')
+        supervisorName = request.form.get('supervisorName')
+    # print(domain)
+    # print(supervisorName)
     teachers = RequestFormFunc.get_available_supervisors()
-    return render_template('requestsform.html', team_id=team_id,srn=srn, teachers=teachers)
+    return render_template('requestsform.html', team_id=team_id,srn=srn, teachers=teachers,domain=domain,supervisorName=supervisorName)
 
 @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=["GET", "POST"])
 def requestsstatus(team_id, srn):
     return render_template('requestsstatus.html', team_id=team_id, srn=srn)
-
 
 @app.route('/teampage/<team_id>/<srn>/reviewpage', methods=["GET", "POST"])
 def reviewpage(team_id, srn):
@@ -175,12 +182,64 @@ def reviewpage(team_id, srn):
 def project(team_id, srn):
     project_id,team_id,problem_statement, domain, start_d, end_d, cur_phase = ProjectPageFunc.display_projectdetails(team_id)
     return render_template('project.html', project_id=project_id,team_id=team_id, srn=srn,problem_statement=problem_statement,domain=domain,start_d=start_d,end_d=end_d,cur_phase=cur_phase)
+
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
 def teacherprofile(username):
     # user = users.get(username)
+    isSupervisor = TeacherDashboardFunc.is_Supervisor(username)
+    requestslink = url_for('viewrequests', username=username)
     first_name,last_name,email = TeacherDashboardFunc.get_teacher_details(username)
     print(first_name,last_name,email)
-    return render_template('teacherprofile.html', username=username, first_name=first_name,last_name=last_name,email_id=email)
+    return render_template('teacherprofile.html', username=username, first_name=first_name,last_name=last_name,email_id=email, isSupervisor=isSupervisor, requestslink=requestslink)
+
+# @app.route('/teacherprofile/<username>/viewrequests', methods=['GET', 'POST'])
+# def viewrequests(username):
+#     content = SupervisorFunc.get_requests(username)
+#     print(content)
+#     request_id = content[0][0]
+#     team_id=content[0][1]
+#     interested_domain=content[0][2]
+#     idea = content[0][3]
+#     req_status=content[0][4]
+#     team_info = TeamPageFunc.team_info(team_id)
+#     # print(team_info)
+#     return render_template('viewrequests.html', username=username, content=content, request_id=request_id,team_id=team_id,interested_domain=interested_domain,idea=idea,team_info=team_info,req_status=req_status)
+
+@app.route('/teacherprofile/<username>/viewrequests', methods=['GET', 'POST'])
+def viewrequests(username):
+    content = SupervisorFunc.get_requests(username)
+    requests = []
+
+    for request in content:
+        # Extract relevant information from the request
+        request_id = request[0]
+        team_id = request[1]
+        interested_domain = request[2]
+        idea = request[3]
+        req_status = request[4]
+
+        team_info = TeamPageFunc.team_info(team_id)
+        print(team_info)
+        requests.append({
+            'request_id': request_id,
+            'team_id': team_id,
+            'interested_domain': interested_domain,
+            'idea': idea,
+            'req_status': req_status,
+            'team_info': team_info, 
+        })
+
+
+    return render_template('viewrequests.html', username=username, requests=requests)
+
+@app.route('/process_request/<request_id>', methods=["POST"])
+def process_request(request_id):
+
+    # get information from the form
+
+    # call needed functions
+    
+    redirect()
 
 ''' TEACHER PROFILE PAGE '''
 # If a teacher is a supervisor -> modify teacher page to supervisor
@@ -260,5 +319,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,port='8628',host="127.0.0.1")
+    app.run(debug=True,port='8080',host="127.0.0.1")
 

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Requests</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .request-box {
+            border: 2px solid #333;
+            padding: 10px;
+            margin: 0px;
+            cursor: pointer;
+            width: 100%;
+
+            background-color: #f5f5f5;
+        }
+
+        .requests {
+            width: 100%;
+        }
+
+        .team-info-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .team-info-table th, .team-info-table td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .team-info-table th {
+            background-color: rgb(7, 8, 8);
+            color: #ffffff;
+        }
+
+        .team-info-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
+        <a class="navbar-brand" href="#" style="color: aqua">Requests Page</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('teacherprofile', username=username)}}" style="color: aqua">Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="requests">
+            {% for request in requests %}
+                <div class="request-box" id="{{ request.request_id }}">
+                    <p> Team ID: {{ request.team_id }} </p>
+                    <p> Interested Domain: {{ request.interested_domain }} </p>
+                    <p> Idea: {{ request.idea }} </p>
+                    <table class="team-info-table" id="team-info-{{ request.request_id }}">
+                        <tr>
+                            <th>SRN</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>CGPA</th>
+                        </tr>
+                        {% for info in request.team_info[2] %}
+                            <tr>
+                                <td>{{ info[0] }}</td>
+                                <td>{{ info[1] }}</td>
+                                <td>{{ info[2] }}</td>
+                                <td>{{ info[3] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <button class="btn btn-success">Accept</button>
+                    <button class="btn btn-danger">Reject</button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

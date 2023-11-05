@@ -1,7 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode 
-import config
-from queries import selects
+from backend import config
+# from queries import selects
 
 def get_requests(supervisor_id):
     
@@ -20,14 +20,13 @@ def get_requests(supervisor_id):
         
     cnx_cursor = cnx.cursor()
     
-    result = cnx_cursor.execute(selects.select_pending_requests, {'id': supervisor_id})
+    result = cnx_cursor.execute("""SELECT request_id,team_id,interested_domain,idea,req_status
+                             FROM Request
+                             WHERE supervisor_id = %(id)s""", {'id': supervisor_id})
     
     content = cnx_cursor.fetchall()
     cnx.close()
     
-    if content is None:
-        return ()
-    
-    print(content)
+    return content
 
-get_requests()
+# get_requests()

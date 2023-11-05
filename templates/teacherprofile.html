@@ -3,9 +3,35 @@
 <head>
     <title>Teacher Profile Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .body {
+            background-color: #ffffff;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #333;
+        }
+
+        .navbar a {
+            color: aqua;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        h1, h2 {
+            color: rgb(0, 0, 0);
+        }
+
+        p {
+            color: #000000;
+        }
+    </style>
 </head>
 <body class="body">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Teacher Profile</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,8 +39,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome, {{first_name}}</a>
+                    <a class="nav-link" href="#">Welcome, {{ first_name }}</a>
                 </li>
+                {% if isSupervisor %}
+                <li>
+                    <a class="nav-link" href="{{ requestslink }}" style="color: aqua">View Requests</a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
