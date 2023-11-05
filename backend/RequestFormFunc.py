@@ -77,6 +77,8 @@ def get_available_supervisors():
 
 def insert_request(team_id, supervisor_ids, domain, idea):
     
+    
+    print("in request form")
     try:
         cnx = mysql.connector.connect(**config.config)
 
@@ -94,12 +96,18 @@ def insert_request(team_id, supervisor_ids, domain, idea):
     
     supervisor_ids = set(supervisor_ids)
     
+    supervisor_ids = list(supervisor_ids)
+    
     for supervisor in supervisor_ids:
         
         cnx_cursor.execute("""SELECT distinct domain FROM Supervisor_Domains WHERE supervisor_id=%(id)s""", {'id': supervisor})
-        
+        print(supervisor)
         d_list = cnx_cursor.fetchall()
-        if domain in d_list:        
+        print(d_list)
+        l = [i[0] for i in d_list]
+        print(l)
+        if domain in l:      
+            print("executing")  
             cnx_cursor.execute("INSERT INTO Request (team_id, supervisor_id, interested_domain, idea, req_status) VALUES (%(team_id)s, %(supervisor_id)s, %(domain)s, %(idea)s, 0)",
                            {'team_id': team_id, 'supervisor_id': supervisor, 'domain': domain, 'idea': idea})
     

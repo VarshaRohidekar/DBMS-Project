@@ -193,7 +193,7 @@ def reviewpage(team_id, srn):
 @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=['GET', 'POST'])
 def requestsstatus(team_id,srn):
     result = TeamPageFunc.get_requests(team_id)
-    # print(result[0])
+    print(result)
     return render_template('requestsstatus.html',team_id=team_id,srn=srn,result=result)
 
 
