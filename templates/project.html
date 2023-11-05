@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
+        <a class="navbar-brand" href="#" style="color: aqua">Project Page</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('studentprofile', username=srn) }}" style="color: aqua">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('teampage', srn=srn,team_id=team_id) }}" style="color: aqua">Team Page</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Project Details</h1>
+        <p>Problem Statement: {{ problem_statement }}</p>
+        <p>Team ID: {{ team_id }}</p>
+        <p>Team Name: {{ team_name }}</p>
+        <p>Grade: {{ grade }}</p>
+
+        <h2>Documents Submitted</h2>
+        <ul>
+            {% for document in documents %}
+                <li>{{ document }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

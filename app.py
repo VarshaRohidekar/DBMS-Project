@@ -122,7 +122,7 @@ def showresume(username):
 
 @app.route('/teamformpage/<srn>', methods=['GET','POST'])
 def teamformpage(srn):
-    print(url_for('teamformpage', srn=srn))
+    # print(url_for('teamformpage', srn=srn))
     if request.method=="POST":
         srn1 = request.form.get('srn1')
         srn2 = request.form.get('srn2')
@@ -162,6 +162,11 @@ def requestsform(team_id,srn):
 @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=["GET", "POST"])
 def requestsstatus(team_id, srn):
     return render_template('requestsstatus.html', team_id=team_id, srn=srn)
+
+
+@app.route('/teampage/<team_id>/<srn>/project', methods=["GET", "POST"])
+def project(team_id, srn):
+    return render_template('project.html', team_id=team_id, srn=srn)
 
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
