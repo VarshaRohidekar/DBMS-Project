@@ -71,6 +71,10 @@ def login():
 
     return render_template('login.html')
 
+@app.route('/adminprofile/<username>/adminteacher', methods=['GET', 'POST'])
+def adminteacher(username):
+    return render_template('adminteacher',username=username)
+
 
 # Check whether the person logging in is a teacher/student or admin
 @app.route('/studentprofile/<username>', methods=['GET', 'POST'])
@@ -165,12 +169,14 @@ def requestsstatus(team_id, srn):
     return render_template('requestsstatus.html', team_id=team_id, srn=srn)
 
 
+@app.route('/teampage/<team_id>/<srn>/reviewpage', methods=["GET", "POST"])
+def reviewpage(team_id, srn):
+    return render_template('reviewpage.html',team_id=team_id,srn=srn)
+
 @app.route('/teampage/<team_id>/<srn>/project', methods=["GET", "POST"])
 def project(team_id, srn):
     project_id,team_id,problem_statement, domain, start_d, end_d, cur_phase = ProjectPageFunc.display_projectdetails(team_id)
     return render_template('project.html', project_id=project_id,team_id=team_id, srn=srn,problem_statement=problem_statement,domain=domain,start_d=start_d,end_d=end_d,cur_phase=cur_phase)
-
-
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
 def teacherprofile(username):
     # user = users.get(username)
@@ -219,5 +225,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,port='8081',host="127.0.0.1")
+    app.run(debug=True,port='8080',host="127.0.0.1")
 

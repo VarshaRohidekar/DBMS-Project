@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .box {
+            border: 2px solid #333;
+            padding: 10px;
+            width: 30%;
+            margin: 10px;
+        }
+        .reviews {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
+        <a class="navbar-brand" href="#" style="color: aqua">Review Page</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('studentprofile', username=srn) }}" style="color: aqua">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('teampage', srn=srn,team_id=team_id) }}" style="color: aqua">Team Page</a>
+                </li>
+            </ul>
+            <h3 style=color:aqua;align-items:center;>Team {{ team_id }}</h3>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="box">
+            <h2>Phase 1</h2>
+            <button onclick="showReviews('phase_1')">View Reviews</button>
+            <div class="reviews" id="phase_1_reviews">
+                <h3>Reviews for Phase 1</h3>
+                <ul>
+                    <li>Review 1 by Person 1</li>
+                    <li>Review 2 by Person 2</li>
+                    <li>Review 3 by Person 3</li>
+                </ul>
+            </div>
+        </div>
+        <div class="box">
+            <h2>Phase 2</h2>
+            <button onclick="showReviews('phase_2')">View Reviews</button>
+            <div class="reviews" id="phase_2_reviews">
+                <h3>Reviews for Phase 2</h3>
+                <ul>
+                    <li>Review 1 by Person 1</li>
+                    <li>Review 2 by Person 2</li>
+                    <li>Review 3 by Person 3</li>
+                </ul>
+            </div>
+        </div>
+        <div class="box">
+            <h2>Phase 3</h2>
+            <button onclick="showReviews('phase_3')">View Reviews</button>
+            <div class="reviews" id="phase_3_reviews">
+                <h3>Reviews for Phase 3</h3>
+                <ul>
+                    <li>Review 1 by Person 1</li>
+                    <li>Review 2 by Person 2</li>
+                    <li>Review 3 by Person 3</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showReviews(phase) {
+            // Hide all review sections
+            document.querySelectorAll('.reviews').forEach(function(review) {
+                review.style.display = 'none';
+            });
+
+            // Show the selected review section
+            document.getElementById(phase + '_reviews').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
