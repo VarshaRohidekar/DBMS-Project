@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for,session,jso
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
-from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc, ProjectPageFunc, RequestFormFunc
+from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc, ProjectPageFunc, RequestFormFunc, SupervisorFunc
 import pandas as pd
 import json
 from backend import config
@@ -175,7 +175,7 @@ def sendingrequests(team_id, srn):
         data = json.loads(content)
         print(data)
         
-        RequestFormFunc.insert_request(data['team_id'], data['teachers'], data['domain'], data[])
+        RequestFormFunc.insert_request(data['team_id'], data['teachers'], data['domain'], data['idea'])
         # s = json.dumps(data, indent=4, sort_keys=True)
         # print(s)
         # print()
