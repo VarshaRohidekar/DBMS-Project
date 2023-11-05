@@ -4,6 +4,74 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            color: aqua;
+        }
+        .sql-query {
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            text-align: center;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            background-color: #343a40;
+            color: aqua;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: aqua;
+            color: #343a40;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            border: 2px solid #333;
+            margin: 20px auto;
+            background-color: #fff;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #343a40;
+            color: aqua;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
@@ -56,7 +124,7 @@
 
             var domain = document.getElementById("domain").value;
             var supervisorName = document.getElementById("supervisorName").value;
-            var temp = '{{teacher[0]}}'
+
             document.getElementById("domain").value = "";
             document.getElementById("supervisorName").value = "";
         });
@@ -64,7 +132,40 @@
         document.getElementById("supervisorSelect").addEventListener("change", function() {
             var selectedSupervisor = document.getElementById("supervisorSelect").value;
             var supervisorDetails = document.getElementById("supervisorDetails");
-            supervisorDetails.innerHTML = "Selected Supervisor: " + selectedSupervisor;
+            var temp;
+            var domains;
+            var email;
+            var projects;
+            var i=0;
+            {% for teacher in teachers %}
+            if('{{teacher[0]}}'==selectedSupervisor) {
+                    temp={{teacher | tojson}};
+                    domains={{teacher[4] | tojson}};
+                    email='{{teacher[3]}}';
+                    projects={{teacher[5] | tojson }}
+            }
+            i+=1;
+            {% endfor %}
+            var code = `<p> email: ${email} </p> <p> domains: ${domains} </p> <p> Projects: 
+                <table>
+                    <thead>
+                        <tr>
+                            <th> project domain </th>
+                            <th>  problem statement </th>
+                        </tr>
+                    </thead>
+                    <tbody id="projectTableBody">
+                    </tbody>
+                </table>
+            </p>`;
+            supervisorDetails.innerHTML = code;
+            var tableBody = document.getElementById("projectTableBody")
+            var code=``
+            for(let i=0; i<projects.length; i++){
+                code+=`<tr> <td> ${projects[i][0]} </td> <td> ${projects[i][1]} </td>`
+            }
+            tableBody.innerHTML = code
+
         });
     </script>
 </body>
