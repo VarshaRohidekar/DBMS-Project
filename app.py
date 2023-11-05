@@ -160,7 +160,7 @@ def teampage(team_id, srn):
 @app.route('/teampage/<team_id>/<srn>/requestsform', methods=["GET", "POST"])
 def requestsform(team_id,srn):
     teachers = RequestFormFunc.get_available_supervisors()
-    return render_template('temprequestform.html', team_id=team_id,srn=srn, teachers=teachers)
+    return render_template('requestsform.html', team_id=team_id,srn=srn, teachers=teachers)
 
 @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=["GET", "POST"])
 def requestsstatus(team_id, srn):
