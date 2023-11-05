@@ -8,16 +8,14 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            /* display: flex; */
-            /* justify-content: center; */
-            /* align-items: center; */
+            background-color: #ffffff;
             min-height: 100vh;
             margin: 0;
         }
         .navbar {
-            background-color: #343a40;
+            background-color: #ffffff;
         }
+
         .navbar-dark .navbar-nav .nav-link {
             color: aqua;
         }
@@ -25,14 +23,18 @@
             text-align: center;
             padding: 20px;
             background-color: #fff;
-            border: 1px solid #ccc;
+            border: 5px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 600px;
+            max-width: 100%;
+            margin: 0 auto; /* Center the content horizontally */
+            height: 100%;
         }
         form {
             text-align: center;
+            height: 100%;
+            width: 100%;
         }
         label {
             display: block;
@@ -60,7 +62,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            border: 2px solid #333;
+            border: 5px solid #333;
             background-color: #fff;
         }
         th, td {
@@ -76,23 +78,31 @@
             background-color: #f2f2f2;
         }
     </style>
+
+    <style>
+        .navbar-brand {
+            color: aqua;
+        }
+        .nav-link {
+            color: aqua;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#" style="color: aqua;">Request Page</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style="color: aqua;">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}" style="color: aqua;">Return to Team Page</a>
-                    </li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
+        <a class="navbar-brand" href="#" style="align-items: center; color: aqua;">Request Status</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style="color: aqua;">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}" style="color: aqua;">Return to Team Page</a>
+                </li>
+            </ul>
         </div>
     </nav>
+
     
     <div class="sql-query">
         <label for="supervisorSelect">Select Supervisor:</label>

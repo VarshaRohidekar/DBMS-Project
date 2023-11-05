@@ -32,14 +32,14 @@
 </head>
 <body class="body">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Teacher Profile</a>
+        <a class="navbar-brand" href="#" style="color: aqua;">Teacher Profile</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome, {{ first_name }}</a>
+                    <a class="nav-link" href="#" style="color: aqua;">Welcome, {{ first_name }}</a>
                 </li>
                 {% if isSupervisor %}
                 <li>
@@ -47,7 +47,7 @@
                 </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" href="/logout" style="color: aqua;">Logout</a>
                 </li>
             </ul>
         </div>
