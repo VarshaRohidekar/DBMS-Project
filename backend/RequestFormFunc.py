@@ -6,6 +6,28 @@ from datetime import date
 
 # each supervisor's details along some project info
 
+def get_domains():
+
+    try:
+        cnx = mysql.connector.connect(**config.config)
+
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+    else:
+        print("connected to", cnx._database)        #cnx._database -- value of current database
+        
+    cnx_cursor = cnx.cursor()
+    
+    cnx_cursor.execute("""SELECT distinct domain FROM Supervisor_Domains""") 
+    result = cnx_cursor.fetchall()
+    
+    return result
+
 def get_available_supervisors():
     
     try:
@@ -56,7 +78,7 @@ def get_available_supervisors():
 def insert_request(team_id, supervisor_ids, domain, idea):
     
     try:
-        cnx = mysql.connector.connect(**config)
+        cnx = mysql.connector.connect(**config.config)
 
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -70,5 +92,10 @@ def insert_request(team_id, supervisor_ids, domain, idea):
         
     cnx_cursor = cnx.cursor()
     
+    for supervisor in supervisor_ids:
+        cnx_cursor.execute("INSERT INTO Request (team_id, supervisor_id, interested_domain, idea, req_status) VALUES (%(team_id)s, %(supervisor_id)s, %(domain)s, %(idea)s, 0)",
+                           {'team_id': team_id, 'supervisor_id': supervisor, 'domain': domain, 'idea': idea})
     
-get_available_supervisors()
+    cnx.close()
+    
+# get_available_supervisors()

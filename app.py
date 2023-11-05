@@ -2,11 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for,session,jso
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
-from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc, ProjectPageFunc, RequestFormFunc, SupervisorFunc
+from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc, ProjectPageFunc, RequestFormFunc
 import pandas as pd
+import json
 from backend import config
 import os
-import json
 # A simple dictionary to store user data (replace with a proper database)
 
 # users = {
@@ -160,19 +160,31 @@ def teampage(team_id, srn):
 
 @app.route('/teampage/<team_id>/<srn>/requestsform', methods=["GET", "POST"])
 def requestsform(team_id,srn):
-    domain=""
-    supervisorName=""
-    if request.method=='POST':
-        domain = request.form.get('domain')
-        supervisorName = request.form.get('supervisorName')
-    # print(domain)
-    # print(supervisorName)
+    domains = RequestFormFunc.get_domains()
     teachers = RequestFormFunc.get_available_supervisors()
-    return render_template('requestsform.html', team_id=team_id,srn=srn, teachers=teachers,domain=domain,supervisorName=supervisorName)
+    sendingrequestslink = url_for('sendingrequests', team_id=team_id, srn=srn)
+    return render_template('requestsform.html', team_id=team_id,srn=srn, teachers=teachers, domains=domains, sendingrequestslink=sendingrequestslink)
+
+@app.route('/teampage/<team_id>/<srn>/sendingrequests', methods=["POST"])
+def sendingrequests(team_id, srn):
+    
+    print("reached")
+    if request.method == 'POST':
+        content=request.get_data()
+        content=content.decode('utf8')
+        data = json.loads(content)
+        print(data)
+        
+        RequestFormFunc.insert_request(data['team_id'], data['teachers'], data['domain'], data[])
+        # s = json.dumps(data, indent=4, sort_keys=True)
+        # print(s)
+        # print()
+    return
 
 @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=["GET", "POST"])
 def requestsstatus(team_id, srn):
     return render_template('requestsstatus.html', team_id=team_id, srn=srn)
+
 
 @app.route('/teampage/<team_id>/<srn>/reviewpage', methods=["GET", "POST"])
 def reviewpage(team_id, srn):
@@ -182,7 +194,6 @@ def reviewpage(team_id, srn):
 def project(team_id, srn):
     project_id,team_id,problem_statement, domain, start_d, end_d, cur_phase = ProjectPageFunc.display_projectdetails(team_id)
     return render_template('project.html', project_id=project_id,team_id=team_id, srn=srn,problem_statement=problem_statement,domain=domain,start_d=start_d,end_d=end_d,cur_phase=cur_phase)
-
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
 def teacherprofile(username):
     # user = users.get(username)

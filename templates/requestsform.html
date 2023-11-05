@@ -4,6 +4,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -90,7 +91,7 @@
     <label for="supervisorSelect">Select Supervisor:</label>
     <select id="supervisorSelect">
         {% for teacher in teachers %}
-        <option value={{teacher[0]}}>{{teacher[1]}} {{teacher[2]}} </option>
+        <option value='{{teacher[0]}}'>{{teacher[1]}} {{teacher[2]}} </option>
         {% endfor%}
     </select>
 
@@ -99,36 +100,54 @@
 
     <button id="addSupervisorButton">Add Supervisor</button>
 
-    <div id="addSupervisorForm" style="display: none;">
-        <h2>Add Supervisor</h2>
-        <form method="POST">
-            <label for="domain">Interested Domain:</label>
-            <input type="text" id="domain" name="domain" required><br>
+    <div id="addedSupervisors">
+        <ol id="addedSupervisorsList">
+        </ol>
+    </div>
 
-            <label for="supervisorName">Supervisor Name:</label>
-            <input type="text" id="supervisorName" name="supervisorName" required><br>
+    <div id="ideaSubmission">
+        <form action="" id="requestSubmission">
 
-            <input type="submit" value="Submit">
+            <select name="domain" id="domain">
+                {% for domain in domains %}
+                <option value='{{domain[0]}}'> {{domain[0]}} </option>
+                {% endfor %}
+            </select>
+
+                <input id="idea" type="text" class="form-control">
+
+            <button type="submit"> Send Requests </button>
         </form>
     </div>
 
+
     <script>
+
+        // adding selected supervisor to list
+
         document.getElementById("addSupervisorButton").addEventListener("click", function() {
-            var addSupervisorForm = document.getElementById("addSupervisorForm");
-            addSupervisorForm.style.display = addSupervisorForm.style.display === "none" ? "block" : "none";
+          //  var addSupervisorForm = document.getElementById("addSupervisorForm");
+          //  addSupervisorForm.style.display = addSupervisorForm.style.display === "none" ? "block" : "none";
+             var addedSupervisors=document.getElementById("addedSupervisorsList");
+          //  var addedSupervisors = $('#addedSupervisors').find('ul');
+            console.log(addedSupervisors.innerHTML)
+            var selectedSupervisor=document.getElementById("supervisorSelect").value;
+            var id;
+            var firstName;
+            var lastName;
+            {% for teacher in teachers %}
+                if('{{teacher[0]}}'==selectedSupervisor){
+                    id='{{teacher[0]}}'
+                    firstName='{{teacher[1]}}'
+                    lastName='{{teacher[2]}}'
+                }
+            {% endfor %}
+            var listItem=`<li data-value=${id}>${firstName} ${lastName} </li>`
+        //    console.log(listItem)
+            addedSupervisors.innerHTML+=listItem
         });
 
-        document.getElementById("supervisorForm").addEventListener("submit", function(event) {
-            event.preventDefault();
 
-            var domain = document.getElementById("domain").value;
-            var supervisorName = document.getElementById("supervisorName").value;
-
-            document.getElementById("domain").value = "";
-            document.getElementById("supervisorName").value = "";
-        });
-        // print(domain)
-        // print(supervisorName)
         document.getElementById("supervisorSelect").addEventListener("change", function() {
             var selectedSupervisor = document.getElementById("supervisorSelect").value;
             var supervisorDetails = document.getElementById("supervisorDetails");
@@ -167,6 +186,47 @@
             tableBody.innerHTML = code
 
         });
+
+
+        
+
+        var requestSubmission = document.getElementById("requestSubmission")
+
+        if(requestSubmission != null && requestSubmission != undefined){
+            requestSubmission.addEventListener("submit", (e) => {
+                e.preventDefault()
+    
+                let domain = document.getElementById("domain");
+                let idea = document.getElementById("idea");
+                var addedSupervisorsList = document.getElementById("addedSupervisorsList").children
+                console.log(domain.value, idea.value, addedSupervisorsList[0])
+                var teachers=[]
+                for(let i=0; i<addedSupervisorsList.length; i++){
+                    teachers.push(addedSupervisorsList[i].attributes.getNamedItem("data-value").nodeValue)
+                }
+                console.log(teachers)
+
+                function sendData(domain, idea, team_id, teachers){
+                    console.log
+                    $.ajax({
+                        url: '{{sendingrequestslink}}',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({'domain':domain.value, 'idea': idea.value, 'team_id': team_id, 'teachers': teachers}),
+                        success: function(response) { 
+                            alert(response.result); 
+                        }, 
+                        error: function(error) { 
+                            alert(error); 
+                        } 
+                    })
+                };
+
+                sendData(domain, idea, '{{team_id}}', teachers);
+    
+            })
+        }   
+
     </script>
 </body>
 </html>
