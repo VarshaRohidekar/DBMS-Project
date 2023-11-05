@@ -22,7 +22,9 @@
     
     <label for="supervisorSelect">Select Supervisor:</label>
     <select id="supervisorSelect">
-        
+        {% for teacher in teachers %}
+        <option value={{teacher[0]}}>{{teacher[1]}} {{teacher[2]}} </option>
+        {% endfor%}
     </select>
 
     <div id="supervisorDetails">
@@ -62,7 +64,6 @@
         document.getElementById("supervisorSelect").addEventListener("change", function() {
             var selectedSupervisor = document.getElementById("supervisorSelect").value;
             var supervisorDetails = document.getElementById("supervisorDetails");
-
             supervisorDetails.innerHTML = "Selected Supervisor: " + selectedSupervisor;
         });
     </script>
