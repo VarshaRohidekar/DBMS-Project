@@ -4,6 +4,7 @@
     <title>Request Status</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         .box {
             width: 32%; /* Adjust the width as needed */
@@ -51,9 +52,43 @@
                         Rejected
                     {% endif %}
                 </p>
+
+                {% if request[5]==1 %}
+                <button id='{{request[0]}}' >Start Project</button>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
     
+    <script>
+
+        function sendData(id){
+            console.log('in sendData')
+            $.ajax({
+                url: '{{redirectlink}}',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({'id': id}),
+                success: function(response) { 
+                    window.location.replace(response); 
+                }, 
+                error: function(error) { 
+                    alert(error); 
+                } 
+            })
+        };
+
+        $(document).ready(function(){
+            $("button").click(function(){
+                id = $(this).attr('id')
+                console.log(id)
+                sendData(id)
+            });
+        });
+
+
+    </script>
+
+
 </body>
 </html>

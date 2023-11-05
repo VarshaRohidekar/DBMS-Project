@@ -89,7 +89,9 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
+        {% if not hasProject %}
         <button id="toggleDashboard" class="btn btn-secondary custom-button">Team Dashboard</button>
+        {% endif %}
         <a class="navbar-brand" href="#" style="color: aqua">Team Page</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">

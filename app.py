@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for,session,jso
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
-from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc, ProjectPageFunc, RequestFormFunc, SupervisorFunc
+from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc, ProjectPageFunc, RequestFormFunc, SupervisorFunc,ReviewPageFunc
 import pandas as pd
 import json
 from backend import config
@@ -188,14 +188,33 @@ def sendingrequests(team_id, srn):
 
 @app.route('/teampage/<team_id>/<srn>/reviewpage', methods=["GET", "POST"])
 def reviewpage(team_id, srn):
-    return render_template('reviewpage.html',team_id=team_id,srn=srn)
+    result = ReviewPageFunc.get_reviews(team_id)
+    # print(result[0])
+    return render_template('reviewpage.html',team_id=team_id,srn=srn,result=result)
 
 @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=['GET', 'POST'])
 def requestsstatus(team_id,srn):
     result = TeamPageFunc.get_requests(team_id)
-    print(result)
-    return render_template('requestsstatus.html',team_id=team_id,srn=srn,result=result)
+    redirectlink = url_for('creating_project_page', team_id=team_id, srn=srn)
 
+    print("to creating project: "+ redirectlink)
+    return render_template('requestsstatus.html',team_id=team_id,srn=srn,result=result, redirectlink=redirectlink)
+
+@app.route('/creating_project_page/<team_id>/<srn>', methods=["POST", "GET"])
+def creating_project_page(team_id, srn):
+    print("reached creating project page")
+    if request.method == 'POST':
+        content=request.get_data()
+        content=content.decode('utf8')
+        data = json.loads(content)
+        print('LASKDFKJLSKJLKJLJ: ', type(data['id']))
+        projectid = ProjectPageFunc.create_project(int(data['id']))
+        # RequestFormFunc.insert_request(data['team_id'], data['teachers'], data['domain'], data['idea'])
+        # s = json.dumps(data, indent=4, sort_keys=True)
+        # print(s)
+        # print()
+        return url_for('project', team_id=team_id, srn=srn)
+    # return url_for('requestsstatus', team_id=team_id, srn=srn)
 
 
 @app.route('/teampage/<team_id>/<srn>/project', methods=["GET", "POST"])
