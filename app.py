@@ -166,6 +166,8 @@ def requestsstatus(team_id, srn):
 
 @app.route('/teampage/<team_id>/<srn>/project', methods=["GET", "POST"])
 def project(team_id, srn):
+    
+
     return render_template('project.html', team_id=team_id, srn=srn)
 
 

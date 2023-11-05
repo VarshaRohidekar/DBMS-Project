@@ -20,19 +20,62 @@
         </div>
     </nav>
 
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Status of Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .box {
+            width: 32%; /* Adjust the width as needed */
+            height: 700px; /* Adjust the height as needed */
+            border: 3px solid #000;
+            text-align: center;
+            display: inline-block;
+            /* margin: 5px; */
+            padding: 0px;
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 5px;
+            margin-right: 5px;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
     <div class="container mt-4">
         <h1>Project Details</h1>
         <p>Problem Statement: {{ problem_statement }}</p>
         <p>Team ID: {{ team_id }}</p>
         <p>Team Name: {{ team_name }}</p>
         <p>Grade: {{ grade }}</p>
-
+        
         <h2>Documents Submitted</h2>
         <ul>
             {% for document in documents %}
-                <li>{{ document }}</li>
+            <li>{{ document }}</li>
             {% endfor %}
         </ul>
     </div>
+</div>
+    <div class="box">
+        <h3>PHASE 1 - SEMESTER 6</h3>
+        <input type="checkbox" id="phase1Checkbox" name="phase1Checkbox">
+    </div>
+
+    <div class="box">
+        <h3>PHASE 2 - SEMESTER 7</h3>
+        <input type="checkbox" id="phase2Checkbox" name="phase2Checkbox">
+    </div>
+
+    <div class="box">
+        <h3>PHASE 3 - SEMESTER 8</h3>
+        <input type="checkbox" id="phase3Checkbox" name="phase3Checkbox">
+    </div>
+    </body>
+    </html>
+
 </body>
 </html>
