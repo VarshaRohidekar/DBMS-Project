@@ -92,8 +92,15 @@ def insert_request(team_id, supervisor_ids, domain, idea):
         
     cnx_cursor = cnx.cursor()
     
+    supervisor_ids = set(supervisor_ids)
+    
     for supervisor in supervisor_ids:
-        cnx_cursor.execute("INSERT INTO Request (team_id, supervisor_id, interested_domain, idea, req_status) VALUES (%(team_id)s, %(supervisor_id)s, %(domain)s, %(idea)s, 0)",
+        
+        cnx_cursor.execute("""SELECT distinct domain FROM Supervisor_Domains WHERE supervisor_id=%(id)s""", {'id': supervisor})
+        
+        d_list = cnx_cursor.fetchall()
+        if domain in d_list:        
+            cnx_cursor.execute("INSERT INTO Request (team_id, supervisor_id, interested_domain, idea, req_status) VALUES (%(team_id)s, %(supervisor_id)s, %(domain)s, %(idea)s, 0)",
                            {'team_id': team_id, 'supervisor_id': supervisor, 'domain': domain, 'idea': idea})
     
     cnx.close()
