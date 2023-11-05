@@ -1,61 +1,130 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: aqua;
+        }
+
+        .custom-button {
+            margin-right: 10px;
+        }
+
+        .dashboard {
+            width: 0;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1;
+        }
+
+        .dashboard ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .dashboard ul li {
+            padding: 10px 0;
+        }
+
+        .dashboard ul li a {
+            text-decoration: none;
+            color: aqua;
+            display: block;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .dashboard ul li a:hover {
+            background-color: #272b30;
+        }
+
+        #admin-dashboard-x {
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 20px;
+            text-decoration: none;
+            color: aqua;
+            cursor: pointer;
+        }
+
+        #admin-dashboard-x:hover {
+            color: #f00; /* Red color on hover */
+        }
+
+        .content {
+            padding: 20px;
+        }
+    </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
-            <button id="toggleDashboard" class="btn btn-secondary custom-button">Toggle Dashboard</button>
-            <a class="navbar-brand" href="#">Dashboard</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
-                </ul>
-            </div>
+        <button id="toggleDashboard" class="btn btn-secondary custom-button">Toggle Dashboard</button>
+        <a class="navbar-brand" href="#" style="color: aqua;">Dashboard</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout" style="color: aqua;">Logout</a>
+                </li>
+            </ul>
+        </div>
     </nav>
-    
+
     <div class="dashboard" id="dashboard">
         <ul>
-            <li>Home</li> 
-            <li>About</li>
-            <li><a class="nav-link" href="{{ url_for('adminteacher', username=username) }}" style="color: aqua">Teacher Section</a></li>
-            <li>Student Section </li>
+            <li><a class="nav-link" href="{{adminteacherlink}}" style="color: aqua;">Teacher Section</a></li>
+            <li><a class="nav-link" href="{{adminstudentlink}}" style="color: aqua;">Student Section</a></li>
+            <li><a class="nav-link" href="{{adminquerylink}}" style="color: aqua;">Query Here</a></li>
         </ul>
-        <button id="admin-dashboard-x"> x </button>
+        <span id="admin-dashboard-x">x</span>
     </div>
-    
+
     <!-- "Toggle Dashboard" button outside of the sidebar -->
-    <div>
-        <p> Admin page </p>
-        <p> Admin ID: {{ admin_id }}, email: {{ email }}  </p>
+    <div class="content">
+        <p>Admin page</p>
+        <p>Admin ID: {{ admin_id }}, email: {{ email }}</p>
     </div>
-    <div>
-        
-    </div>
+
     <script>
         const dashboard = document.getElementById('dashboard');
         const toggleButton = document.getElementById('toggleDashboard');
         const toggleX = document.getElementById('admin-dashboard-x');
 
-
         toggleButton.style.display = 'block'; // Make sure the button is initially visible
 
-        toggleButton.addEventListener('click', function() {    
+        toggleButton.addEventListener('click', function() {
             dashboard.style.width = '250px';
         });
 
-        toggleX.addEventListener('click', function(){
+        toggleX.addEventListener('click', function() {
             if (dashboard.style.width == '250px') {
-                dashboard.style.width = '0'
+                dashboard.style.width = '0';
             }
         })
-
     </script>
 </body>
+
 </html>

@@ -38,11 +38,13 @@ def get_admin_details(id):
     
     return email
 
-def get_student_details(semester):
+def get_student_details():
     global cnx
     cnx_cursor = cnx.cursor()
     # result = cnx_cursor.execute(selects.select_students, {'sem': semester})
-    result = cnx_cursor.execute(select_students, {'sem': semester})
+    result = cnx_cursor.execute("""SELECT srn, Fname, Lname, semester, cgpa, email, outgoing_year, team_id
+                                   FROM Student
+                                   """)
     data = cnx_cursor.fetchall()
     column_names = [desc[0] for desc in cnx_cursor.description]
     
@@ -52,11 +54,23 @@ def get_teacher_details():
     global cnx
     cnx_cursor = cnx.cursor()
     # result = cnx_cursor.execute(selects.select_teachers)
-    result = cnx_cursor.execute(select_teachers)
+    result = cnx_cursor.execute("""SELECT teacher_id, Fname, Lname, email, floor, cabin_no FROM Teacher""")
     data = cnx_cursor.fetchall()
     column_names = [desc[0] for desc in cnx_cursor.description]
    
-    return
+    return (data, column_names)
+
+def get_query(query):
+    global cnx 
+    cnx_cursor = cnx.cursor()
+    try:
+        cnx_cursor.execute(query)
+        data = cnx_cursor.fetchall()
+        column_names = [desc[0] for desc in cnx_cursor.description]
+    except:
+        return "incorrect query"
+    else:
+        return (data, column_names)
 
 def log_out():
     global cnx

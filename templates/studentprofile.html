@@ -1,15 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Profile Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: aqua;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .btn-primary {
+            background-color: #343a40;
+            color: aqua;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: aqua;
+            color: #343a40;
+        }
+    </style>
 </head>
-</head>
+
 <body class="body">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Student Profile</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -23,16 +55,14 @@
             </ul>
         </div>
     </nav>
+
     <div class="container">
         <h1>Welcome, {{ first_name }} {{ last_name }}</h1>
         <div>
-            <!-- <label for="email">Email:</label> -->
             <p>Email: {{ email_id }}</p>
-        <div>
+        </div>
         {% if not hasResume %}
         <form method="POST" action="{{ url_for('studentprofile', username=username) }}" enctype="multipart/form-data">
-            
-            
             <div class="form-group">
                 <label for="resume">Upload Resume</label>
                 <input type="file" class="form-control-file" id="resume" name="resume">
@@ -40,19 +70,18 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Upload Resume</button>
             </div>
-            
         </form>
         {% endif %}
 
         {% if hasResume %}
         <div>
-            <button onclick="window.open({{ url_for('showresume', username=username) }}, '_blank')"> dummy view resume </button>
+            <button
+                onclick="window.open('{{ url_for('showresume', username=username) }}', '_blank')">Dummy View Resume</button>
         </div>
         <div>
-            <a href={{ resume_page }} target="blank"> working view resume </a>
+            <a href="{{ resume_page }}" target="_blank">Working View Resume</a>
         </div>
         <form method="POST" action="{{ url_for('studentprofile', username=username) }}" enctype="multipart/form-data">
-            
             <div class="form-group">
                 <label for="resume">Re-upload Resume:</label>
                 <input type="file" class="form-control-file" id="resume" name="resume">
@@ -60,22 +89,20 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Upload Resume</button>
             </div>
-            
         </form>
-        {% endif%}
+        {% endif %}
 
         {% if teamEligibility %}
         <div>
             {% if hasTeam %}
-                <a href="{{url_for('teampage', team_id=team_id, srn=username)}}"> Team Page </a>
+            <a href="{{ url_for('teampage', team_id=team_id, srn=username) }}">Team Page</a>
             {% endif %}
-
-            {% if not hasTeam%}
-                <a href="{{url_for('teamformpage', srn=username)}}">Create Team</a>
+            {% if not hasTeam %}
+            <a href="{{ url_for('teamformpage', srn=username) }}">Create Team</a>
             {% endif %}
         </div>
         {% endif %}
-
     </div>
 </body>
+
 </html>

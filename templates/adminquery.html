@@ -7,9 +7,9 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
             margin: 0;
             padding: 0;
-            background-color: #f7f7f7;
         }
         .navbar {
             background-color: #343a40;
@@ -17,18 +17,47 @@
         .navbar-dark .navbar-nav .nav-link {
             color: aqua;
         }
-        h1 {
+        .sql-query {
             text-align: center;
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
             margin: 20px auto;
+            padding: 10px;
             background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            text-align: center;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            background-color: #343a40;
+            color: aqua;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: aqua;
+            color: #343a40;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            border: 2px solid #333;
+            margin: 20px auto;
+            background-color: #fff;
         }
         th, td {
             text-align: left;
@@ -58,9 +87,18 @@
             </ul>
         </div>
     </nav>
-    <h1>Teacher Database</h1>
+
+    <div class="sql-query">
+        <form method="POST">
+            <label for="query">Enter query here:</label>
+            <input type="text" id="query" name="query" required>
+            <button type="submit">Send Query</button>
+        </form>
+    </div>
+
     <div>
         <p></p>
+        {% if data %}
         <table>
             <thead>
                 <tr>
@@ -79,6 +117,11 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% endif %}
+
+        {% if not data %}
+            {{ err }}
+        {% endif %}
     </div>
 </body>
 </html>

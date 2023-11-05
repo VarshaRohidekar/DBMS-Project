@@ -71,9 +71,7 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/adminprofile/<username>/adminteacher', methods=['GET', 'POST'])
-def adminteacher(username):
-    return render_template('adminteacher',username=username)
+
 
 
 # Check whether the person logging in is a teacher/student or admin
@@ -213,7 +211,44 @@ def adminprofile(username):
     logged_in_users.append(username)
     AdminFunc.log_in()
     email = AdminFunc.get_admin_details(username)
-    return render_template('adminprofile.html', email=email, admin_id=username)
+    adminteacherlink = url_for('adminteacher', username=username)
+    adminstudentlink = url_for('adminstudent', username=username)
+    adminquerylink = url_for('adminquery', username=username)
+    return render_template('adminprofile.html', email=email, admin_id=username, adminteacherlink=adminteacherlink, adminstudentlink=adminstudentlink, adminquerylink=adminquerylink)
+
+@app.route('/adminprofile/<username>/adminstudent', methods=['GET', 'POST'])
+def adminstudent(username):
+    AdminFunc.log_in()
+    (data, cols) = AdminFunc.get_student_details()
+    return render_template('adminstudent.html', username=username, data=data, cols=cols)
+
+@app.route('/adminprofile/<username>/adminteacher', methods=['GET', 'POST'])
+def adminteacher(username):
+    AdminFunc.log_in()
+    (data, cols) = AdminFunc.get_teacher_details()
+    return render_template('adminteacher.html',username=username, data=data, cols=cols)
+
+@app.route('/adminprofile/<username>/adminquery', methods=["POST", 'GET'])
+def adminquery(username):
+    AdminFunc.log_in()
+    data=None
+    cols=None
+    err=None
+    if request.method=="POST":
+        query = request.form.get('query')
+        # cursor = db.cursor()
+
+        # cursor.execute(query)
+        # data = cursor.fetchall()
+        # # Get the column names from the database cursor
+        # cols = [desc[0] for desc in cursor.description]
+        result = AdminFunc.get_query(query)
+        if type(result)!= str:
+            (data, cols) = result
+        else:
+            err=result
+
+    return render_template('adminquery.html', username=username, data=data, cols=cols, err=err)
 
 @app.route('/logout')
 def logout():

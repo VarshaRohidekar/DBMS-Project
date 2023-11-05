@@ -1,55 +1,136 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            color: aqua;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: aqua;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .btn-secondary {
+            background-color: #343a40;
+            color: aqua;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: aqua;
+            color: #343a40;
+        }
+
+        .dashboard {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .dashboard a {
+            color: white;
+        }
+
+        .dashboard button {
+            background-color: #343a40;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .dashboard button:hover {
+            background-color: aqua;
+            color: #343a40;
+        }
+
+        h3, h2 {
+            color: #343a40;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            border: 2px solid #333;
+            margin: 20px auto;
+            background-color: #fff;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #070707;
+        }
+        th {
+            background-color: #343a40;
+            color: aqua;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
-            <button id="toggleDashboard" class="btn btn-secondary custom-button">Team Dashboard</button>
-            <a class="navbar-brand" href="#" style=color:aqua>Team Page</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style=color:aqua>Home</a>
-                    </li>
-                    {% if hasProject %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('project', srn=srn,team_id=team_id)}}" style=color:aqua>View Project</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
+        <button id="toggleDashboard" class="btn btn-secondary custom-button">Team Dashboard</button>
+        <a class="navbar-brand" href="#" style="color: aqua">Team Page</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style="color: aqua">Home</a>
+                </li>
+                {% if hasProject %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('project', srn=srn,team_id=team_id)}}" style="color: aqua">View Project</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </nav>
-    
+
     <div class="dashboard" id="dashboard">
         <ul>
-            <li><a href="{{url_for('requestsform',srn=srn,team_id=team_id)}}" style=color:white>Make requests</a></li>
-            <li><a href="{{url_for('requestsstatus',srn=srn,team_id=team_id)}}" style=color:white>Request Status</a></li>
+            <li><a href="{{url_for('requestsform',srn=srn,team_id=team_id)}}">Make Requests</a></li>
+            <li><a href="{{url_for('requestsstatus',srn=srn,team_id=team_id)}}">Request Status</a></li>
         </ul>
         <button id="admin-dashboard-x"> x </button>
     </div>
+    <h3 style="text-align: center; color: #343a40; font-family: 'Verdana', sans-serif;">Welcome, {{team_name}}</h3>
+    <h2 style="text-align: center; color: #343a40; font-family: 'Verdana', sans-serif;">TEAM ID: {{ team_id }}</h2>
     
-    <h3 style=text-align:center> Welcome, {{team_name}}</h3>
-    <h2 style=text-align:center>TEAM ID : {{ team_id }}</h2>
     
-    </div>
+
     <div style="text-align: center;">
-        <table style="margin: 0 auto; text-align: left;width: 700px;height: 500px;">
+        <table>
             <thead>
-                <tr style="border: 1px solid #000;">
+                <tr>
                     {% for column in cols %}
-                    <th style="border: 1px solid #000;">{{ column }}</th>
+                    <th>{{ column }}</th>
                     {% endfor %}
                 </tr>
             </thead>
-            <tbody style="border: 1px solid #000";>
+            <tbody>
                 {% for row in rows %}
-                    <tr style="border: 1px solid #000;">
+                    <tr>
                         {% for cell in row %}
-                        <td style="border: 1px solid #000;">{{ cell }}</td>
+                        <td>{{ cell }}</td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
@@ -61,21 +142,17 @@
         const toggleButton = document.getElementById('toggleDashboard');
         const toggleX = document.getElementById('admin-dashboard-x');
 
-
         toggleButton.style.display = 'block'; // Make sure the button is initially visible
 
-        toggleButton.addEventListener('click', function() {    
+        toggleButton.addEventListener('click', function() {
             dashboard.style.width = '250px';
-            dashboard.style.backgroundColor=black;
         });
 
         toggleX.addEventListener('click', function(){
             if (dashboard.style.width == '250px') {
-                dashboard.style.width = '0'
+                dashboard.style.width = '0';
             }
         })
-
     </script>
 </body>
 </html>
-
