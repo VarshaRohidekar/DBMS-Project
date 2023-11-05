@@ -9,8 +9,11 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
+            /* display: flex; */
+            /* justify-content: center; */
+            /* align-items: center; */
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
         }
         .navbar {
             background-color: #343a40;
@@ -20,12 +23,13 @@
         }
         .sql-query {
             text-align: center;
-            margin: 20px auto;
-            padding: 10px;
+            padding: 20px;
             background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
         }
         form {
             text-align: center;
@@ -36,7 +40,7 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 80%;
+            width: 100%;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -54,10 +58,9 @@
             color: #343a40;
         }
         table {
-            width: 80%;
+            width: 100%;
             border-collapse: collapse;
             border: 2px solid #333;
-            margin: 20px auto;
             background-color: #fff;
         }
         th, td {
@@ -75,78 +78,71 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
-        <a class="navbar-brand" href="#" style=align-items:center;color:aqua>Request Page</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style=color:aqua>Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}" style=color:aqua>Return to Team Page</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="color: aqua;">Request Page</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style="color: aqua;">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}" style="color: aqua;">Return to Team Page</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-    <label for="supervisorSelect">Select Supervisor:</label>
-    <select id="supervisorSelect">
-        {% for teacher in teachers %}
-        <option value='{{teacher[0]}}'>{{teacher[1]}} {{teacher[2]}} </option>
-        {% endfor%}
-    </select>
+    
+    <div class="sql-query">
+        <label for="supervisorSelect">Select Supervisor:</label>
+        <select id="supervisorSelect">
+            {% for teacher in teachers %}
+            <option value='{{teacher[0]}}'>{{teacher[1]}} {{teacher[2]}}</option>
+            {% endfor%}
+        </select>
 
-    <div id="supervisorDetails">
+        <div id="supervisorDetails">
+        </div>
+
+        <button id="addSupervisorButton" style="margin: 10px 0;">Add Supervisor</button>
+
+        <div id="addedSupervisors">
+            <ol id="addedSupervisorsList">
+            </ol>
+        </div>
+
+        <div id="ideaSubmission">
+            <form action="" id="requestSubmission">
+                <select name="domain" id="domain">
+                    {% for domain in domains %}
+                    <option value='{{domain[0]}}'>{{domain[0]}}</option>
+                    {% endfor %}
+                </select>
+                <input id="idea" type="text" class="form-control" style="margin: 10px 0;">
+                <button type="submit" style="background-color: #343a40; color: aqua; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Send Requests</button>
+            </form>
+        </div>
     </div>
-
-    <button id="addSupervisorButton">Add Supervisor</button>
-
-    <div id="addedSupervisors">
-        <ol id="addedSupervisorsList">
-        </ol>
-    </div>
-
-    <div id="ideaSubmission">
-        <form action="" id="requestSubmission">
-
-            <select name="domain" id="domain">
-                {% for domain in domains %}
-                <option value='{{domain[0]}}'> {{domain[0]}} </option>
-                {% endfor %}
-            </select>
-
-                <input id="idea" type="text" class="form-control">
-
-            <button type="submit"> Send Requests </button>
-        </form>
-    </div>
-
 
     <script>
-
-        // adding selected supervisor to list
-
+        // Adding selected supervisor to the list
         document.getElementById("addSupervisorButton").addEventListener("click", function() {
-          //  var addSupervisorForm = document.getElementById("addSupervisorForm");
-          //  addSupervisorForm.style.display = addSupervisorForm.style.display === "none" ? "block" : "none";
-             var addedSupervisors=document.getElementById("addedSupervisorsList");
-          //  var addedSupervisors = $('#addedSupervisors').find('ul');
-            console.log(addedSupervisors.innerHTML)
-            var selectedSupervisor=document.getElementById("supervisorSelect").value;
+            var addedSupervisors = document.getElementById("addedSupervisorsList");
+            var selectedSupervisor = document.getElementById("supervisorSelect").value;
             var id;
             var firstName;
             var lastName;
             {% for teacher in teachers %}
-                if('{{teacher[0]}}'==selectedSupervisor){
-                    id='{{teacher[0]}}'
-                    firstName='{{teacher[1]}}'
-                    lastName='{{teacher[2]}}'
-                }
+            if ('{{teacher[0]}}' == selectedSupervisor) {
+                id = '{{teacher[0]}}';
+                firstName = '{{teacher[1]}}';
+                lastName = '{{teacher[2]}}';
+            }
             {% endfor %}
-            var listItem=`<li data-value=${id}>${firstName} ${lastName} </li>`
-        //    console.log(listItem)
-            addedSupervisors.innerHTML+=listItem
+            var listItem = `<li data-value=${id}>${firstName} ${lastName}</li>`;
+            addedSupervisors.innerHTML += listItem;
         });
-
 
         document.getElementById("supervisorSelect").addEventListener("change", function() {
             var selectedSupervisor = document.getElementById("supervisorSelect").value;
@@ -155,22 +151,22 @@
             var domains;
             var email;
             var projects;
-            var i=0;
+            var i = 0;
             {% for teacher in teachers %}
-            if('{{teacher[0]}}'==selectedSupervisor) {
-                    temp={{teacher | tojson}};
-                    domains={{teacher[4] | tojson}};
-                    email='{{teacher[3]}}';
-                    projects={{teacher[5] | tojson }}
+            if ('{{teacher[0]}}' == selectedSupervisor) {
+                temp = {{teacher | tojson}};
+                domains = {{teacher[4] | tojson}};
+                email = '{{teacher[3]}}';
+                projects = {{teacher[5] | tojson}}
             }
-            i+=1;
+            i += 1;
             {% endfor %}
-            var code = `<p> email: ${email} </p> <p> domains: ${domains} </p> <p> Projects: 
+            var code = `<p>Email: ${email}</p><p>Domains: ${domains}</p><p>Projects: 
                 <table>
                     <thead>
                         <tr>
-                            <th> project domain </th>
-                            <th>  problem statement </th>
+                            <th>Project Domain</th>
+                            <th>Problem Statement</th>
                         </tr>
                     </thead>
                     <tbody id="projectTableBody">
@@ -178,55 +174,44 @@
                 </table>
             </p>`;
             supervisorDetails.innerHTML = code;
-            var tableBody = document.getElementById("projectTableBody")
-            var code=``
-            for(let i=0; i<projects.length; i++){
-                code+=`<tr> <td> ${projects[i][0]} </td> <td> ${projects[i][1]} </td>`
+            var tableBody = document.getElementById("projectTableBody");
+            var code = "";
+            for (let i = 0; i < projects.length; i++) {
+                code += `<tr><td>${projects[i][0]}</td><td>${projects[i][1]}</td></tr>`;
             }
-            tableBody.innerHTML = code
-
+            tableBody.innerHTML = code;
         });
 
-
-        
-
-        var requestSubmission = document.getElementById("requestSubmission")
-
-        if(requestSubmission != null && requestSubmission != undefined){
+        var requestSubmission = document.getElementById("requestSubmission");
+        if (requestSubmission != null && requestSubmission != undefined) {
             requestSubmission.addEventListener("submit", (e) => {
-                e.preventDefault()
-    
+                e.preventDefault();
                 let domain = document.getElementById("domain");
                 let idea = document.getElementById("idea");
-                var addedSupervisorsList = document.getElementById("addedSupervisorsList").children
-                console.log(domain.value, idea.value, addedSupervisorsList[0])
-                var teachers=[]
-                for(let i=0; i<addedSupervisorsList.length; i++){
-                    teachers.push(addedSupervisorsList[i].attributes.getNamedItem("data-value").nodeValue)
+                var addedSupervisorsList = document.getElementById("addedSupervisorsList").children;
+                var teachers = [];
+                for (let i = 0; i < addedSupervisorsList.length; i++) {
+                    teachers.push(addedSupervisorsList[i].attributes.getNamedItem("data-value").nodeValue);
                 }
-                console.log(teachers)
 
-                function sendData(domain, idea, team_id, teachers){
-                    console.log
+                function sendData(domain, idea, team_id, teachers) {
                     $.ajax({
                         url: '{{sendingrequestslink}}',
                         type: 'POST',
                         contentType: 'application/json',
-                        data: JSON.stringify({'domain':domain.value, 'idea': idea.value, 'team_id': team_id, 'teachers': teachers}),
-                        success: function(response) { 
-                            window.location.replace(response); 
-                        }, 
-                        error: function(error) { 
-                            alert(error); 
-                        } 
-                    })
-                };
+                        data: JSON.stringify({'domain': domain.value, 'idea': idea.value, 'team_id': team_id, 'teachers': teachers}),
+                        success: function(response) {
+                            window.location.replace(response);
+                        },
+                        error: function(error) {
+                            alert(error);
+                        }
+                    });
+                }
 
                 sendData(domain, idea, '{{team_id}}', teachers);
-    
-            })
-        }   
-
+            });
+        }
     </script>
 </body>
 </html>

@@ -83,7 +83,7 @@ create table Request (
     request_id int primary key auto_increment,
     team_id int not null,
     supervisor_id char(13) not null default '0000000000000',
-    interested_domain varchar(30) not null,
+    interested_domain varchar(50) not null,
     idea varchar(140),
     req_status int not null check(req_status in (-1, 0, 1)),
     constraint team_id_ref foreign key (team_id) references Team(team_id) 

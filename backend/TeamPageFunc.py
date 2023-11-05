@@ -67,9 +67,10 @@ def get_requests(team_id):
         
     cnx_cursor = cnx.cursor() 
     
-    cnx_cursor.execute("""""")
+    cnx_cursor.execute("""SELECT request_id, Fname, Lname, interested_domain, idea, req_status FROM Request join Teacher WHERE team_id=%(id)s and supervisor_id=teacher_id""", {'id': team_id})
+    result = cnx_cursor.fetchall()
+    cnx.close()
     
-    
-    return
+    return result
 
 # team_info(3)

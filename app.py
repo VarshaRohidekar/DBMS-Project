@@ -118,7 +118,6 @@ def studentprofile(username):
 
 @app.route('/studentprofile/<username>/resume', methods = ['GET', 'POST'])
 def showresume(username):
-    
     print("reached resume")
     return render_template('resume.html', username=username)
 
@@ -162,6 +161,7 @@ def teampage(team_id, srn):
 def requestsform(team_id,srn):
     domains = RequestFormFunc.get_domains()
     teachers = RequestFormFunc.get_available_supervisors()
+    print(teachers)
     sendingrequestslink = url_for('sendingrequests', team_id=team_id, srn=srn)
     return render_template('requestsform.html', team_id=team_id,srn=srn, teachers=teachers, domains=domains, sendingrequestslink=sendingrequestslink)
 
@@ -181,19 +181,29 @@ def sendingrequests(team_id, srn):
         # print()
     return url_for('teampage', team_id=team_id, srn=srn)
 
-@app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=["GET", "POST"])
-def requestsstatus(team_id, srn):
-    return render_template('requestsstatus.html', team_id=team_id, srn=srn)
+# @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=["GET", "POST"])
+# def requestsstatus(team_id, srn):
+#     return render_template('requestsstatus.html', team_id=team_id, srn=srn)
 
 
 @app.route('/teampage/<team_id>/<srn>/reviewpage', methods=["GET", "POST"])
 def reviewpage(team_id, srn):
     return render_template('reviewpage.html',team_id=team_id,srn=srn)
 
+@app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=['GET', 'POST'])
+def requestsstatus(team_id,srn):
+    result = TeamPageFunc.get_requests(team_id)
+    # print(result[0])
+    return render_template('requestsstatus.html',team_id=team_id,srn=srn,result=result)
+
+
+
 @app.route('/teampage/<team_id>/<srn>/project', methods=["GET", "POST"])
 def project(team_id, srn):
     project_id,team_id,problem_statement, domain, start_d, end_d, cur_phase = ProjectPageFunc.display_projectdetails(team_id)
     return render_template('project.html', project_id=project_id,team_id=team_id, srn=srn,problem_statement=problem_statement,domain=domain,start_d=start_d,end_d=end_d,cur_phase=cur_phase)
+
+
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
 def teacherprofile(username):
     # user = users.get(username)
@@ -242,6 +252,8 @@ def viewrequests(username):
 
 
     return render_template('viewrequests.html', username=username, requests=requests)
+
+
 
 @app.route('/process_request/<request_id>', methods=["POST"])
 def process_request(request_id):
@@ -330,5 +342,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,host="127.0.0.1")
+    app.run(debug=True,port=5001,host="127.0.0.1")
 

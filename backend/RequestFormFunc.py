@@ -49,7 +49,7 @@ def get_available_supervisors():
         'batch': date.today().year
     }
     
-    cnx_cursor.execute("""with Current (teacher_id) as (select supervisor_id from Supervisor natural join Supervisor_years where batch=2025)
+    cnx_cursor.execute("""with Current (teacher_id) as (select supervisor_id from Supervisor natural join Supervisor_years where batch=2025 and active_projects < team_limit)
                           select teacher_id, Fname, Lname, email from Current natural join Teacher""", data)
     
     teachers_temp = cnx_cursor.fetchall()
