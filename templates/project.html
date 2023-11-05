@@ -17,6 +17,7 @@
                     <a class="nav-link" href="{{ url_for('teampage', srn=srn,team_id=team_id) }}" style="color: aqua">Team Page</a>
                 </li>
             </ul>
+            <h3 style=color:aqua;align-items:center;>Team {{ team_id }}</h3>
         </div>
     </nav>
 
@@ -47,36 +48,48 @@
 <body>
     <div class="container mt-4">
         <h1>Project Details</h1>
-        <p>Problem Statement: {{ problem_statement }}</p>
-        <p>Team ID: {{ team_id }}</p>
-        <p>Team Name: {{ team_name }}</p>
-        <p>Grade: {{ grade }}</p>
-        
-        <h2>Documents Submitted</h2>
-        <ul>
-            {% for document in documents %}
-            <li>{{ document }}</li>
-            {% endfor %}
-        </ul>
+        <table class="table">
+            
+            <tr>
+                <td style=font-weight:bold>Problem Statement</td>
+                <td>{{ problem_statement }}</td>
+            </tr>
+            <tr>
+                <td style=font-weight:bold>Domain</td>
+                <td>{{ domain }}</td>
+            </tr>
+            <tr>
+                <td style=font-weight:bold>Start Date</td>
+                <td>{{ start_d }}</td>
+            </tr>
+            <tr>
+                <td style=font-weight:bold>End Date</td>
+                <td>{{ end_d }}</td>
+            </tr>
+            <tr>
+                <td style=font-weight:bold>Current Phase</td>
+                <td>{{ cur_phase }}</td>
+            </tr>
+        </table>
     </div>
+    
+    {% if cur_phase >= 1 %}
     <div class="box">
-    </div>
-    <div>
         <h3>PHASE 1 - SEMESTER 6</h3>
-        <input type="checkbox" id="phase1Checkbox" name="phase1Checkbox">
     </div>
-
+    {% endif %}
+    
+    {% if cur_phase >= 2 %}
     <div class="box">
         <h3>PHASE 2 - SEMESTER 7</h3>
-        <input type="checkbox" id="phase2Checkbox" name="phase2Checkbox">
     </div>
-
+    {% endif %}
+    
+    {% if cur_phase >= 3 %}
     <div class="box">
         <h3>PHASE 3 - SEMESTER 8</h3>
-        <input type="checkbox" id="phase3Checkbox" name="phase3Checkbox">
     </div>
-    </body>
-    </html>
+    {% endif %}
 
 </body>
 </html>

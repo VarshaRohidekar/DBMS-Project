@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for,session,jso
 import mysql.connector
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'dbms'
-from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc
+from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc,ProjectPageFunc
 import pandas as pd
 from backend import config
 import os
@@ -150,9 +150,9 @@ def teamformpage(srn):
 def teampage(team_id, srn):
     print(srn)
     (team_id, team_name, rows, cols, hasProject) = TeamPageFunc.team_info(team_id)
+    print(hasProject)
     
-    
-    return render_template('teampage.html', team_id=team_id, team_name=team_name, srn=srn, rows=rows, cols=cols)
+    return render_template('teampage.html', team_id=team_id, team_name=team_name, srn=srn, rows=rows, cols=cols, hasProject=hasProject)
 
 
 @app.route('/teampage/<team_id>/<srn>/requestsform', methods=["GET", "POST"])
@@ -166,9 +166,8 @@ def requestsstatus(team_id, srn):
 
 @app.route('/teampage/<team_id>/<srn>/project', methods=["GET", "POST"])
 def project(team_id, srn):
-    
-
-    return render_template('project.html', team_id=team_id, srn=srn)
+    project_id,team_id,problem_statement, domain, start_d, end_d, cur_phase = ProjectPageFunc.display_projectdetails(team_id)
+    return render_template('project.html', project_id=project_id,team_id=team_id, srn=srn,problem_statement=problem_statement,domain=domain,start_d=start_d,end_d=end_d,cur_phase=cur_phase)
 
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])

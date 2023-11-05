@@ -15,9 +15,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style=color:aqua>Home</a>
                     </li>
+                    {% if hasProject %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('project', srn=srn,team_id=team_id)}}" style=color:aqua>View Project</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
     </nav>
