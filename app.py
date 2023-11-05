@@ -179,7 +179,7 @@ def sendingrequests(team_id, srn):
         # s = json.dumps(data, indent=4, sort_keys=True)
         # print(s)
         # print()
-    return
+    return url_for('teampage', team_id=team_id, srn=srn)
 
 @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=["GET", "POST"])
 def requestsstatus(team_id, srn):

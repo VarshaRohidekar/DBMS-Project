@@ -214,7 +214,7 @@
                         contentType: 'application/json',
                         data: JSON.stringify({'domain':domain.value, 'idea': idea.value, 'team_id': team_id, 'teachers': teachers}),
                         success: function(response) { 
-                            alert(response.result); 
+                            window.location.replace(response); 
                         }, 
                         error: function(error) { 
                             alert(error); 
