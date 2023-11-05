@@ -230,6 +230,7 @@ def teacherprofile(username):
 def viewrequests(username):
     content = SupervisorFunc.get_requests(username)
     requests = []
+    redirectlink = url_for('process_request', username=username)
 
     for request in content:
         # Extract relevant information from the request
@@ -251,18 +252,23 @@ def viewrequests(username):
         })
 
 
-    return render_template('viewrequests.html', username=username, requests=requests)
+    return render_template('viewrequests.html', username=username, requests=requests, redirectlink=redirectlink)
 
-
-
-@app.route('/process_request/<request_id>', methods=["POST"])
-def process_request(request_id):
-
+@app.route('/process_request/<username>', methods=["POST", "GET"])
+def process_request(username):
+    print("reached process")
     # get information from the form
+    if request.method == 'POST':
+        content=request.get_data()
+        content=content.decode('utf8')
+        data = json.loads(content)
+        print(data)
+        
+        SupervisorFunc.modify_request(data['action'], data['id'])
 
     # call needed functions
     
-    redirect()
+    return url_for("viewrequests", username=username)
 
 ''' TEACHER PROFILE PAGE '''
 # If a teacher is a supervisor -> modify teacher page to supervisor

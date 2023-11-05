@@ -4,6 +4,7 @@
     <title>View Requests</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -81,11 +82,50 @@
                             </tr>
                         {% endfor %}
                     </table>
-                    <button class="btn btn-success">Accept</button>
-                    <button class="btn btn-danger">Reject</button>
+                    <button class="btn btn-success accept">Accept</button>
+                    <button class="btn btn-danger reject">Reject</button>
                 </div>
             {% endfor %}
         </div>
     </div>
+
+    <script>
+
+        function sendData(requestAction, request_id){
+            $.ajax({
+                url: '{{redirectlink}}',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({'action': requestAction, 'id': request_id}),
+                success: function(response) { 
+                    window.location.replace(response); 
+                }, 
+                error: function(error) { 
+                    alert(error); 
+                } 
+            })
+        };
+
+        $(document).ready(function(){
+            $(".accept").click(function(){
+                var parent = $(this).parent()
+                var request_id = $(parent).attr('id')
+                console.log(request_id)
+                sendData(1, request_id)
+
+            });
+        });
+
+        $(document).ready(function(){
+            $(".reject").click(function(){
+                var parent = $(this).parent()
+                var request_id = $(parent).attr('id')
+                console.log(request_id)
+                sendData(-1, request_id)
+            });
+        });
+
+    </script>
+
 </body>
 </html>
