@@ -1,10 +1,64 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Project Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: aqua;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .box {
+            width: 30%;
+            height: 300px;
+            border: 3px solid #343a40;
+            text-align: center;
+            display: inline-block;
+            padding: 20px;
+            margin: 25px;
+            background-color: #fff;
+            box-shadow: 0px 0px 15px 0px #000;
+        }
+
+        .table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table th, .table td {
+        border: 3px solid rgb(9, 11, 11);
+        padding: 2px;
+    }
+
+    .table th {
+        background-color: #343a40;
+        color: aqua;
+    }
+
+    .table td {
+        background-color: #f7f7f7;
+        color: #343a40;
+    }
+    </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
         <a class="navbar-brand" href="#" style="color: aqua">Project Page</a>
@@ -20,79 +74,48 @@
                     <a class="nav-link" href="{{ url_for('reviewpage', srn=srn,team_id=team_id) }}" style="color: aqua">Reviews</a>
                 </li>
             </ul>
-            <h3 style=color:aqua;align-items:center;>Team {{ team_id }}</h3>
         </div>
+        <h3 style="color: aqua; text-align: center;">Team {{ team_id }}</h3>
     </nav>
 
-
-    <!DOCTYPE html>
-<html>
-<head>
-    <title>Status of Project</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <style>
-        .box {
-            width: 32%; /* Adjust the width as needed */
-            height: 700px; /* Adjust the height as needed */
-            border: 3px solid #000;
-            text-align: center;
-            display: inline-block;
-            /* margin: 5px; */
-            padding: 0px;
-            margin-left: 5px;
-            margin-right: 5px;
-            margin-top: 5px;
-            margin-right: 5px;
-            background-color: #ffffff;
-        }
-    </style>
-</head>
-<body>
     <div class="container mt-4">
         <h1>Project Details</h1>
-        <table class="table">
-            
+        <table class="table" style="background-color: #f7f7f7;">
             <tr>
-                <td style=font-weight:bold>Problem Statement</td>
-                <td>{{ problem_statement }}</td>
+                <th style="background-color: #ffffff; color: rgb(6, 7, 7);">Problem Statement</th>
+                <td style="background-color: #f7f7f7; color: #343a40;">{{ problem_statement }}</td>
             </tr>
             <tr>
-                <td style=font-weight:bold>Domain</td>
-                <td>{{ domain }}</td>
+                <th style="background-color: #ffffff; color: rgb(6, 7, 7);">Domain</th>
+                <td style="background-color: #f7f7f7; color: #343a40;">{{ domain }}</td>
             </tr>
             <tr>
-                <td style=font-weight:bold>Start Date</td>
-                <td>{{ start_d }}</td>
+                <th style="background-color: #ffffff; color: rgb(6, 7, 7);">Start Date</th>
+                <td style="background-color: #f7f7f7; color: #343a40;">{{ start_d }}</td>
             </tr>
             <tr>
-                <td style=font-weight:bold>End Date</td>
-                <td>{{ end_d }}</td>
+                <th style="background-color: #ffffff; color: rgb(6, 7, 7);">End Date</th>
+                <td style="background-color: #f7f7f7; color: #343a40;">{{ end_d }}</td>
             </tr>
             <tr>
-                <td style=font-weight:bold>Current Phase</td>
-                <td>{{ cur_phase }}</td>
+                <th style="background-color: #ffffff; color:rgb(6, 7, 7);">Current Phase</th>
+                <td style="background-color: #f7f7f7; color: #343a40;">{{ cur_phase }}</td>
             </tr>
         </table>
+        
     </div>
-    
-    {% if cur_phase >= 1 %}
+
     <div class="box">
         <h3>PHASE 1 - SEMESTER 6</h3>
     </div>
-    {% endif %}
-    
-    {% if cur_phase >= 2 %}
+
     <div class="box">
         <h3>PHASE 2 - SEMESTER 7</h3>
     </div>
-    {% endif %}
-    
-    {% if cur_phase >= 3 %}
+
     <div class="box">
         <h3>PHASE 3 - SEMESTER 8</h3>
     </div>
-    {% endif %}
-
 </body>
+
 </html>

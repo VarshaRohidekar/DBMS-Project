@@ -34,6 +34,34 @@
             background-color: aqua;
             color: #343a40;
         }
+
+        .profile-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .file-upload-box {
+            border: 2px dashed #343a40;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+        }
+
+        .resume-button {
+            display: block;
+            background-color: #343a40;
+            color: aqua;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -58,47 +86,44 @@
 
     <div class="container">
         <h1>Welcome, {{ first_name }} {{ last_name }}</h1>
-        <div>
+        <div class="profile-box">
             <p>Email: {{ email_id }}</p>
         </div>
+
         {% if not hasResume %}
-        <form method="POST" action="{{ url_for('studentprofile', username=username) }}" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="resume">Upload Resume</label>
+        <div class="file-upload-box">
+            <p>Upload Your Resume</p>
+            <form method="POST" action="{{ url_for('studentprofile', username=username) }}" enctype="multipart/form-data">
                 <input type="file" class="form-control-file" id="resume" name="resume">
-            </div>
-            <div class="form-group">
                 <button type="submit" class="btn btn-primary">Upload Resume</button>
-            </div>
-        </form>
+            </form>
+        </div>
         {% endif %}
 
         {% if hasResume %}
-        <div>
-            <button
-                onclick="window.open('{{ url_for('showresume', username=username) }}', '_blank')">Dummy View Resume</button>
+        <div class="profile-box">
+            <p>View Your Resume:</p>
+            <a href="{{ resume_page }}" class="resume-button" target="_blank">View Resume</a>
         </div>
-        <div>
-            <a href="{{ resume_page }}" target="_blank">Working View Resume</a>
-        </div>
-        <form method="POST" action="{{ url_for('studentprofile', username=username) }}" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="resume">Re-upload Resume:</label>
+
+        <div class="file-upload-box">
+            <p>Re-upload Your Resume</p>
+            <form method="POST" action="{{ url_for('studentprofile', username=username) }}" enctype="multipart/form-data">
                 <input type="file" class="form-control-file" id="resume" name="resume">
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Upload Resume</button>
-            </div>
-        </form>
+                <button type="submit" class="btn btn-primary">Re-upload Resume</button>
+            </form>
+        </div>
         {% endif %}
 
         {% if teamEligibility %}
-        <div>
+        <div class="profile-box">
             {% if hasTeam %}
-            <a href="{{ url_for('teampage', team_id=team_id, srn=username) }}">Team Page</a>
+            <p>Your Team:</p>
+            <a href="{{ url_for('teampage', team_id=team_id, srn=username) }}" class="btn btn-primary">Team Page</a>
             {% endif %}
             {% if not hasTeam %}
-            <a href="{{ url_for('teamformpage', srn=username) }}">Create Team</a>
+            <p>Create a Team:</p>
+            <a href="{{ url_for('teamformpage', srn=username) }}" class="btn btn-primary">Create Team</a>
             {% endif %}
         </div>
         {% endif %}

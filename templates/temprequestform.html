@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        /* Your previous styles here */
+
+        body {
+            background-color: white;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            align-items: center;
+            color: aqua;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: aqua;
+        }
+
+        #supervisorSelect {
+            background-color: white;
+            color: #343a40;
+        }
+
+        #supervisorDetails {
+            color: white;
+        }
+
+        #addSupervisorButton {
+            background-color: #343a40;
+            color: aqua;
+        }
+
+        .cart-container {
+            background-color: white;
+            color: #343a40;
+            padding: 10px;
+            border: 2px solid #343a40;
+            border-radius: 5px;
+        }
+
+        .cart-items {
+            list-style-type: none;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #343a40;
+        }
+
+        .cart-item-name {
+            flex: 1;
+        }
+
+        .cart-item-price {
+            flex: 1;
+            text-align: right;
+        }
+
+        .cart-total {
+            font-weight: bold;
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Your existing content here -->
+
+    <div class="cart-container">
+        <h3>Shopping Cart</h3>
+        <ul class="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </ul>
+        <div class="cart-total">Total: $0.00</div>
+    </div>
+
+    <!-- Add a button to call addItemToCart -->
+    <button id="addItemButton">Add Item to Cart</button>
+
+    <label for="supervisorSelect">Select Supervisor:</label>
+    <select id="supervisorSelect">
+        {% for teacher in teachers %}
+        <option value={{teacher[0]}}>{{teacher[1]}} {{teacher[2]}} </option>
+        {% endfor%}
+    </select>
+
+    <!-- Your existing content here -->
+
+    <script>
+        function addItemToCart(name, price) {
+            var cartItems = document.querySelector(".cart-items");
+            var cartTotal = document.querySelector(".cart-total");
+
+            var cartItem = document.createElement("li");
+            cartItem.className = "cart-item";
+
+            var itemName = document.createElement("div");
+            itemName.className = "cart-item-name";
+            itemName.textContent = name;
+
+            var itemPrice = document.createElement("div");
+            itemPrice.className = "cart-item-price";
+            itemPrice.textContent = "$" + price.toFixed(2);
+
+            cartItem.appendChild(itemName);
+            cartItem.appendChild(itemPrice);
+            cartItems.appendChild(cartItem);
+
+            var currentTotal = parseFloat(cartTotal.textContent.substring(7));
+            var newTotal = currentTotal + price;
+            cartTotal.textContent = "Total: $" + newTotal.toFixed(2);
+        }
+
+        // Add an event listener to the button
+        var addItemButton = document.getElementById("addItemButton");
+        addItemButton.addEventListener("click", function() {
+            // Call addItemToCart with item details
+            addItemToCart("New Product", 19.99);
+        });
+    </script>
+</body>
+
+
+
+</html>

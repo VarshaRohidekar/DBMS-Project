@@ -1,28 +1,81 @@
-<!-- DROPDOWN BOX FOR TEACHER<ADMIN AND STUDENT -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Login Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .col-md-6 {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #343a40;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #343a40;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #aqua;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h1 class="text-center">Login or Sign Up</h1>
                 <form method="POST" action="/login">
-
                     <div class="form-group">
                         <label for="role">Role:</label>
                         <select name="role" id="role">
                             <option value="s">Student</option>
                             <option value="t">Teacher</option>
                             <option value="a">Admin</option>
-                          </select>
-                          <!-- <input type="submit" value="Submit"/> -->
-                    </div>    
+                        </select>
+                    </div>
                     <div class="form-group">
-                        <!-- need to add a drop down for student or teacher (role)-->
                         <label for="username">Username:</label>
                         <input type="text" class="form-control" id="username" name="username" required>
                     </div>
@@ -36,5 +89,5 @@
         </div>
     </div>
 </body>
-</html>
 
+</html>

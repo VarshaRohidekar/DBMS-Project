@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Project Page</title>
+    <title>Review Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: aqua;
+        }
+
         .container {
             display: flex;
             justify-content: space-around;
             padding: 20px;
         }
+
         .box {
             border: 2px solid #333;
-            padding: 10px;
-            width: 30%;
-            margin: 10px;
+            padding: 20px;
+            width: 500px;
+            margin: 20px;
+            background-color: white;
+            height: 500px;
         }
+
         .reviews {
             display: none;
+        }
+
+        .btn-primary {
+            background-color: #343a40;
+            color: aqua;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: aqua;
+            color: #343a40;
         }
     </style>
 </head>
@@ -33,13 +63,13 @@
                     <a class="nav-link" href="{{ url_for('teampage', srn=srn,team_id=team_id) }}" style="color: aqua">Team Page</a>
                 </li>
             </ul>
-            <h3 style=color:aqua;align-items:center;>Team {{ team_id }}</h3>
+            <h3 style="color: aqua;">Team {{ team_id }}</h3>
         </div>
     </nav>
     <div class="container">
         <div class="box">
             <h2>Phase 1</h2>
-            <button onclick="showReviews('phase_1')">View Reviews</button>
+            <button class="btn btn-primary" onclick="showReviews('phase_1')">View Reviews</button>
             <div class="reviews" id="phase_1_reviews">
                 <h3>Reviews for Phase 1</h3>
                 <ul>
@@ -51,7 +81,7 @@
         </div>
         <div class="box">
             <h2>Phase 2</h2>
-            <button onclick="showReviews('phase_2')">View Reviews</button>
+            <button class="btn btn-primary" onclick="showReviews('phase_2')">View Reviews</button>
             <div class="reviews" id="phase_2_reviews">
                 <h3>Reviews for Phase 2</h3>
                 <ul>
@@ -63,7 +93,7 @@
         </div>
         <div class="box">
             <h2>Phase 3</h2>
-            <button onclick="showReviews('phase_3')">View Reviews</button>
+            <button class="btn btn-primary" onclick="showReviews('phase_3')">View Reviews</button>
             <div class="reviews" id="phase_3_reviews">
                 <h3>Reviews for Phase 3</h3>
                 <ul>
