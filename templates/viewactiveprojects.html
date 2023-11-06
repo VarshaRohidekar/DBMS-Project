@@ -84,7 +84,7 @@
                         {% endfor %}
                     </table>
                     <button class="btn btn-success view">View Project</button>
-                
+                    <button class="btn btn-danger complete">Mark project complete</button>
                 </div>
             {% endfor %}
         </div>
@@ -98,6 +98,21 @@
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({'team_id': team_id}),
+                success: function(response) { 
+                    window.location.replace(response); 
+                }, 
+                error: function(error) { 
+                    alert(error); 
+                } 
+            })
+        };
+
+        function endProject(project_id, string){
+            $.ajax({
+                url: '{{url_for("viewactiveprojects", username=username)}}',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({'project_id': project_id}),
                 success: function(response) { 
                     window.location.replace(response); 
                 }, 
@@ -123,7 +138,23 @@
             }); 
         });
 
-
+        $(document).ready(function(){
+            $(".complete").click(function(){
+                var parent = $(this).parent()
+                var team_id = $(parent).attr('id')
+                console.log(team_id)
+                var url
+                var project_id
+                {% for request in requests %}
+                    if('{{request.team_id}}'==team_id){
+                        project_id = '{{request.project_id}}'
+                        url='{{url_for("project", team_id=request.team_id, srn=username)}}'
+                    }
+                {% endfor %}
+                console.log(url)
+                endProject(project_id, url)
+            }); 
+        });
     </script>
 
 </body>

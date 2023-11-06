@@ -36,6 +36,8 @@ def team_info(team_id):
     
     cnx_cursor.execute("""SELECT project_id FROM Project WHERE team_id=%(team_id)s""", {'team_id': team_id})
     content = cnx_cursor.fetchall()
+    cnx_cursor.execute("""CALL cumulative(%(team_id)s)""", {'team_id': team_id})
+    avg = cnx_cursor.fetchone()[1]
     print(content)
     hasProject = False
     if len(content) != 0:
@@ -47,7 +49,7 @@ def team_info(team_id):
     for row in rows:
         print(row)   
     
-    return (team_id, team_name, rows, column_names, hasProject)
+    return (team_id, team_name, rows, column_names, hasProject, avg)
 
 
 def get_requests(team_id):

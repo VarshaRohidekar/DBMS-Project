@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
+            background-color: #fff;
             margin: 0;
             padding: 0;
         }
@@ -17,10 +17,11 @@
         }
 
         .col-md-6 {
-            background-color: #fff;
+            background-color: #f7f7f7; /* Light gray background */
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease; /* Add box shadow transition */
         }
 
         h1 {
@@ -38,6 +39,7 @@
 
         label {
             color: #343a40;
+            font-weight: bold; /* Make labels bold */
         }
 
         select, input {
@@ -53,10 +55,33 @@
             color: #fff;
             border: none;
             border-radius: 5px;
+            transition: background-color 0.3s ease; /* Add background color transition */
         }
 
         .btn-primary:hover {
-            background-color: #aqua;
+            background-color: aqua; /* Aqua background on hover */
+        }
+
+        /* Add a subtle shadow on hover */
+        .col-md-6:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Add an animation for the Login button */
+        .btn-primary {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
     </style>
 </head>

@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import errorcode 
 from backend import config
+import datetime
 # from queries import selects
 
 def get_requests(supervisor_id):
@@ -71,4 +72,28 @@ def get_projects(userid):
 
     result = cnx_cursor.fetchall()
 
+    cnx.close()
     return result
+
+def end_project(project_id):
+    try:
+        cnx = mysql.connector.connect(**config.config)
+
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+    else:
+        print("connected to", cnx._database)        #cnx._database -- value of current database
+        
+    cnx_cursor = cnx.cursor()
+
+    cnx_cursor.execute("""UPDATE Project SET end_d=%(d)s where project_id=%(id)s""", {'d': datetime.datetime.now().strftime("%Y-%m-%d"), 'id': project_id})
+
+    cnx_cursor.execute("""CALL decrement_active_projects(%(id)s)""", {'id': project_id})
+
+    cnx.close()
+    return

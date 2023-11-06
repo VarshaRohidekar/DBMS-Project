@@ -152,4 +152,23 @@ CREATE PROCEDURE cumulative(IN team_id int)
     SELECT s.team_id, avg(s.cgpa) FROM Student s GROUP BY s.team_id HAVING s.team_id=team_id;
     END //
 
+
+CREATE TRIGGER delete_requests
+    AFTER INSERT ON Project
+    FOR EACH ROW
+    BEGIN
+    DELETE FROM Request WHERE team_id=NEW.team_id;
+    END //
+
+CREATE PROCEDURE decrement_active_projects(IN project_id int)
+    BEGIN
+    DECLARE supervisor_id varchar(15);
+    SELECT p.supervisor_id INTO supervisor_id
+    FROM Project p
+    WHERE p.project_id=project_id;
+    UPDATE Supervisor
+    SET active_projects = active_projects - 1
+    WHERE Supervisor.supervisor_id = supervisor_id;
+    END //
+    
 delimiter ;

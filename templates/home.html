@@ -4,39 +4,79 @@
     <title>Capstone Mapping</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #343a40;
+            color: aqua;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
         }
+
         th, td {
-            border: 1px solid black;
+            border: 1px solid aqua;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: aqua;
+        }
+
+        .navbar-toggler-icon {
+            background-color: aqua;
+        }
+
+        .nav-link {
+            color: aqua;
+        }
+
+        .animated-text {
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(90deg, #343a40, aqua, #343a40);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-size: 200% 100%;
+            animation: gradient 2s linear infinite;
+            align-items: center;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .login-link {
+            margin-top: 20px;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
     </style>
-    <!-- <link rel="stylesheet" type="text/css" href="/static/style.css">  -->
 </head>
-<body class="body">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Your Website</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- <div>
-        <input type="text">Enter text here </input>
-    </div> -->
-
-
+<body>
+    <a href="/login" style="text-decoration: none;"><div class="animated-text">Capstone Mapping</div></a>
 </body>
 </html>

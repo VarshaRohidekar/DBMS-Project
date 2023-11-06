@@ -7,13 +7,6 @@ import pandas as pd
 import json
 from backend import config
 import os
-# A simple dictionary to store user data (replace with a proper database)
-
-# users = {
-#     'user1': {'password': 'password1', 'name': 'John Doe','auth':'t'},
-#     'user2': {'password': 'password2', 'name': 'Jane Smith','auth':'s'},
-#     'user3': {'password': 'password3', 'name': 'ADMIN CHECKING','auth':'a'}
-# }
 
 logged_in_users = []
 
@@ -53,55 +46,18 @@ def login():
         else:
             print(result)
             return render_template('login.html')
-            #pop-up on login page printing the 'result' string
-
-        # if username in users and users[username]['password'] == password:
-        #     # Successful login
-        #     session['username'] = username  # Store the username in the session
-        #     auth_level = users[username]['auth']
-        #     if role == 1:
-        #         return redirect(url_for('teacherprofile', username=username))
-        #     elif auth_level==2:
-        #         # The user is a student
-        #         return redirect(url_for('studentprofile', username=username))
-        #     elif auth_level==3:
-        #         return redirect(url_for('adminprofile', username=username))
-        # else:
-        #     # Invalid username or password
-        #     return "Invalid credentials. Please try again."
 
     return render_template('login.html')
-
-
 
 
 # Check whether the person logging in is a teacher/student or admin
 @app.route('/studentprofile/<username>', methods=['GET', 'POST'])
 def studentprofile(username):
     first_name, last_name, email, outgoing_year, cgpa, semester, teamEligibility, hasTeam, hasResume, team_id = StudentDashboardFunc.get_student_details(username)
-    
-
-
     resume_link = url_for("showresume", username=username)
-    # if teamEligibility:
-    #     # needs to redirect to 2 different pages depending upon state of team formation
-    #     if hasTeam:
-    #         return "go to team page"        # a button
-    #     else:
-    #         return "create team"            # a button
-    
-    # else:
-    #     return None
     print(url_for("showresume", username=username))
     if request.method == 'POST':
-        # First name, last name, SRN, CGPA ,Semester and email, upload resume, current YEAR/Batch.
-        # If student not in team -> button to create a team (only for 3rd years)
-        # If student has a team -> view team button -> on clicking view team redirect to team page.
-        # If student has a resume -> view resume, edit resume button
-        # If student does not have a resume -> upload resume
-        # Batch -> Outgoing Year 
-        # user['email'] = request.form.get('email')
-        # user['bio'] = request.form.get('bio')
+
         for field, data in request.files.items():
             print("file recieved")
             print(field)
@@ -154,10 +110,11 @@ def teampage(team_id, srn):
     isStudent=False
     if srn[0]=='P':
         isStudent=True
-    (team_id, team_name, rows, cols, hasProject) = TeamPageFunc.team_info(team_id)
+    (team_id, team_name, rows, cols, hasProject, avg) = TeamPageFunc.team_info(team_id)
+    avg=format(avg, ".2f")
     print(hasProject)
     
-    return render_template('teampage.html', team_id=team_id, team_name=team_name, srn=srn, rows=rows, cols=cols, hasProject=hasProject, isStudent=isStudent)
+    return render_template('teampage.html', team_id=team_id, team_name=team_name, srn=srn, rows=rows, cols=cols, hasProject=hasProject, isStudent=isStudent, avg=avg)
 
 
 @app.route('/teampage/<team_id>/<srn>/requestsform', methods=["GET", "POST"])
@@ -183,11 +140,6 @@ def sendingrequests(team_id, srn):
         # print(s)
         # print()
     return url_for('teampage', team_id=team_id, srn=srn)
-
-# @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=["GET", "POST"])
-# def requestsstatus(team_id, srn):
-#     return render_template('requestsstatus.html', team_id=team_id, srn=srn)
-
 
 @app.route('/teampage/<team_id>/<srn>/reviewpage', methods=["GET", "POST"])
 def reviewpage(team_id, srn):
@@ -243,19 +195,6 @@ def teacherprofile(username):
     print(first_name,last_name,email)
     return render_template('teacherprofile.html', username=username, first_name=first_name,last_name=last_name,email_id=email, isSupervisor=isSupervisor, requestslink=requestslink)
 
-# @app.route('/teacherprofile/<username>/viewrequests', methods=['GET', 'POST'])
-# def viewrequests(username):
-#     content = SupervisorFunc.get_requests(username)
-#     print(content)
-#     request_id = content[0][0]
-#     team_id=content[0][1]
-#     interested_domain=content[0][2]
-#     idea = content[0][3]
-#     req_status=content[0][4]
-#     team_info = TeamPageFunc.team_info(team_id)
-#     # print(team_info)
-#     return render_template('viewrequests.html', username=username, content=content, request_id=request_id,team_id=team_id,interested_domain=interested_domain,idea=idea,team_info=team_info,req_status=req_status)
-
 @app.route('/teacherprofile/<username>/viewrequests', methods=['GET', 'POST'])
 def viewrequests(username):
     content = SupervisorFunc.get_requests(username)
@@ -280,7 +219,7 @@ def viewrequests(username):
             'req_status': req_status,
             'team_info': team_info, 
         })
-
+        # need to handle avg value added in the end
 
     return render_template('viewrequests.html', username=username, requests=requests, redirectlink=redirectlink)
 
@@ -291,6 +230,11 @@ def viewactiveprojects(username):
         content=request.get_data()
         content=content.decode('utf8')
         data = json.loads(content)
+        if 'project_id' in data.keys():
+            # need to end project
+            print("project ended for project id: ", data['project_id'])
+            SupervisorFunc.end_project(data['project_id'])
+            return url_for('viewactiveprojects', username=username)
         return url_for('project', srn=username, team_id=data['team_id'])
 
     result = SupervisorFunc.get_projects(username)
@@ -307,7 +251,7 @@ def viewactiveprojects(username):
             domain=req[6]
             idea = req[7]
 
-
+            # need to handle avg in team_info
             team_info = TeamPageFunc.team_info(team_id)
             print(team_info)
             requests.append({
@@ -343,29 +287,6 @@ def process_request(username):
     # call needed functions
     
     return url_for("viewrequests", username=username)
-
-''' TEACHER PROFILE PAGE '''
-# If a teacher is a supervisor -> modify teacher page to supervisor
-# TEACHER PAGE -> Teacher ID, Name, GET REVIEWS(SEE LATER)
-
-# Regardless of the year for which a teacher is a supervisor -> redirect to supervisor page
-# SUPERVISOR PAGE -> Supervisor ID,Name,Drop down box for checking the batch of team, GET REVIEWS(LATER)
-# If the supervisor exists for the current batch (3rd year) -> on view requests -> viewing pending requests(allowed to accept/reject) (x or a tick)
-# If the supervisor exists for the final year batch (4th year) -> do not accept requests.
-# View Active Teams(button) -> Each team will have "view project" button,List of active project teams with team name,project name,BATCH
-
-'''ADMIN PAGE'''
-# @app.route('/adminprofile', methods=['GET', 'POST'])
-# def adminprofile():
-#     # user = users.get(username)
-#     # if not user:
-#     #     return "User not found."
-#     # if request.method == 'POST':
-#     #     # Add teacher-specific logic for updating the profile
-#     #     user['email'] = request.form.get('email')
-#     #     user['bio'] = request.form.get('bio')
-#     #     return "Teacher profile updated successfully."
-#     return render_template('adminprofile.html')
 
 @app.route('/adminprofile/<username>', methods=['GET', 'POST'])
 def adminprofile(username):
