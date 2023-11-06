@@ -68,7 +68,7 @@ def display_projectdetails(team_id):
     data = {
         'team_id' : team_id
     }
-    cnx_cursor.execute("""SELECT project_id, team_id, problem_statement, domain, start_d, end_d, cur_phase FROM Project WHERE team_id=%(team_id)s""", data)
+    cnx_cursor.execute("""SELECT project_id, team_id, supervisor_id, problem_statement, domain, start_d, end_d, cur_phase FROM Project WHERE team_id=%(team_id)s""", data)
     # print(cnx_cursor.fetchall())
     info = cnx_cursor.fetchall()[0]
     send = [i for i in info]

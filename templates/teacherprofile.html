@@ -46,6 +46,10 @@
                     <a class="nav-link" href="{{ requestslink }}" style="color: aqua">View Requests</a>
                 </li>
                 {% endif %}
+                <li>
+                    <a class="nav-link" href="{{ url_for('viewactiveprojects',username=username) }}" style="color: aqua">View Active Projects </a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/logout" style="color: aqua;">Logout</a>
                 </li>

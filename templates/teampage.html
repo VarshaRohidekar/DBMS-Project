@@ -95,9 +95,17 @@
         <a class="navbar-brand" href="#" style="color: aqua">Team Page</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                {% if isStudent %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style="color: aqua">Home</a>
                 </li>
+                {% endif %}
+                {% if not isStudent %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('teacherprofile', username=srn)}}" style="color: aqua">Home</a>
+                </li>
+
+                {% endif %}
                 {% if hasProject %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('project', srn=srn,team_id=team_id)}}" style="color: aqua">View Project</a>

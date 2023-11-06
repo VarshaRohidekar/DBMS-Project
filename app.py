@@ -151,10 +151,13 @@ def teamformpage(srn):
 @app.route('/teampage/<team_id>/<srn>', methods=["GET", "POST"])
 def teampage(team_id, srn):
     print(srn)
+    isStudent=False
+    if srn[0]=='P':
+        isStudent=True
     (team_id, team_name, rows, cols, hasProject) = TeamPageFunc.team_info(team_id)
     print(hasProject)
     
-    return render_template('teampage.html', team_id=team_id, team_name=team_name, srn=srn, rows=rows, cols=cols, hasProject=hasProject)
+    return render_template('teampage.html', team_id=team_id, team_name=team_name, srn=srn, rows=rows, cols=cols, hasProject=hasProject, isStudent=isStudent)
 
 
 @app.route('/teampage/<team_id>/<srn>/requestsform', methods=["GET", "POST"])
@@ -189,8 +192,13 @@ def sendingrequests(team_id, srn):
 @app.route('/teampage/<team_id>/<srn>/reviewpage', methods=["GET", "POST"])
 def reviewpage(team_id, srn):
     result = ReviewPageFunc.get_reviews(team_id)
-    # print(result[0])
-    return render_template('reviewpage.html',team_id=team_id,srn=srn,result=result)
+    print(result)
+
+    isStudent = False 
+    if srn[0]=='P':
+        isStudent=True
+
+    return render_template('reviewpage.html',team_id=team_id,srn=srn,result=result,isStudent=isStudent)
 
 @app.route('/teampage/<team_id>/<srn>/requestsstatus', methods=['GET', 'POST'])
 def requestsstatus(team_id,srn):
@@ -218,9 +226,12 @@ def creating_project_page(team_id, srn):
 
 
 @app.route('/teampage/<team_id>/<srn>/project', methods=["GET", "POST"])
-def project(team_id, srn):
-    project_id,team_id,problem_statement, domain, start_d, end_d, cur_phase = ProjectPageFunc.display_projectdetails(team_id)
-    return render_template('project.html', project_id=project_id,team_id=team_id, srn=srn,problem_statement=problem_statement,domain=domain,start_d=start_d,end_d=end_d,cur_phase=cur_phase)
+def project(team_id, srn):          # srn can be student id or supervisor id
+    project_id,team_id,supervisor_id, problem_statement, domain, start_d, end_d, cur_phase = ProjectPageFunc.display_projectdetails(team_id)
+    isStudent=False
+    if srn[0]=='P':
+        isStudent=True
+    return render_template('project.html', project_id=project_id,team_id=team_id, srn=srn,problem_statement=problem_statement,domain=domain,start_d=start_d,end_d=end_d,cur_phase=cur_phase, isStudent=isStudent)
 
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
@@ -272,6 +283,50 @@ def viewrequests(username):
 
 
     return render_template('viewrequests.html', username=username, requests=requests, redirectlink=redirectlink)
+
+@app.route('/teacherprofile/<username>/viewactiveprojects', methods=['GET', 'POST'])
+def viewactiveprojects(username):
+
+    if request.method=='POST':
+        content=request.get_data()
+        content=content.decode('utf8')
+        data = json.loads(content)
+        return url_for('project', srn=username, team_id=data['team_id'])
+
+    result = SupervisorFunc.get_projects(username)
+    print("This is ",result)
+    requests = []
+    for req in result:
+            # Extract relevant information from the request
+            project_id = req[0]
+            team_id = req[1]
+            supervisor_name = req[2]
+            start_date = req[3]
+            end_date = req[4]
+            cur_phase = req[5]
+            domain=req[6]
+            idea = req[7]
+
+
+            team_info = TeamPageFunc.team_info(team_id)
+            print(team_info)
+            requests.append({
+                'project_id': project_id,
+                'team_id': team_id,
+                'supervisor_name' : supervisor_name,
+                'start_date':start_date,
+                'end_date': end_date,
+                'cur_phase':cur_phase,
+                'domain':domain,
+                'idea':idea,
+                'team_info':team_info
+                
+            })
+
+
+    
+    return render_template('viewactiveprojects.html',username=username,requests=requests)
+
 
 @app.route('/process_request/<username>', methods=["POST", "GET"])
 def process_request(username):
@@ -367,5 +422,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,host="127.0.0.1")
+    app.run(debug=True,port=8080,host="127.0.0.1")
 

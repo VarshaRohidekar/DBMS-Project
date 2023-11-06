@@ -144,3 +144,12 @@ create table Document (
 -- insert into latest_id values ('Team', '0000000000');
 -- insert into latest_id values ('Request', '0000000000');
 -- insert into latest_id values ('Project', '0000000000');
+
+delimiter //
+
+CREATE PROCEDURE cumulative(IN team_id int)
+    BEGIN
+    SELECT s.team_id, avg(s.cgpa) FROM Student s GROUP BY s.team_id HAVING s.team_id=team_id;
+    END //
+
+delimiter ;
