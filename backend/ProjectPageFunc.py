@@ -30,7 +30,7 @@ def create_project(request_id):
         else:
             print(err)
     else:
-        print("connected to", cnx._database)        #cnx._database -- value of current database
+        print("connected to", cnx._database)       
         
     cnx_cursor = cnx.cursor()
 
@@ -44,6 +44,9 @@ def create_project(request_id):
                           VALUES (%(team_id)s, %(supervisor_id)s, %(d)s, 1, %(domain)s, %(idea)s)""", {'team_id': data[1], 'supervisor_id': data[2], 'd': datetime.datetime.now().strftime("%Y-%m-%d"), 'domain': data[3], 'idea': data[4]})
 
     project_id = cnx_cursor.lastrowid
+
+    cnx_cursor.execute("""UPDATE Supervisor SET active_projects = active_projects +1 WHERE supervisor_id=%(id)s""", {'id':data[2]})
+
     return project_id
 
 

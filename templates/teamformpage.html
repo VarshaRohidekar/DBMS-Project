@@ -1,17 +1,75 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Dashboard</title>
+    <title>Team Form Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: aqua;
+            padding: 20px;
+        }
+
+        .navbar {
+            background-color: #000000;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: aqua;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: aqua;
+        }
+
+        h1 {
+            color: aqua;
+        }
+
+        form {
+            padding: 20px;
+            border: 5px solid rgb(0, 0, 0);
+            border-radius: 0px;
+        }
+
+        label {
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid rgb(0, 0, 0);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #343a40;
+            color: aqua;
+            border: 1px solid aqua;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: aqua;
+            color: #343a40;
+        }
+    </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
-        <a class="navbar-brand" href="#" style=align-items:center;color:aqua>Team Form Page</a>
+        <a class="navbar-brand" href="#" style="color: aqua;">Team Form Page</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('studentprofile',username=username)}}" style=color:aqua>Home</a>
+                    <a class="nav-link" href="{{ url_for('studentprofile', username=username) }}" style="color: aqua;">Home</a>
                 </li>
             </ul>
         </div>
@@ -19,25 +77,26 @@
     <div>
 
         <h1>Team Formation Form</h1>
-        <form action="{{to_check}}" method="POST">
+        <form action="{{ to_check }}" method="POST">
             
-            <label for="TeamName">Team_Name(Max 20 characters)</label>
-            <input type="text" id="TeamName" name="TeamName" required><br><br>
+            <label for="TeamName">Team Name (Max 20 characters):</label>
+            <input type="text" id="TeamName" name="TeamName" required><br>
             
             <label for="srn1">SRN-1:</label>
-            <input type="text" id="srn1" name="srn1" required><br><br>
+            <input type="text" id="srn1" name="srn1" required><br>
             
             <label for="srn2">SRN-2:</label>
-            <input type="text" id="srn2" name="srn2" required><br><br>
+            <input type="text" id="srn2" name="srn2" required><br>
             
             <label for="srn3">SRN-3:</label>
-            <input type="text" id="srn3" name="srn3" required><br><br>
+            <input type="text" id="srn3" name="srn3" required><br>
             
             <label for="srn4">SRN-4:</label>
-            <input type="text" id="srn4" name="srn4" required><br><br>
+            <input type="text" id="srn4" name="srn4" required><br>
             
             <input type="submit" value="Create Team">
         </form>
     </div>
 </body>
+
 </html>
