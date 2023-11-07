@@ -10,9 +10,9 @@ import os
 
 logged_in_users = []
 
-db = mysql.connector.connect(
-    **config.config
-)
+# db = mysql.connector.connect(
+#     **config.config
+# )
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
@@ -63,13 +63,6 @@ def studentprofile(username):
             print(field)
             print(data.stream.read())
             StudentDashboardFunc.insert_file(username, data.stream)
-        # resume = form['resume']
-        # if resume:
-        #     print(resume)
-        # else:
-        #     print("no resume")
-        
-        # return "Profile updated successfully."
     return render_template('studentprofile.html', username=username, first_name=first_name, last_name=last_name, email_id=email,outgoing_year=outgoing_year,cgpa=cgpa,semester=semester, hasResume=hasResume, teamEligibility = teamEligibility, hasTeam=hasTeam, resume_page = resume_link, team_id=team_id)
 
 @app.route('/studentprofile/<username>/resume', methods = ['GET', 'POST'])
@@ -344,4 +337,3 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True,port=8080,host="127.0.0.1")
-
