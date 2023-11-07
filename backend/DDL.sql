@@ -57,9 +57,7 @@ need to put pop saying that this is the last team they can accept, and on accept
 create table Supervisor (
     supervisor_id char(13) not null,
     team_limit int not null check (team_limit > 0),
-    active_projects int not null check (active_projects >= 0),
-    foreign key (supervisor_id) references Teacher(teacher_id) on update cascade on delete restrict,
-    constraint active_projects_limit check (active_projects < team_limit)
+    foreign key (supervisor_id) references Teacher(teacher_id) on update cascade on delete restrict
 );
 
     /* need to find a way to be able to set domain values */
@@ -145,6 +143,16 @@ create table Document (
 -- insert into latest_id values ('Team', '0000000000');
 -- insert into latest_id values ('Request', '0000000000');
 -- insert into latest_id values ('Project', '0000000000');
+
+CREATE VIEW supervisor_projects AS 
+WITH active_projects_count (supervisor_id, active_projects)
+AS (
+    SELECT supervisor_id, count(project_id)
+    FROM Project
+    WHERE end_d is NULL
+    GROUP BY supervisor_id
+)
+SELECT * FROM Supervisor natural join active_projects_count;
 
 delimiter //
 
