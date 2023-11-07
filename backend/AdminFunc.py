@@ -66,9 +66,13 @@ def get_query(query):
     try:
         cnx_cursor.execute(query)
         data = cnx_cursor.fetchall()
-        column_names = [desc[0] for desc in cnx_cursor.description]
+        if data != []:
+            column_names = [desc[0] for desc in cnx_cursor.description]
+        else:
+            x = query.split()[0]
+            return (x+" successful").upper()
     except:
-        return "incorrect query"
+            return "INCORRECT QUERY"
     else:
         return (data, column_names)
 
