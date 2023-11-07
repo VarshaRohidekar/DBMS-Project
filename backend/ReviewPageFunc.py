@@ -21,8 +21,11 @@ def get_reviews(team_id):
 
     cnx_cursor = cnx.cursor()
     
+    cnx_cursor.execute("""SELECT project_id from Project where team_id=%(team_id)s""", {'team_id': team_id})
+    project_id = cnx_cursor.fetchone()[0]
+    cnx_cursor.execute("""SELECT * from Review where project_id = %(project_id)s""", {'project_id': project_id})
     
-    cnx_cursor.execute("""SELECT * from Review""")
+    # cnx_cursor.execute("""SELECT * from Review""")
 
     res = cnx_cursor.fetchall()
     l = [list(i) for i in res]

@@ -58,7 +58,8 @@ create table Supervisor (
     supervisor_id char(13) not null,
     team_limit int not null check (team_limit > 0),
     active_projects int not null check (active_projects >= 0),
-    foreign key (supervisor_id) references Teacher(teacher_id) on update cascade on delete restrict
+    foreign key (supervisor_id) references Teacher(teacher_id) on update cascade on delete restrict,
+    constraint active_projects_limit check (active_projects < team_limit)
 );
 
     /* need to find a way to be able to set domain values */
