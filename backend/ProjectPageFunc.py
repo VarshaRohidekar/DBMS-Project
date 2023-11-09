@@ -45,7 +45,8 @@ def create_project(request_id):
 
     project_id = cnx_cursor.lastrowid
 
-    cnx_cursor.execute("""UPDATE Supervisor SET active_projects = active_projects +1 WHERE supervisor_id=%(id)s""", {'id':data[2]})
+    # taken care of by the view
+    # cnx_cursor.execute("""UPDATE Supervisor SET active_projects = active_projects +1 WHERE supervisor_id=%(id)s""", {'id':data[2]})
 
     return project_id
 

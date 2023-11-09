@@ -182,11 +182,26 @@ def project(team_id, srn):          # srn can be student id or supervisor id
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
 def teacherprofile(username):
     # user = users.get(username)
+    print(username)
     isSupervisor = TeacherDashboardFunc.is_Supervisor(username)
     requestslink = url_for('viewrequests', username=username)
     first_name,last_name,email = TeacherDashboardFunc.get_teacher_details(username)
     print(first_name,last_name,email)
-    return render_template('teacherprofile.html', username=username, first_name=first_name,last_name=last_name,email_id=email, isSupervisor=isSupervisor, requestslink=requestslink)
+    team_limit = None 
+    active_projects = None
+    accepted_requests = None
+    activeSupervisor = None 
+    if isSupervisor:
+        stuff = SupervisorFunc.get_supervisor_info(username)
+        activeSupervisor = stuff[0]
+        team_limit = stuff[1]
+        active_projects = stuff[2]
+        accepted_requests = stuff[3]
+        print(stuff)
+        
+    return render_template('teacherprofile.html', username=username, first_name=first_name,last_name=last_name,
+                           email_id=email, isSupervisor=isSupervisor, requestslink=requestslink, team_limit=team_limit, 
+                           active_projects=active_projects, accepted_requests=accepted_requests, activeSupervisor=activeSupervisor)
 
 @app.route('/teacherprofile/<username>/viewrequests', methods=['GET', 'POST'])
 def viewrequests(username):

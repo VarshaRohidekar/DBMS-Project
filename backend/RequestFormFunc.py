@@ -2,7 +2,7 @@ import mysql.connector
 from mysql.connector import errorcode 
 from backend import config
 # import config
-from datetime import date
+from datetime import datetime
 
 # each supervisor's details along some project info
 
@@ -23,7 +23,7 @@ def get_domains():
         
     cnx_cursor = cnx.cursor()
     
-    cnx_cursor.execute("""SELECT distinct domain FROM Supervisor_Domains""") 
+    cnx_cursor.execute("""SELECT domain FROM Domain""") 
     result = cnx_cursor.fetchall()
     
     return result
@@ -46,10 +46,14 @@ def get_available_supervisors():
     cnx_cursor = cnx.cursor()
     
     data = {
-        'batch': date.today().year
+        'batch': datetime.now().year + 2
     }
     
-    cnx_cursor.execute("""with Current (teacher_id) as (select supervisor_id from Supervisor natural join Supervisor_years where batch=2025 and active_projects < team_limit)
+    cnx_cursor.execute("""with Current (teacher_id) 
+                          as (select supervisor_id 
+                              from supervisor_projects natural join Supervisor_years 
+                              where batch=%(batch)s and active_projects < team_limit or active_projects is NULL
+                          )
                           select teacher_id, Fname, Lname, email from Current natural join Teacher""", data)
     
     teachers_temp = cnx_cursor.fetchall()
@@ -99,7 +103,7 @@ def insert_request(team_id, supervisor_ids, domain, idea):
     supervisor_ids = list(supervisor_ids)
     
     for supervisor in supervisor_ids:
-        
+        # getting a supervisor's domains
         cnx_cursor.execute("""SELECT distinct domain FROM Supervisor_Domains WHERE supervisor_id=%(id)s""", {'id': supervisor})
         print(supervisor)
         d_list = cnx_cursor.fetchall()

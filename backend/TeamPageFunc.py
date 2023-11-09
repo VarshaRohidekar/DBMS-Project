@@ -36,7 +36,7 @@ def team_info(team_id):
     
     cnx_cursor.execute("""SELECT project_id FROM Project WHERE team_id=%(team_id)s""", {'team_id': team_id})
     content = cnx_cursor.fetchall()
-    cnx_cursor.execute("""CALL cumulative(%(team_id)s)""", {'team_id': team_id})
+    cnx_cursor.execute("""CALL team_avg_cgpa(%(team_id)s)""", {'team_id': team_id})
     avg = cnx_cursor.fetchone()[1]
     print(content)
     hasProject = False

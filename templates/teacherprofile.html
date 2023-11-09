@@ -41,7 +41,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#" style="color: aqua;">Welcome, {{ first_name }}</a>
                 </li>
-                {% if isSupervisor %}
+                {% if activeSupervisor %}
                 <li>
                     <a class="nav-link" href="{{ requestslink }}" style="color: aqua">View Requests</a>
                 </li>
@@ -60,9 +60,29 @@
         <h1>Welcome, {{ first_name }} {{ last_name }}</h1>
         <h2>Teacher Dashboard</h2>
         <form method="POST" action="{{ url_for('teacherprofile', username=username) }}" enctype="multipart/form-data">
-            <div class="form-group">
+            <div>
+                {% if activeSupervisor %}
+                    <p> You are currently accepting current 3rd year Capstone Teams! </p>
+                {% endif %}
+
+                {% if not activeSupervisor%}
+                    <p> You are currently not accepting current 3rd year Capstone Teams! </p>
+                {% endif %}
+
+                <!-- need to put button which will help change the status of accepting teams or not -->
+
+            </div>
+            
+            <div>
                 <!-- <label for="email">Email:</label> -->
                 <p>Email: {{ email_id }}</p>
+                {% if isSupervisor %}
+                    <p> Active Projects : {{ active_projects }} </p>
+                    {% if activeSupervisor %}
+                        <p> Team Limit: {{ team_limit }} </p>
+                        <p> Accepted Requests : {{ accepted_requests }} </p>
+                    {% endif %}
+                {% endif %}
             </div>
         </form>
     </div>

@@ -30,7 +30,7 @@ def get_reviews(team_id):
     res = cnx_cursor.fetchall()
     l = [list(i) for i in res]
     for r in l:
-        cnx_cursor.execute("""SELECT reviewer_id, Fname, Lname, feedback FROM Review natural join Reviewed_By join Teacher where project_id=%(id)s and phase=%(phase)s and teacher_id=reviewer_id""", {'id': r[0], 'phase': r[1]})
+        cnx_cursor.execute("""SELECT reviewer_id, Fname, Lname, feedback FROM Review natural join Reviewed_by join Teacher where project_id=%(id)s and phase=%(phase)s and teacher_id=reviewer_id""", {'id': r[0], 'phase': r[1]})
         reviewers = cnx_cursor.fetchall()
         r.append(reviewers)
     cnx.close()

@@ -86,7 +86,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}" style="color: aqua">Team Page</a>
                 </li>
-
+                <li>
+                    <a class="nav-link" href="{{ url_for('project', team_id=team_id, srn=srn)}}" style="color: aqua"> Project Page </a>
+                </li>
             </ul>
             <h3 style="color: aqua;">Team {{ team_id }}</h3>
         </div>
