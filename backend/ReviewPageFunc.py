@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import errorcode 
-from backend import config    
+from backend.table_population import config    
     
 def get_reviews(team_id):
 

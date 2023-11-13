@@ -5,7 +5,7 @@ app.secret_key = 'dbms'
 from backend import LoginPageFunc, StudentDashboardFunc,TeacherDashboardFunc, AdminFunc, TeamFormFunc, TeamPageFunc, ProjectPageFunc, RequestFormFunc, SupervisorFunc,ReviewPageFunc
 import pandas as pd
 import json
-from backend import config
+from backend.table_population import config
 import os
 
 logged_in_users = []

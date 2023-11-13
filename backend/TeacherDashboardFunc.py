@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import errorcode 
-from backend import config
+from backend.table_population import config
 
 
 # returning hasTeam and hasResume values in the get_student_details function itself

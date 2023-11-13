@@ -9,7 +9,7 @@ or should verification be done in the create function
 
 import mysql.connector
 from mysql.connector import errorcode 
-from backend import config
+from backend.table_population import config
 # import config
 import sys
 import os 
