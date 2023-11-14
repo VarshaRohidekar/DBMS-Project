@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Profile Page</title>
+    <title>Review Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
         body {
@@ -71,6 +71,25 @@
 
         .email-section {
             margin-top: 20px;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            border: 2px solid #333;
+            margin: 20px auto;
+            background-color: #fff;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #070707;
+        }
+        th {
+            background-color: #343a40;
+            color: aqua;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
@@ -150,14 +169,7 @@
                 </tbody>
             </table>
         {% else %}
-            <form action="{{ url_for('makereviews', username=username) }}" method="POST">
-                <div class="form-group">
-                    <label for="feedback">Make a Review:</label>
-                    <input type="text" id="feedback" name="feedback" required>
-                </div>
-                <input type="hidden" name="reviewer_id" value="{{ username }}">
-                <input type="submit" value="Submit Review" class="btn btn-primary">
-            </form>
+            <h2>No assigned review</h2>
         {% endif %}
     </div>>
 

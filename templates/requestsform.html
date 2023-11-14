@@ -173,6 +173,8 @@
             addedSupervisors.innerHTML += listItem;
         });
 
+
+
         // Deleting the most recent supervisor added
         document.getElementById("deleteSupervisorButton").addEventListener("click", function() {
             var addedSupervisorsList = document.getElementById("addedSupervisorsList");
@@ -220,6 +222,7 @@
                 code += `<tr><td>${projects[i][0]}</td><td>${projects[i][1]}</td></tr>`;
             }
             tableBody.innerHTML = code;
+            updateDomainDropdown(domains);
         });
 
         var requestSubmission = document.getElementById("requestSubmission");
@@ -252,6 +255,24 @@
                 sendData(domain, idea, '{{team_id}}', teachers);
             });
         }
+
+        function updateDomainDropdown(domains) {
+            var domainDropdown = document.getElementById("domain");
+            domainDropdown.innerHTML = ""; // Clear existing options
+
+            for (let i = 0; i < domains.length; i++) {
+                var option = document.createElement("option");
+                option.value = domains[i];
+                option.text = domains[i];
+                domainDropdown.add(option);
+            }
+        }
+
+
+
+
+
+
     </script>
 </body>
 

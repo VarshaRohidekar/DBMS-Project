@@ -99,5 +99,3 @@ def addreviews(project_id, phase, reviewer_id, feedback):
         cnx.close()
 
     return True
-
-
