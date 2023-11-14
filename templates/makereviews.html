@@ -84,7 +84,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" style="color: aqua;">Welcome, {{ first_name }}</a>
+                    <a class="nav-link" href="{{ url_for('teacherprofile', username=username) }}" style="color: aqua;">Home</a>
                 </li>
                 {% if activeSupervisor %}
                 <li>
@@ -108,3 +108,60 @@
             </ul>
         </div>
     </nav>
+
+    <div class="container">
+        <h3>Reviews for Reviewer ID: {{ username }}</h3>
+
+        {% if requests %}
+            <!-- Display reviews in a table -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Project ID</th>
+                        <th>Phase</th>
+                        <th>Feedback</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in requests %}
+                        <tr>
+                            <td>{{ request.project_id }}</td>
+                            <td>{{ request.phase }}</td>
+                            {% if request.feedback %}
+                                <td>{{ request.feedback }}</td>
+                            {% else %}
+                            <td>
+                                <form action="{{ url_for('makereviews', username=username) }}" method="POST">
+                                    <div class="form-group">
+                                        <label for="new_feedback">Make a Review:</label>
+                                        <input type="text" id="new_feedback" name="new_feedback" required>
+                                    </div>
+                                    <input type="hidden" name="reviewer_id" value="{{ username }}">
+                                    <input type="hidden" name="project_id" value="{{ request.project_id }}">
+                                    <input type="hidden" name="phase" value="{{ request.phase }}">
+                                    <input type="submit" value="Submit Review" class="btn btn-primary">
+                                </form>
+                            </td>
+                        {% endif %}
+                            <td>{{ request.grade }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <form action="{{ url_for('makereviews', username=username) }}" method="POST">
+                <div class="form-group">
+                    <label for="feedback">Make a Review:</label>
+                    <input type="text" id="feedback" name="feedback" required>
+                </div>
+                <input type="hidden" name="reviewer_id" value="{{ username }}">
+                <input type="submit" value="Submit Review" class="btn btn-primary">
+            </form>
+        {% endif %}
+    </div>>
+
+
+</body>
+
+</html>

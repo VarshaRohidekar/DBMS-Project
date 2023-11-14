@@ -312,6 +312,53 @@ def viewpastprojects(username):
     return render_template('viewpastprojects.html', username=username, requests=requests)
 
 
+@app.route('/teacherprofile/<username>/makereviews', methods=['GET', 'POST'])
+def makereviews(username):
+    result = ReviewPageFunc.get_reviewers(username)
+    requests = []
+    for req in result:
+        # Extract relevant information from the request
+        project_id = req[0]
+        phase = req[1]
+        supervisor_id = req[2]
+        feedback = req[3]
+        grade = req[4]
+
+        requests.append({
+            'project_id': project_id,
+            'phase': phase,
+            'supervisor_id': supervisor_id,
+            'feedback' : feedback,
+            'grade' : grade
+        })
+
+    if request.method == 'POST':
+        new_feedback = request.form.get('new_feedback')
+        reviewer_id = request.form.get('reviewer_id')
+        project_id = request.form.get('project_id')
+        phase = request.form.get('phase')
+
+        print(f"Received data: new_feedback={new_feedback}, reviewer_id={reviewer_id}, project_id={project_id}, phase={phase}")
+
+        # Debug statements to check if the route is being reached
+        print("Reached POST route")
+
+        # Add validation for new_feedback if needed
+        success = ReviewPageFunc.addreviews(project_id, phase, reviewer_id, new_feedback)
+
+        # Debug statement to check if the function is executed
+        if success:
+            print("Review added successfully")
+        else:
+            print("Failed to add review")
+
+        return redirect(url_for('makereviews', username=username))
+
+        return redirect(url_for('makereviews', username=username))
+    return render_template('makereviews.html',username=username,requests=requests)
+
+
+
 @app.route('/process_request/<username>', methods=["POST", "GET"])
 def process_request(username):
     print("reached process")
