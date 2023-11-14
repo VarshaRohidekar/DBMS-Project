@@ -176,7 +176,8 @@ def project(team_id, srn):          # srn can be student id or supervisor id
     isStudent=False
     if srn[0]=='P':
         isStudent=True
-    return render_template('project.html', project_id=project_id,team_id=team_id, srn=srn,problem_statement=problem_statement,domain=domain,start_d=start_d,end_d=end_d,cur_phase=cur_phase, isStudent=isStudent)
+    Fname, Lname, email = TeacherDashboardFunc.get_teacher_details(supervisor_id)
+    return render_template('project.html', project_id=project_id,team_id=team_id, srn=srn,problem_statement=problem_statement,domain=domain,start_d=start_d,end_d=end_d,cur_phase=cur_phase, isStudent=isStudent,supervisor_id=supervisor_id,Fname=Fname,Lname=Lname)
 
 
 @app.route('/teacherprofile/<username>', methods=['GET', 'POST'])
@@ -279,6 +280,37 @@ def viewactiveprojects(username):
     
     return render_template('viewactiveprojects.html',username=username,requests=requests)
 
+@app.route('/teacherprofile/<username>/viewpastprojects', methods=['GET', 'POST'])
+def viewpastprojects(username):
+    result = SupervisorFunc.get_completed_projects(username)
+    print(result)
+    requests = []
+    for req in result:
+        # Extract relevant information from the request
+        project_id = req[0]
+        team_id = req[1]
+        # supervisor_id = req[2]
+        start_date = req[3]
+        end_date = req[4]
+        # cur_phase = req[5]
+        domain = req[6]
+        idea = req[7]
+
+        team_info = TeamPageFunc.team_info(team_id)
+        requests.append({
+            'project_id': project_id,
+            'team_id': team_id,
+            # 'supervisor_id' : supervisor_id,
+            'start_date': start_date,
+            'end_date': end_date,
+            # 'cur_phase': cur_phase,
+            'domain': domain,
+            'idea': idea,
+            'team_info': team_info
+        })
+
+    return render_template('viewpastprojects.html', username=username, requests=requests)
+
 
 @app.route('/process_request/<username>', methods=["POST", "GET"])
 def process_request(username):
@@ -351,4 +383,4 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True,port="8081",host="127.0.0.1")
+    app.run(debug=True,port="8080",host="127.0.0.1")

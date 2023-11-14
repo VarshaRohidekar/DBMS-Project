@@ -34,6 +34,32 @@ def get_supervisor_info(id):
         (supervisor_id, team_limit, active_projects, accepted_requests) = result
         return (activeSupervisor, team_limit, active_projects, accepted_requests)
 
+def get_completed_projects(s_id):
+
+    try:
+        cnx = mysql.connector.connect(**config.config)
+
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+    else:
+        print("connected to", cnx._database)        #cnx._database -- value of current database
+        
+    cnx_cursor = cnx.cursor()
+    cnx_cursor.execute("""SELECT * FROM Project WHERE supervisor_id=%(id)s and end_d is not NULL""", {'id': s_id})
+
+    x = cnx_cursor.fetchall()
+    cnx.close()
+    if x is None:
+        print("this teacher does not have any completed projects")
+    
+
+    return x
+
 def get_requests(supervisor_id):
     
     try:

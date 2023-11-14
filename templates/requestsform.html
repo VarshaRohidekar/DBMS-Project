@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -12,6 +15,7 @@
             min-height: 100vh;
             margin: 0;
         }
+
         .navbar {
             background-color: #ffffff;
         }
@@ -19,6 +23,7 @@
         .navbar-dark .navbar-nav .nav-link {
             color: aqua;
         }
+
         .sql-query {
             text-align: center;
             padding: 20px;
@@ -28,82 +33,97 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 100%;
-            margin: 0 auto; /* Center the content horizontally */
+            margin: 0 auto;
             height: 100%;
         }
+
         form {
             text-align: center;
             height: 100%;
             width: 100%;
+            margin-top: 20px;
         }
+
         label {
             display: block;
             font-weight: bold;
             margin-bottom: 10px;
         }
-        input[type="text"] {
+
+        /* Updated styles for the dropdown box */
+        select#supervisorSelect {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url("https://cdn.iconscout.com/icon/free/png-256/chevron-down-4-477044.png") no-repeat scroll right center / 20px 20px;
         }
-        button[type="submit"] {
+
+        /* Updated styles for the buttons */
+        button {
             background-color: #343a40;
             color: aqua;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
         }
-        button[type="submit"]:hover {
+
+        button:hover {
             background-color: aqua;
             color: #343a40;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             border: 5px solid #333;
             background-color: #fff;
+            margin-top: 20px;
         }
-        th, td {
+
+        th,
+        td {
             text-align: left;
             padding: 8px;
             border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #343a40;
             color: aqua;
         }
+
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-    </style>
 
-    <style>
-        .navbar-brand {
-            color: aqua;
-        }
+        .navbar-brand,
         .nav-link {
             color: aqua;
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-row">
-        <a class="navbar-brand" href="#" style="align-items: center; color: aqua;">Request Status</a>
+        <a class="navbar-brand" href="#" style="align-items: center;">Request Status</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}" style="color: aqua;">Home</a>
+                    <a class="nav-link" href="{{url_for('studentprofile', username=srn)}}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}" style="color: aqua;">Return to Team Page</a>
+                    <a class="nav-link" href="{{ url_for('teampage', srn=srn, team_id=team_id) }}">Return to Team Page</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    
     <div class="sql-query">
         <label for="supervisorSelect">Select Supervisor:</label>
         <select id="supervisorSelect">
@@ -115,11 +135,10 @@
         <div id="supervisorDetails">
         </div>
 
-        <button id="addSupervisorButton" style="margin: 10px 0;">Add Supervisor</button>
-
+        <button id="addSupervisorButton">ADD SUPERVISOR</button>
+        <button id="deleteSupervisorButton">DELETE SUPERVISOR</button>
         <div id="addedSupervisors">
-            <ol id="addedSupervisorsList">
-            </ol>
+            <ol id="addedSupervisorsList"></ol>
         </div>
 
         <div id="ideaSubmission">
@@ -129,8 +148,8 @@
                     <option value='{{domain[0]}}'>{{domain[0]}}</option>
                     {% endfor %}
                 </select>
-                <input id="idea" type="text" class="form-control" style="margin: 10px 0;">
-                <button type="submit" style="background-color: #343a40; color: aqua; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Send Requests</button>
+                <input id="idea" type="text" class="form-control" placeholder="Your Idea">
+                <button type="submit">Send Requests</button>
             </form>
         </div>
     </div>
@@ -154,6 +173,15 @@
             addedSupervisors.innerHTML += listItem;
         });
 
+        // Deleting the most recent supervisor added
+        document.getElementById("deleteSupervisorButton").addEventListener("click", function() {
+            var addedSupervisorsList = document.getElementById("addedSupervisorsList");
+            if (addedSupervisorsList.children.length > 0) {
+                // Remove the last child (most recent supervisor added)
+                addedSupervisorsList.removeChild(addedSupervisorsList.lastChild);
+            }
+        });
+
         document.getElementById("supervisorSelect").addEventListener("change", function() {
             var selectedSupervisor = document.getElementById("supervisorSelect").value;
             var supervisorDetails = document.getElementById("supervisorDetails");
@@ -171,7 +199,9 @@
             }
             i += 1;
             {% endfor %}
-            var code = `<p>Email: ${email}</p><p>Domains: ${domains}</p><p>Projects: 
+            var code = `<p><b>Email: ${email}<b></p><p>Domains: ${domains}</p>
+                <h1>Previous Projects/Ongoing Projects</h1>
+                <p>
                 <table>
                     <thead>
                         <tr>
@@ -182,7 +212,7 @@
                     <tbody id="projectTableBody">
                     </tbody>
                 </table>
-            </p>`;
+                </p>`;
             supervisorDetails.innerHTML = code;
             var tableBody = document.getElementById("projectTableBody");
             var code = "";
@@ -224,4 +254,5 @@
         }
     </script>
 </body>
+
 </html>

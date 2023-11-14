@@ -93,71 +93,74 @@
             <h3 style="color: aqua;">Team {{ team_id }}</h3>
         </div>
     </nav>
+
     <div class="container">
-        {% for r in result %}
-        {% if r[1] == 1 %}
-        <div class="box">
-            <h2>Phase 1</h2>
-            <button class="btn btn-primary" onclick="showReviews('phase_1')">View Reviews</button>
-            <div class="reviews" id="phase_1_reviews">
-                <h3>Reviews for Phase 1</h3>
-                <ul>
-                    <li>Project ID: {{ r[0] }}</li>
-                    <li>Phase: {{ r[1] }}</li>
-                    <li>Grade: {{ r[2] }}</li>
-                    <li style="font-weight: bold;">Reviewers: </li>
-                    <ol>
-                        {% for x in r[3] %}
-                            <li>{{x[1]}} {{x[2]}} : {{x[3]}}</li>
-                        {% endfor %}
-                    </ol>
-
-                </ul>
-            </div>
-        </div>
+        {% if result %}
+            {% for r in result %}
+                {% if r[1] == 1 %}
+                    <div class="box">
+                        <h2>Phase 1</h2>
+                        <button class="btn btn-primary" onclick="showReviews('phase_1')">View Reviews</button>
+                        <div class="reviews" id="phase_1_reviews">
+                            <h3>Reviews for Phase 1</h3>
+                            <ul>
+                                <li>Project ID: {{ r[0] }}</li>
+                                <li>Phase: {{ r[1] }}</li>
+                                <li>Grade: {{ r[2] }}</li>
+                                <li style="font-weight: bold;">Reviewers: </li>
+                                <ol>
+                                    {% for x in r[3] %}
+                                        <li>{{x[1]}} {{x[2]}} : {{x[3]}}</li>
+                                    {% endfor %}
+                                </ol>
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if r[1] == 2 %}
+                    <div class="box">
+                        <h2>Phase 2</h2>
+                        <button class="btn btn-primary" onclick="showReviews('phase_2')">View Reviews</button>
+                        <div class="reviews" id="phase_2_reviews">
+                            <h3>Reviews for Phase 2</h3>
+                            <ul>
+                                <li>Project ID: {{ r[0] }}</li>
+                                <li>Phase: {{ r[1] }}</li>
+                                <li>Grade: {{ r[2] }}</li>
+                                <li style="font-weight: bold;">Reviewers: </li>
+                                <ol>
+                                    {% for x in r[3] %}
+                                        <li>{{x[1]}} {{x[2]}} : {{x[3]}}</li>
+                                    {% endfor %}
+                                </ol>
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if r[1] == 3 %}
+                    <div class="box">
+                        <h2>Phase 3</h2>
+                        <button class="btn btn-primary" onclick="showReviews('phase_3')">View Reviews</button>
+                        <div class="reviews" id="phase_3_reviews">
+                            <h3>Reviews for Phase 3</h3>
+                            <ul>
+                                <li>Project ID: {{ r[0] }}</li>
+                                <li>Phase: {{ r[1] }}</li>
+                                <li>Grade: {{ r[2] }}</li>
+                                <li style="font-weight: bold;">Reviewers: </li>
+                                <ol>
+                                    {% for x in r[3] %}
+                                        <li>{{x[1]}} {{x[2]}} : {{x[3]}}</li>
+                                    {% endfor %}
+                                </ol>
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <h2>No reviews yet, kindly wait</h2>
         {% endif %}
-        {% if r[1] == 2 %}
-        <div class="box">
-            <h2>Phase 2</h2>
-            <button class="btn btn-primary" onclick="showReviews('phase_2')">View Reviews</button>
-            <div class="reviews" id="phase_2_reviews">
-                <h3>Reviews for Phase 2</h3>
-                <ul>
-                    <li>Project ID: {{ r[0] }}</li>
-                    <li>Phase: {{ r[1] }}</li>
-                    <li>Grade: {{ r[2] }}</li>
-                    <li style="font-weight: bold;">Reviewers: </li>
-                    <ol>
-                        {% for x in r[3] %}
-                            <li>{{x[1]}} {{x[2]}} : {{x[3]}}</li>
-                        {% endfor %}
-                    </ol>
-                </ul>
-            </div>
-        </div>
-        {% endif %}
-        {% if r[1] == 3 %}
-        <div class="box">
-            <h2>Phase 3</h2>
-            <button class="btn btn-primary" onclick="showReviews('phase_3')">View Reviews</button>
-            <div class="reviews" id="phase_3_reviews">
-                <h3>Reviews for Phase 3</h3>
-                <ul>
-                    <li>Project ID: {{ r[0] }}</li>
-                    <li>Phase: {{ r[1] }}</li>
-                    <li>Grade: {{ r[2] }}</li>
-                    <li style="font-weight: bold;">Reviewers: </li>
-                    <ol>
-                        {% for x in r[3] %}
-                            <li>{{x[1]}} {{x[2]}} : {{x[3]}}</li>
-                        {% endfor %}
-                    </ol>
-                </ul>
-            </div>
-        </div>
-        {% endif %}
-        {% endfor %}
-
     </div>
 
     <script>
@@ -173,6 +176,5 @@
             }
         }
     </script>
-    
 </body>
 </html>

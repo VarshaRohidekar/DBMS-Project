@@ -65,7 +65,7 @@ def get_available_supervisors():
         cnx_cursor.execute("""SELECT domain FROM Supervisor_Domains WHERE supervisor_id = %(id)s""", {'id': id})
         domains = cnx_cursor.fetchall()
         teacher.append(domains)
-        cnx_cursor.execute("""SELECT domain, problem_statement FROM Project WHERE supervisor_id = %(id)s""", {'id': id})
+        cnx_cursor.execute("""SELECT domain, problem_statement FROM Project WHERE supervisor_id = %(id)s and end_d is not NULL""", {'id': id})
         projects = cnx_cursor.fetchall()
         teacher.append(projects)
     

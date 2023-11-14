@@ -61,6 +61,7 @@
 
     <div class="container">
         <div class="requests">
+            {% if requests %}
             {% for request in requests %}
                 <div class="request-box" id="{{ request.request_id }}">
                     <p> Team ID: {{ request.team_id }} </p>
@@ -86,6 +87,10 @@
                     <button class="btn btn-danger reject">Reject</button>
                 </div>
             {% endfor %}
+            {% else %}
+            <h2>No requests yet! Kindly wait!</h2>
+            {% endif %}
+
         </div>
     </div>
 

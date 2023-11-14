@@ -43,6 +43,13 @@
         .team-info-table tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+
+        .no-projects-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -58,40 +65,42 @@
         </div>
     </nav>
 
-
     <div class="container">
-        <div class="requests">
-            {% for request in requests %}
-                <div class="request-box" id="{{ request.team_id }}">
-                    <p> Project ID: {{ request.project_id }} </p>
-                    <p> Team ID: {{ request.team_id }} </p>
-                    <p> Interested Domain: {{ request.domain }} </p>
-                    <p> Idea: {{ request.idea }} </p>
-                    <table class="team-info-table" id="team-info-{{ request.request_id }}">
-                        <tr>
-                            <th>SRN</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>CGPA</th>
-                        </tr>
-                        {% for info in request.team_info[2] %}
+        {% if requests %}
+            <div class="requests">
+                {% for request in requests %}
+                    <div class="request-box" id="{{ request.team_id }}">
+                        <p> Project ID: {{ request.project_id }} </p>
+                        <p> Team ID: {{ request.team_id }} </p>
+                        <p> Interested Domain: {{ request.domain }} </p>
+                        <p> Idea: {{ request.idea }} </p>
+                        <table class="team-info-table" id="team-info-{{ request.request_id }}">
                             <tr>
-                                <td>{{ info[0] }}</td>
-                                <td>{{ info[1] }}</td>
-                                <td>{{ info[2] }}</td>
-                                <td>{{ info[3] }}</td>
+                                <th>SRN</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>CGPA</th>
                             </tr>
-                        {% endfor %}
-                    </table>
-                    <button class="btn btn-success view">View Project</button>
-                    <button class="btn btn-danger complete">Mark project complete</button>
-                </div>
-            {% endfor %}
-        </div>
+                            {% for info in request.team_info[2] %}
+                                <tr>
+                                    <td>{{ info[0] }}</td>
+                                    <td>{{ info[1] }}</td>
+                                    <td>{{ info[2] }}</td>
+                                    <td>{{ info[3] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <button class="btn btn-success view">View Project</button>
+                        <button class="btn btn-danger complete">Mark project complete</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2 class="no-projects-message" style="font-family: Georgia, 'Times New Roman', Times, serif;"><b>No active projects</b></h2>
+        {% endif %}
     </div>
 
     <script>
-
         function sendData(team_id, string){
             $.ajax({
                 url: '{{url_for("viewactiveprojects", username=username)}}',

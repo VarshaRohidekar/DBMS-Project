@@ -22,7 +22,12 @@ INSERT INTO Student (srn, semester, cgpa, Fname, Lname, email, pswd, outgoing_ye
 ('PES1UG20CS509', 7, 7.5, 'Laasya', 'G', 'laasyag@example.com', 'ABC', 2024),
 ('PES1UG20CS510', 7, 8.93, 'Shrikar', 'M', 'shrikarm@example.com', 'ABC', 2024),
 ('PES1UG20CS511', 7, 9.8, 'Aryan', 'Agarwal', 'aryana@example.com', 'ABC', 2024),
-('PES1UG20CS512', 7, 8.33, 'Nambrata', 'A', 'nambrataa@example.com', 'ABC', 2024);
+('PES1UG20CS512', 7, 8.33, 'Nambrata', 'A', 'nambrataa@example.com', 'ABC', 2024),
+('PES1UG21CS712', 5, 8.69, 'Prajwal', 'Rai', 'prajwalrai@example.com', 'ABC', 2025),
+('PES1UG21CS713', 5, 9.23, 'HariKrishnan', 'G', 'harig@example.com', 'ABC', 2025),
+('PES1UG21CS714', 5, 9.51, 'Abhinav', 'Singh', 'abhisingh@example.com', 'ABC', 2025),
+('PES1UG21CS715', 5, 8.82, 'Shrishti', 'A', 'shrishtia123@example.com', 'ABC', 2025);
+
 
 
 INSERT INTO Teacher (teacher_id, Fname, Lname, email, floor, cabin_no, pswd) VALUES 
