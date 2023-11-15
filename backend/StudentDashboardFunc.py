@@ -46,11 +46,16 @@ def get_student_details(srn):
 def insert_file(username, stream_obj):
     
     # convert file to binary
-    file = stream_obj.read()
-    try:
-        file = base64.b64encode(file)
-    except:
-        print("couldn't convert file")
+    # file = stream_obj.read()
+    print(stream_obj)
+    file=bytearray(stream_obj)
+    
+    print(file)
+    # file = stream_obj
+    # try:
+    #     file = base64.b64encode(file)
+    # except:
+    #     print("couldn't convert file")
     
     
     try:

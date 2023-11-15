@@ -124,7 +124,7 @@ create table Reviewed_by (
     project_id int,
     phase int check(phase in (1,2,3)),
     reviewer_id char(13) not null,
-    feedback varchar(200) not null,
+    feedback varchar(200) default null,
     primary key(project_id, phase, reviewer_id),
     foreign key(project_id) references Project(project_id),
     foreign key(reviewer_id) references Teacher(teacher_id)

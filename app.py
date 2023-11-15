@@ -61,8 +61,8 @@ def studentprofile(username):
         for field, data in request.files.items():
             print("file recieved")
             print(field)
-            print(data.stream.read())
-            StudentDashboardFunc.insert_file(username, data.stream)
+            # print(data.stream.read())
+            StudentDashboardFunc.insert_file(username, data.stream.read())
     return render_template('studentprofile.html', username=username, first_name=first_name, last_name=last_name, email_id=email,outgoing_year=outgoing_year,cgpa=cgpa,semester=semester, hasResume=hasResume, teamEligibility = teamEligibility, hasTeam=hasTeam, resume_page = resume_link, team_id=team_id)
 
 @app.route('/studentprofile/<username>/resume', methods = ['GET', 'POST'])
@@ -113,6 +113,7 @@ def teampage(team_id, srn):
 @app.route('/teampage/<team_id>/<srn>/requestsform', methods=["GET", "POST"])
 def requestsform(team_id,srn):
     domains = RequestFormFunc.get_domains()
+    print(domains)
     teachers = RequestFormFunc.get_available_supervisors()
     print(teachers)
     sendingrequestslink = url_for('sendingrequests', team_id=team_id, srn=srn)
@@ -384,7 +385,9 @@ def adminprofile(username):
     adminteacherlink = url_for('adminteacher', username=username)
     adminstudentlink = url_for('adminstudent', username=username)
     adminquerylink = url_for('adminquery', username=username)
-    return render_template('adminprofile.html', email=email, admin_id=username, adminteacherlink=adminteacherlink, adminstudentlink=adminstudentlink, adminquerylink=adminquerylink)
+    adminreviewerslink=url_for('assignreviewers', username=username)
+    return render_template('adminprofile.html', email=email, admin_id=username, adminteacherlink=adminteacherlink, adminstudentlink=adminstudentlink,
+                           adminquerylink=adminquerylink, adminreviewerslink=adminreviewerslink)
 
 @app.route('/adminprofile/<username>/adminstudent', methods=['GET', 'POST'])
 def adminstudent(username):
@@ -419,6 +422,33 @@ def adminquery(username):
             err=result
 
     return render_template('adminquery.html', username=username, data=data, cols=cols, err=err)
+
+@app.route('/adminprofile/<username>/assignreviewers', methods=["POST", "GET"])
+def assignreviewers(username):
+    AdminFunc.log_in()
+    result=False
+    phase=None
+    batches = AdminFunc.get_batches()
+    if request.method=="POST" and 'batch' in request.form:
+        # print('batch' in request.form)
+        batch=request.form.get('batch')
+        phase, result=AdminFunc.assign_reviewers(batch)
+    else:
+        content = request.get_data()
+        content = content.decode('utf8')
+        content = json.loads(content)
+        # content = str(content)
+        # content.replace("&#39;", '"')
+        # print("printing content: ",content)
+        # print("type: ", type(content))
+        reviewer_list = content['result']
+        p = content['phase']
+        # print(p, reviewer_list)
+        AdminFunc.add_reviewers(reviewer_list, p)
+        pass
+    
+    print(result)
+    return render_template('adminassignreviewers.html', username=username, result=result, batches=batches, phase=phase)
 
 @app.route('/logout')
 def logout():
