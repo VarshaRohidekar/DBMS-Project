@@ -393,9 +393,8 @@ def adminprofile(username):
     adminteacherlink = url_for('adminteacher', username=username)
     adminstudentlink = url_for('adminstudent', username=username)
     adminquerylink = url_for('adminquery', username=username)
-    adminreviewerslink=url_for('assignreviewers', username=username)
-    return render_template('adminprofile.html', email=email, admin_id=username, adminteacherlink=adminteacherlink, adminstudentlink=adminstudentlink,
-                           adminquerylink=adminquerylink, adminreviewerslink=adminreviewerslink)
+    adminreviewerslink = url_for('adminassignreviews', username=username)
+    return render_template('adminprofile.html', email=email, admin_id=username, adminteacherlink=adminteacherlink, adminstudentlink=adminstudentlink, adminquerylink=adminquerylink, adminreviewerslink=adminreviewerslink)
 
 @app.route('/adminprofile/<username>/adminstudent', methods=['GET', 'POST'])
 def adminstudent(username):
