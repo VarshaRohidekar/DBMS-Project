@@ -51,7 +51,42 @@
             color: black;
         }
 
+        button {
+            background-color: #343a40;
+            color: aqua;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
 
+        button:hover {
+            background-color: aqua;
+            color: #343a40;
+        }
+
+        select#projectSelect {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url("https://cdn.iconscout.com/icon/free/png-256/chevron-down-4-477044.png") no-repeat scroll right center / 20px 20px;
+        }
+
+        select#gradeSelect {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url("https://cdn.iconscout.com/icon/free/png-256/chevron-down-4-477044.png") no-repeat scroll right center / 20px 20px;
+        }
 
         table {
             width: 80%;
@@ -89,7 +124,7 @@
     <label for="project"> Select Project: </label>
     <select name="project" id="projectSelect">
         <option value=""> select project </option>
-        {% for project in projects %}
+        {% for project in reviews %}
         <option value='{{project[0]}}'> Project ID: {{project[0]}}, Team ID: {{project[1]}}</option>
         {% endfor %}
     </select>
@@ -158,7 +193,7 @@
             var code;
             {% for project in reviews %}
                 if('{{project[0]}}'==selectedProject){
-                    code = `<p> Reviews for Project ID = {{project[0]}} and Phase = {{project[1]}} </p>
+                    code = `<p> Reviews for Project ID = <span id="projectID"> {{project[0]}} </span> and Phase = <span id="projectPhase">{{project[1]}} </span></p>
                 <table>
                     <thead>
                         <tr>
@@ -185,16 +220,51 @@
                     code = "";
                     if(flag){
                         var grade = document.getElementById("grade");
-                        code = ` <button> THIS IS BUTTON </button> `;
+                        code = ` <label for="grade"> Grade Given : </label>
+                                <select id="gradeSelect">
+                                    <option value="S"> S </option>
+                                    <option value="A"> A </option>
+                                    <option value="B"> B </option>
+                                    <option value="C"> C </option>
+                                    <option value="D"> D </option>
+                                    <option value="E"> E </option>
+                                    <option value="F"> F </option>
+                                </select>
+                        <button id="submitGrade"> SUBMIT GRADE </button> `;
                         grade.innerHTML=code;
                     }
-
-
                 }
-
             {% endfor %}
+        })
 
+        
 
+        $(document).on("click", "#submitGrade", function(){
+            var grade=document.getElementById("gradeSelect").value;
+            var projectID = document.getElementById("projectID").innerHTML;
+            projectID = parseInt(projectID);
+            var phase = document.getElementById("projectPhase").innerHTML;
+            phase = parseInt(phase);
+            toSend = {'grade': grade, 'project_id': projectID, 'phase': phase};
+            console.log(toSend);
+            console.log(window.location.href)
+
+            function sendData(l){
+                $.ajax({
+                    url: window.location.href,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(l),
+                    success: function(response) {
+                        window.location.replace(response);
+                    },
+                    error: function(error) {
+                        alert(error);
+                    }
+                });
+            }
+
+            sendData(toSend);
         })
 
     </script>

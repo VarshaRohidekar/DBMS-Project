@@ -182,6 +182,7 @@ CREATE TRIGGER delete_requests
     FOR EACH ROW
     BEGIN
     DELETE FROM Request WHERE team_id=NEW.team_id;
+    UPDATE Request SET req_status=-1 WHERE supervisor_id=NEW.supervisor_id;
     END //
 
 -- CREATE PROCEDURE decrement_active_projects(IN project_id int)

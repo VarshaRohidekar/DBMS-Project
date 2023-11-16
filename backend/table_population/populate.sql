@@ -117,18 +117,18 @@ INSERT INTO Project (team_id, supervisor_id, start_d, cur_phase, domain, problem
 (3, 'T123456789008', '2022-11-13', 3, 'Data Analytics', 'Optimize a supply chain by analyzing historical demand patterns and supplier performance');
 
 INSERT INTO Reviewed_by (project_id, phase, reviewer_id, feedback) VALUES
-(1, 1, 'T123456789001', 'Clear Presentation'),
-(1, 1, 'T123456789003', 'Research could"ve been more thorough'),
-(1, 2, 'T123456789001', 'Needs to be more refined'),
-(1, 2, 'T123456789004', 'Good effort'),
-(2, 1, 'T123456789007', ''),
-(2, 1, 'T123456789003', ''),
-(2, 2, 'T123456789009', ''),
-(2, 2, 'T123456789005', ''),
-(3, 1, 'T123456789004', ''),
-(3, 1, 'T123456789007', ''),
-(3, 2, 'T123456789009', ''),
-(3, 2, 'T123456789005', '');
+(1, 1, 'T123456789001', 'Clear Presentation.'),
+(1, 1, 'T123456789003', 'Research could"ve been more thorough.'),
+(1, 2, 'T123456789001', 'Needs to be more refined.'),
+(1, 2, 'T123456789004', 'Good effort.'),
+(2, 1, 'T123456789007', 'Comprehensive project with innovative solutions and effective communication.'),
+(2, 1, 'T123456789003', 'Timely delivery and user-friendly interface contribute to success.'),
+(2, 2, 'T123456789009', 'User interface is intuitive, enhancing overall experience.'),
+(2, 2, 'T123456789005', 'Great adaptability in handling changes.'),
+(3, 1, 'T123456789004', 'Attention to detail in planning and execution ensures accuracy.'),
+(3, 1, 'T123456789007', 'Measurable impact on targeted goals.'),
+(3, 2, 'T123456789009', 'Effective teamwork is evident in collaborative efforts.'),
+(3, 2, 'T123456789005', 'Thorough research and analysis contribute significantly to the project"s depth.');
 
 INSERT INTO Review (project_id, phase, grade) VALUES 
 (1, 1, 'A'),

@@ -170,7 +170,24 @@ def get_reviews(supervisor_id):
         
     cnx_cursor = cnx.cursor()
     # need all the active projects under the supervisor and their corresponding reviews for the current phase
-    cnx_cursor.execute("""SELECT project_id, cur_phase FROM Project WHERE supervisor_id=%(id)s""", {'id': supervisor_id})
+    #f with reviewed_projects (project_id, phase) as 
+    # ( select project_id, phase from  (select project_id, cur_phase as phase from Project) as projects natural join (select * from Review) as reviews ) 
+    # select project_id, cur_phase as phase from Project 
+    # where (project_id, cur_phase) not in (select project_id, phase from reviewed_projects);
+    # need to only send those projects that don't have grade yet    
+    # cnx_cursor.execute("""SELECT project_id, cur_phase FROM Project WHERE supervisor_id=%(id)s""", {'id': supervisor_id})
+    
+    cnx_cursor.execute("""WITH reviewed_projects (project_id, phase)
+                          AS (
+                              SELECT project_id, phase 
+                              FROM
+                              (SELECT project_id, cur_phase as phase FROM Project) AS projects
+                              NATURAL JOIN
+                              (SELECT * FROM Review) as reviews
+                              )
+                           SELECT project_id, cur_phase as phase
+                           FROM Project
+                           WHERE supervisor_id = %(id)s AND (project_id, cur_phase) NOT IN (SELECT project_id, phase FROM reviewed_projects)""", {'id': supervisor_id})
     projects = cnx_cursor.fetchall()
     print(projects)
     # get reviews for cur_phase
@@ -187,7 +204,24 @@ def get_reviews(supervisor_id):
 
     return reviews
 
-def assign_grade():
+def assign_grade(data):
+    try:
+        cnx = mysql.connector.connect(**config.config)
 
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+    else:
+        print("connected to", cnx._database)        #cnx._database -- value of current database
+        
+    cnx_cursor = cnx.cursor()
+    
+    cnx_cursor.execute("""INSERT INTO Review (project_id, phase, grade) VALUES (%(project_id)s, %(phase)s, %(grade)s)""", data)
+    
+    cnx.close()
 
     return

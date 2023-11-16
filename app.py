@@ -199,6 +199,10 @@ def teacherprofile(username):
         team_limit = stuff[1]
         active_projects = stuff[2]
         accepted_requests = stuff[3]
+        if accepted_requests is None:
+            accepted_requests = 0
+        if active_projects is None:
+            active_projects = 0
         print(stuff)
         
     return render_template('teacherprofile.html', username=username, first_name=first_name,last_name=last_name,
@@ -210,7 +214,23 @@ def viewrequests(username):
     content = SupervisorFunc.get_requests(username)
     requests = []
     redirectlink = url_for('process_request', username=username)
-
+    stuff = SupervisorFunc.get_supervisor_info(username)
+    team_limit = stuff[1]
+    active_projects = stuff[2]
+    accepted_requests = stuff[3]  
+    
+    if active_projects is None:
+        active_projects = 0
+      
+    if accepted_requests is None:
+        accepted_requests = 0
+    
+    print(accepted_requests)
+    
+    canAccept = True 
+    if team_limit <= active_projects + accepted_requests:
+        canAccept = False
+    
     for request in content:
         # Extract relevant information from the request
         request_id = request[0]
@@ -231,7 +251,7 @@ def viewrequests(username):
         })
         # need to handle avg value added in the end
 
-    return render_template('viewrequests.html', username=username, requests=requests, redirectlink=redirectlink)
+    return render_template('viewrequests.html', username=username, requests=requests, redirectlink=redirectlink, canAccept=canAccept)
 
 @app.route('/teacherprofile/<username>/viewactiveprojects', methods=['GET', 'POST'])
 def viewactiveprojects(username):
@@ -365,7 +385,14 @@ def assigngrade(username):
     # get all the active projects under that supervisor -SupervisorFunc.get_projects(username)
     projects = SupervisorFunc.get_projects(username)
     reviews = SupervisorFunc.get_reviews(username)
-
+    
+    if request.method == "POST":
+        content = request.get_data()
+        content = content.decode('utf8')
+        data = json.loads(content)
+        print(data)
+        SupervisorFunc.assign_grade(data)
+        return url_for('assigngrade', username=username)
     return render_template('assigngrade.html', username=username, projects=projects, reviews = reviews)
 
 

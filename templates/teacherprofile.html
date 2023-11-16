@@ -126,9 +126,9 @@
             <h2 style="font-family: Georgia, 'Times New Roman', Times, serif;">Teacher Dashboard</h2>
         </div>
         <div class="dashboard-info">
-            {% if activeSupervisor %}
+        {% if activeSupervisor %}
             {% if active_projects is not none and team_limit is not none %}
-                {% if active_projects >= team_limit %}
+                {% if team_limit <= active_projects + accepted_requests %}
                     <div class="not-accepting-teams">
                         <p style="color: red;">Already reached your max limit, can no longer accept any teams. Contact admin if necessary.</p>
                         <!-- You may add a button or link for users to contact admin if necessary -->
