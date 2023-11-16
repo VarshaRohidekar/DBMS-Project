@@ -50,6 +50,28 @@
             font-size: 40px;
             color: black;
         }
+
+
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            border: 2px solid #333;
+            margin: 20px auto;
+            background-color: #fff;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #343a40;
+            color: aqua;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -64,10 +86,9 @@
             </ul>
         </div>
     </nav>
-
-    <p> Assign Grade for {{username}}</p>
     <label for="project"> Select Project: </label>
-    <select name="project" id="project">
+    <select name="project" id="projectSelect">
+        <option value=""> select project </option>
         {% for project in projects %}
         <option value='{{project[0]}}'> Project ID: {{project[0]}}, Team ID: {{project[1]}}</option>
         {% endfor %}
@@ -93,7 +114,86 @@
 -->
 
     <script>
-        $(document).ready(function(){
+        document.getElementById("projectSelect").addEventListener("change", function(){
+            var selectedProject = document.getElementById("projectSelect").value;
+            var projectDetails = document.getElementById("projectDetails");
+            var project;
+            {% for project in projects %}
+                if('{{project[0]}}' == selectedProject){
+                    project = {{project | tojson}};
+                }
+            {% endfor %}
+            console.log(project);
+
+            // project id, team id, supervisor id, start_d, end_d, cur_phase, domain, idea 
+
+            var code = ` <p> Details of the selected Project </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> Project ID </th>
+                            <th> Team ID </th>
+                            <th> Current Phase </th>
+                            <th> Domain </th>
+                            <th> Problem Statement </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> ${project[0]} </td>
+                            <td> ${project[1]} </td>
+                            <td> ${project[5]} </td>
+                            <td> ${project[6]} </td>
+                            <td> ${project[7]} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            projectDetails.innerHTML = code;
+        })
+
+        document.getElementById("showReviews").addEventListener("click", function(){
+            var selectedProject = document.getElementById("projectSelect").value;
+            var reviews = document.getElementById("projectReviews");
+            var code;
+            {% for project in reviews %}
+                if('{{project[0]}}'==selectedProject){
+                    code = `<p> Reviews for Project ID = {{project[0]}} and Phase = {{project[1]}} </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Reviewer ID</th>
+                            <th>Feedback</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projectTableBody">
+                    </tbody>
+                </table>
+                <div id="grade">  </div>
+                    `;
+                    reviews.innerHTML = code
+                    var projectTableBody = document.getElementById("projectTableBody");
+                    code = "";
+                    flag = true;
+                    {% for review in project[2] %}
+                        code+= `<tr> <td> {{review[0]}} </td>  <td>  {{review[1]}} </td> </tr>`;
+                        if('{{review[1]}}'=='None'){
+                            flag=false
+                        }
+                    {% endfor %}
+                    projectTableBody.innerHTML = code;
+                    code = "";
+                    if(flag){
+                        var grade = document.getElementById("grade");
+                        code = ` <button> THIS IS BUTTON </button> `;
+                        grade.innerHTML=code;
+                    }
+
+
+                }
+
+            {% endfor %}
+
 
         })
 

@@ -113,7 +113,7 @@ def teampage(team_id, srn):
 @app.route('/teampage/<team_id>/<srn>/requestsform', methods=["GET", "POST"])
 def requestsform(team_id,srn):
     domains = RequestFormFunc.get_domains()
-    print(domains)
+    # print(domains)
     teachers = RequestFormFunc.get_available_supervisors()
     print(teachers)
     sendingrequestslink = url_for('sendingrequests', team_id=team_id, srn=srn)
@@ -361,11 +361,12 @@ def makereviews(username):
 @app.route("/teacherprofile/<username>/assigngrade", methods=["POST", "GET"])
 def assigngrade(username):
 
+
     # get all the active projects under that supervisor -SupervisorFunc.get_projects(username)
     projects = SupervisorFunc.get_projects(username)
-    
+    reviews = SupervisorFunc.get_reviews(username)
 
-    return render_template('assigngrade.html', username=username, projects=projects)
+    return render_template('assigngrade.html', username=username, projects=projects, reviews = reviews)
 
 
 @app.route('/process_request/<username>', methods=["POST", "GET"])
@@ -393,7 +394,7 @@ def adminprofile(username):
     adminteacherlink = url_for('adminteacher', username=username)
     adminstudentlink = url_for('adminstudent', username=username)
     adminquerylink = url_for('adminquery', username=username)
-    adminreviewerslink = url_for('adminassignreviews', username=username)
+    adminreviewerslink = url_for('assignreviewers', username=username)
     return render_template('adminprofile.html', email=email, admin_id=username, adminteacherlink=adminteacherlink, adminstudentlink=adminstudentlink, adminquerylink=adminquerylink, adminreviewerslink=adminreviewerslink)
 
 @app.route('/adminprofile/<username>/adminstudent', methods=['GET', 'POST'])

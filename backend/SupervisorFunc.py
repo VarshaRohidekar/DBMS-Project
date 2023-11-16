@@ -154,6 +154,38 @@ def end_project(project_id):
     cnx.close()
     return
 
+def get_reviews(supervisor_id):
+    try:
+        cnx = mysql.connector.connect(**config.config)
+
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+    else:
+        print("connected to", cnx._database)        #cnx._database -- value of current database
+        
+    cnx_cursor = cnx.cursor()
+    # need all the active projects under the supervisor and their corresponding reviews for the current phase
+    cnx_cursor.execute("""SELECT project_id, cur_phase FROM Project WHERE supervisor_id=%(id)s""", {'id': supervisor_id})
+    projects = cnx_cursor.fetchall()
+    print(projects)
+    # get reviews for cur_phase
+    reviews = []
+    for i in projects:
+        reviews.append([i[0], i[1]])
+        cnx_cursor.execute("""SELECT reviewer_id, feedback FROM Reviewed_by WHERE project_id = %(id)s AND phase = %(phase)s""", {'id': i[0], 'phase': i[1]})
+        content = cnx_cursor.fetchall()
+        reviews[-1].append(content)
+
+    cnx.close()
+
+    # [[project_id, phase, (reveiws)]]
+
+    return reviews
 
 def assign_grade():
 

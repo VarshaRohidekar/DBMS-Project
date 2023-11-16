@@ -8,15 +8,16 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            color: aqua;
-            padding: 20px;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
         }
 
         .navbar {
-            background-color: #000000;
+            background-color: #343a40;
         }
 
-        .navbar-dark .navbar-brand {
+        .navbar-brand {
             color: aqua;
         }
 
@@ -24,8 +25,9 @@
             color: aqua;
         }
 
+
         h1 {
-            color: aqua;
+            color: black;
         }
 
         form {
@@ -74,8 +76,9 @@
             </ul>
         </div>
     </nav>
+    <h1 style="font-family: Georgia, 'Times New Roman', Times, serif; text-align: center;">Team Formation Form</h1>
+    <h3 style="font-family: Georgia, 'Times New Roman', Times, serif;text-align: center;">Please fill in the details carefully</h3>
     <div>
-        <h1>Team Formation Form</h1>
         <form action="{{ to_check }}" method="POST">
             
             <label for="TeamName">Team Name (Max 20 characters):</label>
