@@ -77,15 +77,15 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#" style="color: aqua;">Teacher Profile</a>
+        <a class="navbar-brand" href="#" style="color: aqua;">Welcome, {{ first_name }} {{ last_name }}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>   
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#" style="color: aqua;">Welcome, {{ first_name }}</a>
-                </li>
+                </li> -->
                 {% if activeSupervisor %}
                 <li>
                     <a class="nav-link" href="{{ requestslink }}" style="color: aqua">View Requests</a>
@@ -122,7 +122,7 @@
     </nav>
     <div class="container">
         <div class="welcome-message">
-            <h1 style="font-family: Georgia, 'Times New Roman', Times, serif;">Welcome, {{ first_name }} {{ last_name }}</h1>
+            <!-- <h1 style="font-family: Georgia, 'Times New Roman', Times, serif;">Welcome, {{ first_name }} {{ last_name }}</h1> -->
             <h2 style="font-family: Georgia, 'Times New Roman', Times, serif;">Teacher Dashboard</h2>
         </div>
         <div class="dashboard-info">
