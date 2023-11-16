@@ -58,7 +58,7 @@ def get_reviewers(reviewer_id):
         print("connected to", cnx._database)        #cnx._database -- value of current database
 
     cnx_cursor = cnx.cursor()
-    cnx_cursor.execute(''' SELECT * from Reviewed_by natural join Review where reviewer_id = %(reviewer_id)s''',{'reviewer_id': reviewer_id})
+    cnx_cursor.execute(''' SELECT * from Reviewed_by where reviewer_id = %(reviewer_id)s''',{'reviewer_id': reviewer_id})
 
     result = cnx_cursor.fetchall()
     cnx.close()

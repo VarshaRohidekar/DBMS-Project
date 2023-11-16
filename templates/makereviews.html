@@ -139,7 +139,6 @@
                         <th>Project ID</th>
                         <th>Phase</th>
                         <th>Feedback</th>
-                        <th>Grade</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -163,7 +162,7 @@
                                 </form>
                             </td>
                         {% endif %}
-                            <td>{{ request.grade }}</td>
+                          <!--  <td>{{ request.grade }}</td> -->
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -171,7 +170,7 @@
         {% else %}
             <h2>No assigned review</h2>
         {% endif %}
-    </div>>
+    </div>
 
 
 </body>

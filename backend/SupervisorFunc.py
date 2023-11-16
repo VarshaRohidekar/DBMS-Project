@@ -153,3 +153,9 @@ def end_project(project_id):
 
     cnx.close()
     return
+
+
+def assign_grade():
+
+
+    return

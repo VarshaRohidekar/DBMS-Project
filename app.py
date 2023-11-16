@@ -323,14 +323,14 @@ def makereviews(username):
         phase = req[1]
         supervisor_id = req[2]
         feedback = req[3]
-        grade = req[4]
+      #  grade = req[4]
 
         requests.append({
             'project_id': project_id,
             'phase': phase,
             'supervisor_id': supervisor_id,
             'feedback' : feedback,
-            'grade' : grade
+           # 'grade' : grade
         })
 
     if request.method == 'POST':
@@ -358,6 +358,14 @@ def makereviews(username):
         return redirect(url_for('makereviews', username=username))
     return render_template('makereviews.html',username=username,requests=requests)
 
+@app.route("/teacherprofile/<username>/assigngrade", methods=["POST", "GET"])
+def assigngrade(username):
+
+    # get all the active projects under that supervisor -SupervisorFunc.get_projects(username)
+    projects = SupervisorFunc.get_projects(username)
+    
+
+    return render_template('assigngrade.html', username=username, projects=projects)
 
 
 @app.route('/process_request/<username>', methods=["POST", "GET"])
@@ -433,9 +441,10 @@ def assignreviewers(username):
         # print('batch' in request.form)
         batch=request.form.get('batch')
         phase, result=AdminFunc.assign_reviewers(batch)
-    else:
+    elif request.method=="POST":
         content = request.get_data()
         content = content.decode('utf8')
+        print(content)
         content = json.loads(content)
         # content = str(content)
         # content.replace("&#39;", '"')
