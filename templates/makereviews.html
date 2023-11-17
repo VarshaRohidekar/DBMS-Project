@@ -138,6 +138,7 @@
                     <tr>
                         <th>Project ID</th>
                         <th>Phase</th>
+                        <th> Link to project Page </th>
                         <th>Feedback</th>
                     </tr>
                 </thead>
@@ -146,6 +147,7 @@
                         <tr>
                             <td>{{ request.project_id }}</td>
                             <td>{{ request.phase }}</td>
+                            <td> <a href="{{request.link}}"> View Project {{request.project_id}} </a></td>
                             {% if request.feedback %}
                                 <td>{{ request.feedback }}</td>
                             {% else %}

@@ -91,6 +91,8 @@
                     <a class="nav-link" href="{{ requestslink }}" style="color: aqua">View Requests</a>
                 </li>
                 {% endif %}
+
+                {% if isSupervisor %}
                 <li>
                     <a class="nav-link" href="{{ url_for('viewactiveprojects',username=username) }}"
                         style="color: aqua">View Active Projects </a>
@@ -100,7 +102,7 @@
                     <a class="nav-link" href="{{ url_for('viewpastprojects',username=username) }}"
                         style="color: aqua">View Past Projects </a>
                 </li>
-
+                {% endif %}
 
                 <li>
                     <a class="nav-link" href="{{ url_for('makereviews',username=username) }}"

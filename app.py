@@ -344,13 +344,14 @@ def makereviews(username):
         supervisor_id = req[2]
         feedback = req[3]
       #  grade = req[4]
-
+        (project_id, team_id, supervisor_id, problem_statement, domain, start_d, end_d, cur_phase) = ProjectPageFunc.display_projectdetails(project_id)
         requests.append({
             'project_id': project_id,
             'phase': phase,
             'supervisor_id': supervisor_id,
             'feedback' : feedback,
            # 'grade' : grade
+            'link': url_for("project", team_id=team_id, srn=username)
         })
 
     if request.method == 'POST':

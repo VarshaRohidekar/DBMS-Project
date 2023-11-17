@@ -165,7 +165,7 @@ AS (
     WHERE req_status = 1
     GROUP BY supervisor_id
 )
-SELECT S.supervisor_id, team_limit, active_projects, accepted_requests FROM Supervisor S 
+SELECT S.supervisor_id as supervisor_id, team_limit, active_projects, accepted_requests FROM Supervisor S 
 left join active_projects_count on active_projects_count.supervisor_id=S.supervisor_id
 left join accepted_request_count on accepted_request_count.supervisor_id=S.supervisor_id;
 
@@ -181,8 +181,23 @@ CREATE TRIGGER delete_requests
     AFTER INSERT ON Project
     FOR EACH ROW
     BEGIN
+    DECLARE p INT;
+    DECLARE r INT;
+    DECLARE t INT;
+
     DELETE FROM Request WHERE team_id=NEW.team_id;
-    UPDATE Request SET req_status=-1 WHERE supervisor_id=NEW.supervisor_id;
+
+
+    SELECT team_limit, active_projects INTO t, p
+    FROM supervisor_projects
+    WHERE supervisor_id = NEW.supervisor_id;
+
+    IF p IS NOT NULL THEN 
+        IF t<=p THEN
+            UPDATE Request SET req_status=-1 WHERE supervisor_id=NEW.supervisor_id;
+        END IF;
+    END IF;
+
     END //
 
 -- CREATE PROCEDURE decrement_active_projects(IN project_id int)
