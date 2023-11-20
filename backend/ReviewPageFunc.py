@@ -61,9 +61,29 @@ def get_reviewers(reviewer_id):
     cnx_cursor.execute(''' SELECT * from Reviewed_by where reviewer_id = %(reviewer_id)s''',{'reviewer_id': reviewer_id})
 
     result = cnx_cursor.fetchall()
+    print("hello", result)
     cnx.close()
     return result
 
+def get_project_details(id):
+    try:
+        cnx = mysql.connector.connect(**config.config)
+    except mysql.connector.Error as err:
+        print("Error connecting to the database:", err)
+        return False
+    cnx_cursor = cnx.cursor()
+    cnx_cursor.execute("""SELECT project_id, team_id, supervisor_id, problem_statement, domain, start_d, end_d, cur_phase FROM Project WHERE project_id=%(id)s""", {'id': id})
+
+    info = cnx_cursor.fetchall()[0]
+    send = [i for i in info]
+    print(info)
+    cnx.close()
+    if send[4] is None:
+        send[4]=""
+    if send[5] is None:
+        send[5]=""
+    
+    return send
 
 def addreviews(project_id, phase, reviewer_id, feedback):
     try:

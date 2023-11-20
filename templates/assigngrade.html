@@ -121,14 +121,17 @@
             </ul>
         </div>
     </nav>
-    <label for="project"> Select Project: </label>
-    <select name="project" id="projectSelect">
-        <option value=""> select project </option>
-        {% for project in reviews %}
-        <option value='{{project[0]}}'> Project ID: {{project[0]}}, Team ID: {{project[1]}}</option>
-        {% endfor %}
-    </select>
+    <form>
 
+        <label> Select Project: </label>
+        <select name="project" id="projectSelect">
+            <option value=""> select project </option>
+            {% for project in reviews %}
+            <option value='{{project[0]}}'> Project ID: {{project[0]}}, Team ID: {{project[1]}}</option>
+            {% endfor %}
+        </select>
+    </form>
+        
     <div id="projectDetails">
 
     </div>
@@ -210,17 +213,24 @@
                     var projectTableBody = document.getElementById("projectTableBody");
                     code = "";
                     flag = true;
+                    {% if not project[2] %}
+                        flag=false
+                    {% endif %}
+
                     {% for review in project[2] %}
                         code+= `<tr> <td> {{review[0]}} </td>  <td>  {{review[1]}} </td> </tr>`;
+                        console.log("in loop")
                         if('{{review[1]}}'=='None'){
                             flag=false
                         }
                     {% endfor %}
                     projectTableBody.innerHTML = code;
                     code = "";
+                    console.log(flag)
                     if(flag){
                         var grade = document.getElementById("grade");
-                        code = ` <label for="grade"> Grade Given : </label>
+                        code = `<form> 
+                        <label> Grade Given : </label>
                                 <select id="gradeSelect">
                                     <option value="S"> S </option>
                                     <option value="A"> A </option>
@@ -230,7 +240,8 @@
                                     <option value="E"> E </option>
                                     <option value="F"> F </option>
                                 </select>
-                        <button id="submitGrade"> SUBMIT GRADE </button> `;
+                        <button id="submitGrade"> SUBMIT GRADE </button> 
+                        </form>`;
                         grade.innerHTML=code;
                     }
                 }

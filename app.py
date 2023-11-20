@@ -344,7 +344,7 @@ def makereviews(username):
         supervisor_id = req[2]
         feedback = req[3]
       #  grade = req[4]
-        (project_id, team_id, supervisor_id, problem_statement, domain, start_d, end_d, cur_phase) = ProjectPageFunc.display_projectdetails(project_id)
+        (project_id, team_id, supervisor_id, problem_statement, domain, start_d, end_d, cur_phase) = ReviewPageFunc.get_project_details(project_id)
         requests.append({
             'project_id': project_id,
             'phase': phase,
