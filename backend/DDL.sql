@@ -88,13 +88,15 @@ create table Request (
     request_id int primary key auto_increment,
     team_id int not null,
     supervisor_id char(13) not null default '0000000000000',
-    interested_domain varchar(50) not null,
+    interested_domain varchar(70) not null,
     idea varchar(140),
     req_status int not null check(req_status in (-1, 0, 1)),
     constraint team_id_ref foreign key (team_id) references Team(team_id) 
             on update cascade on delete cascade,
     constraint super_id_ref foreign key (supervisor_id) references Supervisor(supervisor_id)
-            on update cascade on delete set default
+            on update cascade on delete set default,
+    constraint domain_ref foreign key (interested_domain) references Domain(domain)
+            on update cascade on delete cascade
 );
 
 /* an accepted request from the student's side should be used to create the project entry*/
@@ -128,15 +130,6 @@ create table Reviewed_by (
     primary key(project_id, phase, reviewer_id),
     foreign key(project_id) references Project(project_id),
     foreign key(reviewer_id) references Teacher(teacher_id)
-);
-
-create table Document (
-    project_id int,
-    phase int check(phase in (1,2,3)),
-    dname varchar(20) not null,
-    dfile blob not null,
-    primary key(project_id, phase),
-    foreign key (project_id) references Project(project_id)
 );
 
 -- create table latest_id (
